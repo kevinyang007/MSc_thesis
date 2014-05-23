@@ -1,0 +1,396 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis 
+% LaTeX Template
+% Version 1.43 (17/5/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original authors:
+% Steven Gunn 
+% http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/
+% and
+% Sunil Patel
+% http://www.sunilpatel.co.uk/thesis-template/
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Note:
+% Make sure to edit document variables in the Thesis.cls file
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt, oneside]{Thesis} % The default font size and one-sided printing (no margin offsets)
+
+\graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+
+\usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
+\hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
+\title{\ttitle} % Defines the thesis title - don't touch this
+
+\begin{document}
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\setstretch{1.3} % Line spacing of 1.3
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{} % Clears all page headers and footers
+\rhead{\thepage} % Sets the right side header to show the page number
+\lhead{} % Clears the left side page header
+
+\pagestyle{fancy} % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
+
+% PDF meta-data
+\hypersetup{pdftitle={\ttitle}}
+\hypersetup{pdfsubject=\subjectname}
+\hypersetup{pdfauthor=\authornames}
+\hypersetup{pdfkeywords=\keywordnames}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\begin{center}
+\textsc{\Large \bf \univname}\\[0.5cm] % University name
+\textsc{\large Dipartimento di Ingegneria ``Enzo Ferrari"}\\[0.2cm] % Thesis type
+%\HRule \\ % Horizontal line
+\textsc{\large Corso di Laurea Magistrale in Ingegneria Informatica}\\[5.5cm] % Thesis type
+
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+ 
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Candidato:}\\
+\authornames % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Relatore:} \\
+\supname \\ % Supervisor name - remove the \href bracket to remove the link  
+\emph{Correlatore:} \\
+\cosupname \\ % Supervisor name - remove the \href bracket to remove the link  
+\end{flushright}
+\end{minipage}\\[7.5cm]
+ 
+%\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+%\textit{in the}\\[0.4cm]
+%\groupname\\\deptname\\[2cm] % Research group name and department name
+ 
+\textsc{\large Anno Accademico 2013-2014}\\[4cm] % Date
+%\includegraphics{Logo} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%	Your institution may give you a different text to place here
+%----------------------------------------------------------------------------------------
+
+%\Declaration{
+%
+%\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+%
+%I, \authornames, declare that this thesis titled, '\ttitle' and the work presented in it are my own. I confirm that:
+%
+%\begin{itemize} 
+%\item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
+%\item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+%\item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
+%\item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+%\item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
+%\item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+%\end{itemize}
+% 
+%Signed:\\
+%\rule[1em]{25em}{0.5pt} % This prints a line for the signature
+% 
+%Date:\\
+%\rule[1em]{25em}{0.5pt} % This prints a line to write the date
+%}
+
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	QUOTATION PAGE
+%----------------------------------------------------------------------------------------
+
+%\pagestyle{empty} % No headers or footers for the following pages
+%
+%\null\vfill % Add some space to move the quote down the page a bit
+%
+%\textit{``Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism."}
+%
+%\begin{flushright}
+%Dave Barry
+%\end{flushright}
+%
+%\vfill\vfill\vfill\vfill\vfill\vfill\null % Add some space at the bottom to position the quote just right
+%
+%\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+
+%\addtotoc{Abstract} % Add the "Abstract" page entry to the Contents
+%
+%\abstract{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+%
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%}
+%
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+
+\setstretch{1.3} % Return the line spacing back to 1.3
+
+\pagestyle{empty} % Page style needs to be empty for this page
+
+\dedicatory{To Emanuela} % Dedication text
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\setstretch{1.3} % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+\acknowledgements{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+
+Foremost, I would like to express my sincere gratitude to my advisors Prof. Rita Cucchiara and Dr. Giuseppe Serra for the continuous support of my study, for their patience, motivation, enthusiasm, and knowledge. Their guidance helped me in all the time of research and writing of this thesis. I could not have imagined having better advisors for my study.
+
+Besides my advisors, I would like to thank the rest of the Imagelab research group: Costantino Grana, Simone Calderara, Paolo Santinelli, Michele Fornaciari, Marco Manfredi, Franesco Solera, Martino Lombardi and Patrizia Varini, for their encouragement, insightful comments, and hard questions. I am also grateful to Prof. Greg Mori, for enlightening me the first glance of research during a visit in Modena.
+
+Special thanks go to my labmate Francesco Paci, for the stimulating discussions, for the days we were working together before deadlines, and for all the fun we have had in the last months. Also I thank my friends Chiara Ferrari, Emanuele Benatti, Davide Setti, and in particular Michela Benedetti, who encouraged me to study ego-centric vision. Without her, this thesis would not probably exists.
+
+Last but not the least, I would like to thank my parents Franco and Elisabetta, for giving birth to me at the first place and supporting me throughout my life, and my sister Alessia.
+}
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+\pagestyle{fancy} % The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+\lhead{\emph{Contents}} % Set the left side page header to "Contents"
+\tableofcontents % Write out the Table of Contents
+
+\lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
+\listoffigures % Write out the List of Figures
+
+\lhead{\emph{List of Tables}} % Set the left side page header to "List of Tables"
+\listoftables % Write out the List of Tables
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+
+%\clearpage % Start a new page
+%
+%\setstretch{1.5} % Set the line spacing to 1.5, this makes the following tables easier to read
+%
+%\lhead{\emph{Abbreviations}} % Set the left side page header to "Abbreviations"
+%\listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
+%{
+%\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere \\
+%%\textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+%}
+
+%----------------------------------------------------------------------------------------
+%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+%\clearpage % Start a new page
+%
+%\lhead{\emph{Physical Constants}} % Set the left side page header to "Physical Constants"
+%
+%\listofconstants{lrcl} % Include a list of Physical Constants (a four column table)
+%{
+%Speed of Light & $c$ & $=$ & $2.997\ 924\ 58\times10^{8}\ \mbox{ms}^{-\mbox{s}}$ (exact)\\
+%% Constant Name & Symbol & = & Constant Value (with units) \\
+%}
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS
+%----------------------------------------------------------------------------------------
+
+%\clearpage % Start a new page
+%
+%\lhead{\emph{Symbols}} % Set the left side page header to "Symbols"
+%
+%\listofnomenclature{lll} % Include a list of Symbols (a three column table)
+%{
+%$a$ & distance & m \\
+%$P$ & power & W (Js$^{-1}$) \\
+%% Symbol & Name & Unit \\
+%
+%& & \\ % Gap to separate the Roman symbols from the Greek
+%
+%$\omega$ & angular frequency & rads$^{-1}$ \\
+%% Symbol & Name & Unit \\
+%}
+\newcommand{\etal}{\textit{et al.~}}
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{fancy} % Return the page headers back to the "fancy" style
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\input{Chapters/Chapter1}
+
+
+
+\chapter{Hand segmentation in ego-centric videos}
+As stated before, a hand segmentation mask is used to distinguish between camera and hand motions, and to prune away all the trajectories that do not belong to the user's hand. In this way, our descriptor captures hands movement and shape as if the camera was fixed, and disregards the noise coming from other moving regions that could be in the scene.
+
+At each frame we extract superpixels using the SLIC algorithm \cite{achanta2012slic}, that performs a \textsl{k}-means-based local clustering of pixels in a 5-dimensional space, where color and pixel coordinates are used. Superpixels are then represented with several features: histograms in the HSV and LAB color spaces (that have been proven to be good features for skin representation \cite{khan2010skin}), Gabor filters and a simple histogram of gradients, to discriminate between objects with a similar color distribution.
+
+\subsubsection{Illumination invariance}
+To deal with different illumination conditions we train a collection of Random Forest classifiers indexed by a global HSV histogram, instead of using a single classifier. Hence, training images are distributed among the classifiers by a \textsl{k}-means clustering on the feature space. By using a histogram over all three channels of the HSV color space, each scene cluster encodes both the appearance of the scene and its illumination. Intuitively, this models the fact that hands viewed under similar global appearance will share a similar distribution in the feature space. Given a feature vector $\mathbf{l}$ of a superpixel $\mathbf{s}$ and a global appearance
+feature $\mathbf{g}$, the posterior distribution of $\mathbf{s}$
+is computed by marginalizing over different scenes $c$:
+
+\begin{equation}
+P(\mathbf{s}|\mathbf{l},\mathbf{g})=\sum_{c}P(\mathbf{s}|\mathbf{l},c)P(c|\mathbf{g})
+\end{equation}
+
+
+where $P(\mathbf{s}|\mathbf{l},c)$ is the output of a global appearance-specific
+classifier and $P(c|\mathbf{g})$ is a conditional distribution of a
+scene $c$ given a global appearance feature $\mathbf{g}$. In test
+phase, the conditional $P(c|\mathbf{g})$ is approximated using an
+uniform distribution over the five nearest models learned at training.
+It is important to highlight that the optimal number of classifiers
+depends on the characteristics of the dataset: a training dataset
+with several different illumination conditions, taken both inside and
+outside, will need an higher number of classifiers than one taken indoor.
+In addition, we model the hand appearance not
+only considering illumination variations, but also including semantic coherence in time and space.
+
+
+\subsubsection{Temporal coherence}
+
+To improve the foreground prediction of a pixel in a frame, we replace it with a weighted combination of its previous frames,
+since past frames should affect the prediction for the current frame.
+
+We define a smoothing filter for a pixel $x_{t}^{i}$ from frame $t$ as:
+\begin{eqnarray}
+P(x_{t}^{i} & = & 1)=\sum_{k=0}^{d}w_{k}(P(x_{t}^{i}=1|x_{t-k}^{i}=1)\cdot\nonumber \\
+ &  & \cdot P(x_{t-k}^{i}=1|\mathbf{l}_{t-k},\mathbf{g}_{t-k})+P(x_{t}^{i}=1|x_{t-k}^{i}=0)\nonumber \\
+ &  & \cdot P(x_{t-k}^{i}=0|\mathbf{l}_{t-k},\mathbf{g}_{t-k}))
+\end{eqnarray}
+
+
+where $d$ is the number of past frames used, and $P(x_{t-k}^{i}=1|\mathbf{l}_{t-k},\mathbf{g}_{t-k})$
+is the probability that a pixel in frame $t-k$ is marked as hand
+part, equal to $P(\mathbf{s}|\mathbf{l}_{t-k},\mathbf{g}_{t-k})$,
+being $x_{t}^{i}$ part of $\mathbf{s}$. In the same way, $P(x_{t-k}^{i}=0|\mathbf{l}_{t-k},\mathbf{g}_{t-k})$
+is defined as $1-P(\mathbf{s}|\mathbf{l}_{t-k},\mathbf{g}_{t-k})$.
+Last, $P(x_{t}^{i}=1|x_{t-k}^{i}=1)$ and $P(x_{t}^{i}=1|x_{t-k}^{i}=0)$
+are prior probabilities estimated from the training set as follows:
+
+\[
+P(x_{t}^{i}=1|x_{t-k}^{i}=1)=\frac{\#(x_{t}^{i}=1,x_{t-k}^{i}=1)}{\#(x_{t-k}^{i}=1)}
+\]
+
+
+\begin{equation}
+P(x_{t}^{i}=1|x_{t-k}^{i}=0)=\frac{\#(x_{t}^{i}=1,x_{t-k}^{i}=0)}{\#(x_{t-k}^{i}=0)}
+\end{equation}
+
+
+where $\#(x_{t-k}^{i}=1)$ and $\#(x_{t-k}^{i}=0)$ are the number
+of times in which $x_{t-k}^{i}$ belongs or not to a hand region,
+respectively; $\#(x_{t}^{i}=1,x_{t-k}^{i}=1)$ is the number of times
+that two pixels at the same location in frame $t$ and $t-k$ belong
+to a hand part; similary $\#(x_{t}^{i}=1,x_{t-k}^{i}=0)$ is the number
+of times that a pixel in frame $t$ belongs to a hand part and the
+pixel in the same position in frame $t-k$ does not belong to a hand
+region. 
+
+
+\subsubsection{Spatial consistency}
+
+Given pixels elaborated by the previous steps, we want to exploit
+spatial consistency to prune away small and isolated pixel groups
+that are unlikely to be part of hand regions and also aggregate bigger
+connected pixel groups. For every pixel $x$, we extract its posterior
+probability $P(x_{i}^{t})$ and use it as input for the GrabCut algorithm
+\cite{rother2004grabcut}. Each pixel with $P(x_{i}^{t})\geq0.5$
+is marked as foreground, otherwise it's considered as part of background.
+After the segmentation step, we discard all the small isolated regions
+that have an area of less than 5\% of the frame and we keep only the
+three largest connected components.
+
+\section{Experimental results}
+\chapter{Towards ego-vision human-machine interfaces: gesture recognition}
+\section{A distributed network of smart sensors to improve training}
+\section{Support Vector Machines Hidden Markov Models}
+\section{Experimental results}
+\chapter{Conclusion}
+\section{Publications}
+%\input{Chapters/Chapter2} 
+%\input{Chapters/Chapter3}
+%\input{Chapters/Chapter4} 
+%\input{Chapters/Chapter5} 
+%\input{Chapters/Chapter6} 
+%\input{Chapters/Chapter7} 
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+\input{Appendices/AppendixA}
+%\input{Appendices/AppendixB}
+%\input{Appendices/AppendixC}
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\backmatter
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\label{Bibliography}
+
+\lhead{\emph{Bibliography}} % Change the page header to say "Bibliography"
+
+\bibliographystyle{unsrtnat} % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+
+\bibliography{Bibliography} % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+\end{document}  

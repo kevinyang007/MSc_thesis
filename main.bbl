@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Mayol et~al.(2001)Mayol, Tordoff, and Murray]{mayol2001positioning}
+WW~Mayol, B~Tordoff, and DW~Murray.
+\newblock On the positioning of wearable optical devices.
+\newblock Technical report, Technical Report OUEL224101. Oxford University,
+  2001.
+
+\end{thebibliography}
