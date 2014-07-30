@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{31}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -10,5 +10,180 @@ WW~Mayol, B~Tordoff, and DW~Murray.
 \newblock On the positioning of wearable optical devices.
 \newblock Technical report, Technical Report OUEL224101. Oxford University,
   2001.
+
+\bibitem[Khan et~al.(2010)Khan, Hanbury, and Stoettinger]{khan10}
+R.~Khan, A.~Hanbury, and J.~Stoettinger.
+\newblock Skin detection: A random forest approach.
+\newblock In \emph{Proc. of ICIP}, 2010.
+
+\bibitem[Fathi et~al.(2011)Fathi, Ren, and Rehg]{fathi11}
+A.~Fathi, Xiaofeng Ren, and J.M. Rehg.
+\newblock Learning to recognize objects in egocentric activities.
+\newblock In \emph{Proc. of CVPR}, 2011.
+
+\bibitem[Li and Kitani(2013)]{li13}
+C.~Li and K.~M. Kitani.
+\newblock Pixel-level hand detection in ego-centric videos.
+\newblock In \emph{Proc. of CVPR}, 2013.
+
+\bibitem[Bagdanov et~al.(2012)Bagdanov, {Del Bimbo}, Seidenari, and
+  Usai]{bagdanov12}
+Andrew~D. Bagdanov, Alberto {Del Bimbo}, Lorenzo Seidenari, and Lorenzo Usai.
+\newblock Real-time hand status recognition from rgb-d imagery.
+\newblock In \emph{Proc. of International Conference on Pattern Recognition
+  (ICPR)}, 2012.
+
+\bibitem[Breiman(2001)]{leo01}
+Leo Breiman.
+\newblock Random forests.
+\newblock \emph{Machine Learning}, 45\penalty0 (1):\penalty0 5--32, 2001.
+
+\bibitem[Jones and Rehg(1999)]{jones99}
+M.~Jones and J~Rehg.
+\newblock Statistical color models with application to skin detection.
+\newblock In \emph{Proc. of CVPR}, 1999.
+
+\bibitem[Tighe and Lazebnik(2013)]{tighe13}
+Joseph Tighe and Svetlana Lazebnik.
+\newblock Superparsing - scalable nonparametric image parsing with superpixels.
+\newblock \emph{International Journal of Computer Vision}, pages 329--349,
+  2013.
+
+\bibitem[Achanta et~al.(2012)Achanta, Shaji, Smith, Lucchi, Fua, and
+  S{\"u}sstrunk]{achanta12}
+R.~Achanta, A.~Shaji, K.~Smith, A.~Lucchi, P.~Fua, and S.~S{\"u}sstrunk.
+\newblock Slic superpixels compared to state-of-the-art superpixel methods.
+\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions
+  on}, 34\penalty0 (11):\penalty0 2274--2282, 2012.
+
+\bibitem[Ren and Reid(2011)]{YHRengSLIC}
+Carl~Yuheng Ren and Ian Reid.
+\newblock gslic: a real-time implementation of slic superpixel segmentation.
+\newblock Technical report, University of Oxford, Department of Engineering
+  Science, 2011.
+
+\bibitem[Liu et~al.(2008)Liu, Weng, Tseng, Chuang, and Chen]{liu08}
+Ken-Hao Liu, Ming-Fang Weng, Chi-Yao Tseng, Yung-Yu Chuang, and Ming-Syan Chen.
+\newblock Association and temporal rule mining for post-filtering of semantic
+  concept detection in video.
+\newblock \emph{IEEE Transactions on Multimedia}, 10\penalty0 (2):\penalty0
+  240--251, 2008.
+
+\bibitem[Rother et~al.(2004)Rother, Kolmogorov, and Blake]{rother04}
+Carsten Rother, Vladimir Kolmogorov, and Andrew Blake.
+\newblock "grabcut": interactive foreground extraction using iterated graph
+  cuts.
+\newblock \emph{ACM Trans. Graph.}, 23\penalty0 (3):\penalty0 309--314, 2004.
+
+\bibitem[Hayman and Eklundh(2003)]{hayman03}
+E.~Hayman and J.~Eklundh.
+\newblock Statistical background subtraction for a mobile observer.
+\newblock In \emph{Proc. of ICCV}, 2003.
+
+\bibitem[tou()]{tourismintelligence}
+{How the americans will travel 2015}.
+\newblock \url{http://tourism-intelligence.com}.
+
+\bibitem[eco(2014)]{econotravel}
+{Economic Impact of Travel \& Tourism 2014}.
+\newblock World Travel and Tourism Council, 2014.
+
+\bibitem[Kuusik et~al.(2009)Kuusik, Roche, Weis, et~al.]{kuusik2009smartmuseum}
+Alar Kuusik, Sylvain Roche, Fr{\'e}d{\'e}ric Weis, et~al.
+\newblock Smartmuseum: Cultural content recommendation system for mobile users.
+\newblock In \emph{ICCIT'09: Fourth International Conference on Computer
+  Sciences and Convergence Information Technology}, pages 477--482, 2009.
+
+\bibitem[Kuflik et~al.(2011)Kuflik, Stock, Zancanaro, Gorfinkel, Jbara, Kats,
+  Sheidin, and Kashtan]{kuflik2011visitor}
+Tsvi Kuflik, Oliviero Stock, Massimo Zancanaro, Ariel Gorfinkel, Sadek Jbara,
+  Shahar Kats, Julia Sheidin, and Nadav Kashtan.
+\newblock A visitor's guide in an active museum: Presentations, communications,
+  and reflection.
+\newblock \emph{Journal on Computing and Cultural Heritage (JOCCH)}, 3\penalty0
+  (3):\penalty0 11, 2011.
+
+\bibitem[Sparacino(2002)]{sparacino2002museum}
+Flavia Sparacino.
+\newblock The museum wearable: real-time sensor-driven understanding of
+  visitors' interests for personalized visually-augmented museum experiences.
+\newblock In \emph{In Proc. of Museums and the Web}, pages 17--20, 2002.
+
+\bibitem[Kanade and Hebert(2012)]{kanade2012}
+T.~Kanade and M.~Hebert.
+\newblock First-person vision.
+\newblock \emph{Proceedings of the IEEE}, 100\penalty0 (8):\penalty0
+  2442--2453, Aug 2012.
+
+\bibitem[Sanin et~al.(2013)Sanin, Sanderson, Harandi, and
+  Lovell]{sanin2013spatio}
+Andres Sanin, Conrad Sanderson, Mehrtash~T Harandi, and Brian~C Lovell.
+\newblock Spatio-temporal covariance descriptors for action and gesture
+  recognition.
+\newblock In \emph{Proc. of Workshop on Applications of Computer Vision}, 2013.
+
+\bibitem[Lui et~al.(2010)Lui, Beveridge, and Kirby]{lui2010action}
+Yui~Man Lui, J~Ross Beveridge, and Michael Kirby.
+\newblock Action classification on product manifolds.
+\newblock In \emph{Proc. of CVPR}, 2010.
+
+\bibitem[Lui and Beveridge(2011)]{lui2011tangent}
+Yui~Man Lui and J~Ross Beveridge.
+\newblock Tangent bundle for human action recognition.
+\newblock In \emph{In proc. of Automatic Face \& Gesture Recognition and
+  Workshops}, 2011.
+
+\bibitem[Kim and Cipolla(2009)]{kim2009canonical}
+Tae-Kyun Kim and Roberto Cipolla.
+\newblock Canonical correlation analysis of video volume tensors for action
+  categorization and detection.
+\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions
+  on}, 31\penalty0 (8):\penalty0 1415--1428, 2009.
+
+\bibitem[Wang et~al.(2011)Wang, Kl{\"a}ser, Schmid, and
+  Liu]{wang:2011:inria-00583818:1}
+Heng Wang, Alexander Kl{\"a}ser, Cordelia Schmid, and Cheng-Lin Liu.
+\newblock {Action Recognition by Dense Trajectories}.
+\newblock In \emph{Proc. of CVPR}, 2011.
+
+\bibitem[Perronnin et~al.(2010)Perronnin, S{\'a}nchez, and
+  Mensink]{perronnin2010improving}
+Florent Perronnin, Jorge S{\'a}nchez, and Thomas Mensink.
+\newblock Improving the fisher kernel for large-scale image classification.
+\newblock In \emph{Proc. of ECCV}, 2010.
+
+\bibitem[Kim et~al.(2007)Kim, Wong, and Cipolla]{kim2007tensor}
+Tae-Kyun Kim, Kwan-Yee~Kenneth Wong, and Roberto Cipolla.
+\newblock Tensor canonical correlation analysis for action classification.
+\newblock In \emph{Proc. of CVPR}, 2007.
+
+\bibitem[Altun et~al.(2003)Altun, Tsochantaridis, Hofmann,
+  et~al.]{altun2003hidden}
+Yasemin Altun, Ioannis Tsochantaridis, Thomas Hofmann, et~al.
+\newblock Hidden markov support vector machines.
+\newblock In \emph{ICML}, volume~3, pages 3--10, 2003.
+
+\bibitem[Tsochantaridis et~al.(2005)Tsochantaridis, Joachims, Hofmann, Altun,
+  and Singer]{tsochantaridis2005large}
+Ioannis Tsochantaridis, Thorsten Joachims, Thomas Hofmann, Yasemin Altun, and
+  Yoram Singer.
+\newblock Large margin methods for structured and interdependent output
+  variables.
+\newblock \emph{Journal of Machine Learning Research}, 6\penalty0 (9), 2005.
+
+\bibitem[Joachims()]{joachims}
+Thorsten Joachims.
+\newblock {$\text{SVM}^{hmm}$ -- Sequence Tagging with Structural Support
+  Vector Machines}.
+\newblock \url{http://www.cs.cornell.edu/people/tj/svm_light/svm_hmm.html}.
+
+\bibitem[har()]{hardKernel}
+{Odroid-XU developement board by Hardkernel}.
+\newblock \url{http://www.hardkernel.com}.
+
+\bibitem[sam()]{samsungExynos}
+{Samsung Exynos5 5410 ARM SoC}.
+\newblock
+  \url{http://www.samsung.com/global/business/semiconductor/minisite/Exynos/products5octa\_5410.html}.
 
 \end{thebibliography}

@@ -1,7 +1,56 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
 The style file: unsrtnat.bst
 Database file #1: Bibliography.bib
-Warning--I didn't find a database entry for "achanta2012slic"
-Warning--I didn't find a database entry for "khan2010skin"
-Warning--I didn't find a database entry for "rother2004grabcut"
-(There were 3 warnings)
+Repeated entry---line 648 of file Bibliography.bib
+ : @inproceedings{wang:2011:inria-00583818:1
+ :                                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 666 of file Bibliography.bib
+ : @inproceedings{perronnin2010improving
+ :                                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 673 of file Bibliography.bib
+ : @inproceedings{kim2007tensor
+ :                             ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 680 of file Bibliography.bib
+ : @article{kim2009canonical
+ :                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 691 of file Bibliography.bib
+ : @inproceedings{lui2010action
+ :                             ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 698 of file Bibliography.bib
+ : @inproceedings{lui2011tangent
+ :                              ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 705 of file Bibliography.bib
+ : @inproceedings{sanin2013spatio
+ :                               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 789 of file Bibliography.bib
+ : @misc{hardKernel
+ :                 ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 794 of file Bibliography.bib
+ : @misc{samsungExynos
+ :                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 999 of file Bibliography.bib
+ : @inproceedings{wang:2011:inria-00583818:1
+ :                                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1021 of file Bibliography.bib
+ : @incollection{perronnin2010improving
+ :                                     ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1030 of file Bibliography.bib
+ : @inproceedings{kim2007tensor
+ :                             ,
+I'm skipping whatever remains of this entry
+Warning--empty year in tourismintelligence
+Warning--empty year in joachims
+Warning--empty year in hardKernel
+Warning--empty year in samsungExynos
+(There were 12 error messages)

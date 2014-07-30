@@ -1,5 +1,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Performance by incrementally adding new features.\relax }}{10}{table.caption.42}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison considering Illumination Invariance (II), Time Smoothing (TS) and Spatial Consistency (SC).\relax }}{11}{table.caption.44}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Hand segmentation comparison with the state-of-the-art.\relax }}{12}{table.caption.46}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Recognition rates on the Cambridge dataset.\relax }}{18}{table.caption.60}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Gesture recognition accuracy on the Interactive Museum{} dataset with and without hand segmentation.\relax }}{20}{table.caption.70}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

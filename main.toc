@@ -2,24 +2,48 @@
 \contentsline {chapter}{Acknowledgements}{ii}{dummy.1}
 \vspace {1em}
 \contentsline {chapter}{Contents}{iii}{dummy.2}
-\contentsline {chapter}{List of Figures}{iv}{dummy.4}
-\contentsline {chapter}{List of Tables}{v}{dummy.6}
+\contentsline {chapter}{List of Figures}{v}{dummy.4}
+\contentsline {chapter}{List of Tables}{vi}{dummy.6}
 \contentsline {chapter}{\numberline {1}Wearable devices and new human-machine interfaces: an overview}{1}{chapter.8}
 \contentsline {section}{\numberline {1.1}Where to wear an extra eye?}{1}{section.9}
 \contentsline {section}{\numberline {1.2}3D cameras}{1}{section.14}
 \contentsline {section}{\numberline {1.3}In Closing}{1}{section.15}
-\contentsline {chapter}{\numberline {2}Hand segmentation in ego-centric videos}{3}{chapter.16}
-\contentsline {subsubsection}{\numberline {2.0.0.1}Illumination invariance}{3}{subsubsection.17}
-\contentsline {subsubsection}{\numberline {2.0.0.2}Temporal coherence}{4}{subsubsection.19}
-\contentsline {subsubsection}{\numberline {2.0.0.3}Spatial consistency}{5}{subsubsection.22}
-\contentsline {section}{\numberline {2.1}Experimental results}{5}{section.23}
-\contentsline {chapter}{\numberline {3}Towards ego-vision human-machine interfaces: gesture recognition}{6}{chapter.24}
-\contentsline {section}{\numberline {3.1}A distributed network of smart sensors to improve training}{6}{section.25}
-\contentsline {section}{\numberline {3.2}Support Vector Machines Hidden Markov Models}{6}{section.26}
-\contentsline {section}{\numberline {3.3}Experimental results}{6}{section.27}
-\contentsline {chapter}{\numberline {4}Conclusion}{7}{chapter.28}
-\contentsline {section}{\numberline {4.1}Publications}{7}{section.29}
+\contentsline {chapter}{\numberline {2}Computer Vision and Pattern Recognition techniques used in this thesis}{3}{chapter.16}
+\contentsline {section}{\numberline {2.1}Color spaces}{3}{section.17}
+\contentsline {section}{\numberline {2.2}Descriptors}{3}{section.18}
+\contentsline {subsection}{\numberline {2.2.1}Histograms of Oriented Gradient}{3}{subsection.19}
+\contentsline {subsection}{\numberline {2.2.2}Histograms of Optical Flow}{3}{subsection.20}
+\contentsline {subsection}{\numberline {2.2.3}MBH}{3}{subsection.21}
+\contentsline {section}{\numberline {2.3}Classifiers}{3}{section.22}
+\contentsline {subsection}{\numberline {2.3.1}Support Vector Machines}{3}{subsection.23}
+\contentsline {subsection}{\numberline {2.3.2}Structured Support Vector Machines}{3}{subsection.24}
+\contentsline {chapter}{\numberline {3}Hand segmentation in ego-centric videos}{4}{chapter.25}
+\contentsline {section}{\numberline {3.1}Literature overview}{5}{section.26}
+\contentsline {section}{\numberline {3.2}Proposed approach}{6}{section.27}
+\contentsline {subsubsection}{\numberline {3.2.0.1}Illumination invariance}{7}{subsubsection.28}
+\contentsline {subsubsection}{\numberline {3.2.0.2}Temporal smoothing}{7}{subsubsection.30}
+\contentsline {subsubsection}{\numberline {3.2.0.3}Spatial consistency}{8}{subsubsection.33}
+\contentsline {section}{\numberline {3.3}Experimental results}{10}{section.41}
+\contentsline {subsection}{\numberline {3.3.1}Features performance}{11}{subsection.43}
+\contentsline {subsection}{\numberline {3.3.2}Temporal Smoothing and Spatial Consistency}{11}{subsection.45}
+\contentsline {subsection}{\numberline {3.3.3}Comparison to related methods}{12}{subsection.47}
+\contentsline {chapter}{\numberline {4}Towards ego-vision human-machine interfaces: gesture recognition in the cultural heritage scenario}{13}{chapter.48}
+\contentsline {section}{\numberline {4.1}Motivation}{13}{section.49}
+\contentsline {section}{\numberline {4.2}Proposed Method}{15}{section.50}
+\contentsline {subsection}{\numberline {4.2.1}Camera motion removal}{16}{subsection.56}
+\contentsline {subsection}{\numberline {4.2.2}Gesture Description}{17}{subsection.57}
+\contentsline {section}{\numberline {4.3}Experimental Results}{18}{section.59}
+\contentsline {chapter}{\numberline {5}A sequential implementation for the Odroid-XU developer board}{21}{chapter.71}
+\contentsline {section}{\numberline {5.1}Structured Learning}{21}{section.72}
+\contentsline {subsection}{\numberline {5.1.1}Loss Functions}{22}{subsection.75}
+\contentsline {subsection}{\numberline {5.1.2}Structured SVM}{23}{subsection.78}
+\contentsline {subsection}{\numberline {5.1.3}Label Sequence Learning}{23}{subsection.80}
+\contentsline {section}{\numberline {5.2}The Odroid-XU board}{25}{section.88}
+\contentsline {section}{\numberline {5.3}Implementation}{26}{section.91}
+\contentsline {subsection}{\numberline {5.3.1}OpenMP and Neon Intrisics}{27}{subsection.97}
+\contentsline {subsection}{\numberline {5.3.2}OpenCL and GPU optimizations}{28}{subsection.124}
+\contentsline {chapter}{\numberline {6}Conclusion}{30}{chapter.127}
 \vspace {2em}
-\contentsline {chapter}{\numberline {A}Appendix Title Here}{8}{appendix.30}
+\contentsline {chapter}{\numberline {A}Appendix Title Here}{31}{appendix.128}
 \vspace {2em}
-\contentsline {chapter}{Bibliography}{9}{dummy.31}
+\contentsline {chapter}{Bibliography}{32}{dummy.129}
