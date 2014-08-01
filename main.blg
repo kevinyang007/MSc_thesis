@@ -29,14 +29,6 @@ Repeated entry---line 705 of file Bibliography.bib
  : @inproceedings{sanin2013spatio
  :                               ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 789 of file Bibliography.bib
- : @misc{hardKernel
- :                 ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 794 of file Bibliography.bib
- : @misc{samsungExynos
- :                    ,
-I'm skipping whatever remains of this entry
 Repeated entry---line 999 of file Bibliography.bib
  : @inproceedings{wang:2011:inria-00583818:1
  :                                          ,
@@ -51,6 +43,4 @@ Repeated entry---line 1030 of file Bibliography.bib
 I'm skipping whatever remains of this entry
 Warning--empty year in tourismintelligence
 Warning--empty year in joachims
-Warning--empty year in hardKernel
-Warning--empty year in samsungExynos
-(There were 12 error messages)
+(There were 10 error messages)

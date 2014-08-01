@@ -1,4 +1,4 @@
-\begin{thebibliography}{31}
+\begin{thebibliography}{32}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -10,6 +10,23 @@ WW~Mayol, B~Tordoff, and DW~Murray.
 \newblock On the positioning of wearable optical devices.
 \newblock Technical report, Technical Report OUEL224101. Oxford University,
   2001.
+
+\bibitem[Starner et~al.(1998)Starner, Weaver, and Pentland]{starner1998real}
+Thad Starner, Joshua Weaver, and Alex Pentland.
+\newblock Real-time american sign language recognition using desk and wearable
+  computer based video.
+\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions
+  on}, 20\penalty0 (12):\penalty0 1371--1375, 1998.
+
+\bibitem[Schiele and Pentland(1999)]{schiele1999attentional}
+Bernt Schiele and Alex Pentland.
+\newblock Attentional objects for visual context understanding.
+\newblock In \emph{SUBMITTED TO ISWC'99}, 1999.
+
+\bibitem[Cortes and Vapnik(1995)]{cortes1995support}
+Corinna Cortes and Vladimir Vapnik.
+\newblock Support-vector networks.
+\newblock \emph{Machine learning}, 20\penalty0 (3):\penalty0 273--297, 1995.
 
 \bibitem[Khan et~al.(2010)Khan, Hanbury, and Stoettinger]{khan10}
 R.~Khan, A.~Hanbury, and J.~Stoettinger.
@@ -176,14 +193,5 @@ Thorsten Joachims.
 \newblock {$\text{SVM}^{hmm}$ -- Sequence Tagging with Structural Support
   Vector Machines}.
 \newblock \url{http://www.cs.cornell.edu/people/tj/svm_light/svm_hmm.html}.
-
-\bibitem[har()]{hardKernel}
-{Odroid-XU developement board by Hardkernel}.
-\newblock \url{http://www.hardkernel.com}.
-
-\bibitem[sam()]{samsungExynos}
-{Samsung Exynos5 5410 ARM SoC}.
-\newblock
-  \url{http://www.samsung.com/global/business/semiconductor/minisite/Exynos/products5octa\_5410.html}.
 
 \end{thebibliography}

@@ -10,6 +10,24 @@
 Positioning an optical device on the human body is quite a problematic task, as occlusion, motion, social issues as well as criteria related to the purpose of the device must be taken into account.\footnote{\url{http://www.robots.ox.ac.uk/~wmayol/3D/nancy_matlab.html}}. Following the work of Mayol \etal \cite{mayol2001positioning}, in this section we give a detailed overview on the best places where to put a wearable camera.
 
 Cameras used for wearable applications fall into two categories for this discussion; static narrow-view devices and omnidirectional devices. Omnidirectional devices include catadioptric, fish-eye and active systems where either the entire field-of-viewis imaged at low resolution, or in the active case the high-resolution narrow-view sensor moved to any orientation. Narrow-view static cameras can only ever see a small part of the user or their environment, and placement is therefore entirely driven by the task. For wide-angle or omnidirectional sensors placement is less constrained and a range of positions are possible. 
+
+A variety of solutions appear in the literature. In \cite{starner1998real, schiele1999attentional}, hat-mounted cameras have been used to look down at the user’s hands and reaching space, whereas in [9, 13] cameras are strapped to the wearer’s hands themselves. In [10], a hat-mounted camera looks forward, an orientation also used when the camera is attached to a head mounted display [2]. In contrast, [11, 6] uses a camera worn on the chest, in [5] an omnidirectional camera is used above the head, and a wide-angle lens camera mounted at the back in [12] and in previous work [4] we placed a miniature active vision system on the shoulder.
+In a previous paper [4], we identified three frames of reference for measurements that a wearable sensor makes: I relative to the user body (e.g. sensing the manipulative space in front of the user’s chest) II relative to the static world (e.g. sensing the ceiling/
+floor texture to infer user’s location)
+III relative to an independent object (e.g. tracking an interesting
+object)
+This task-oriented classification can help us to understand
+the criteria that should be considered. For working
+in the user frame alone all that is required is a stable view
+of the chosen area — often the handling space, and absolute
+field-of-view may be less important. For sensing the
+outside environment user occlusion is problematic and absolute
+field-of-view is more important. Both occlusion and
+user motion are problems when fixating resolution or processing
+on a particular part of the environment or independently
+moving object.
+
+
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[page=3]{Figures/mayol_etal_ouel224101_cropped.pdf}
