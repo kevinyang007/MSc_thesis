@@ -6,48 +6,111 @@
 
 %----------------------------------------------------------------------------------------
 
-\section{Where to wear an extra eye?}
-Positioning an optical device on the human body is quite a problematic task, as occlusion, motion, social issues as well as criteria related to the purpose of the device must be taken into account.\footnote{\url{http://www.robots.ox.ac.uk/~wmayol/3D/nancy_matlab.html}}. Following the work of Mayol \etal \cite{mayol2001positioning}, in this section we give a detailed overview on the best places where to put a wearable camera.
+\section{Introduction}
+
+Portable head-mounted cameras able to record dynamic high quality first-person videos, have become a common
+item among sportsmen over the last five years. These devices represent the first commercial attempts to record
+experiences from a first-person perspective. This technological trend is a follow-up of the academic results
+obtained in the late 1990s, combined with the growing interest of the people to record their daily activities.
+As a recent survey on first person vision \cite{surveyfpv} recalls, the idea of recording and analyzing videos from first person perspective is not new. To mention some examples:
+In 1998 Mann proposed the WearCam \cite{mann1998wearcam}. Later in 2000, Mayol \etal proposed a necklace device \cite{mayol2002wearable} , and in 2005 Mayol et al. developed an active shoulder mounted camera \cite{mayol2005applying}. In 2006, the Microsoft Research Center started to use the SenseCam for research purposes \cite{hodges2006sensecam}, while Pentland \etal \cite{blum2006insense} developed a wearable data collector system (InSense). Finally, it is important to
+highlight the work of Mann, who, since 1978, has been working on his own family of devices.
+
+Up to date, no consensus has yet been reached in the literature with respect to naming this video perspective.
+\textit{First Person Vision} (FPV) is probabily the most commonly used term, but also \textit{Egocentric Vision}
+has also recently grown in popularity, and will be used in the rest of this thesis. In the awakening of this technological trend, Google announced the Project Glass in 2012. The company started publishing short previews on the Internet demonstrating
+the Glasses FPV recording capabilities. This was coupled by the ability of the device to show relevant information to the user through the head-up display. The main idea of the Project Glass is to use a wearable computer to reduce the time between intention and
+action. In this thesis, we try to move a step forward, and realize a wearable vision device with better computing capacities and thus able to execute complex computer vision algorithms.
+
+\section{On the positioning of the camera}
+One of the first questions to solve in the development of an ego-vision device is where to put the camera. Positioning an optical device on the human body is quite a problematic task, as occlusion, motion, social issues as well as criteria related to the purpose of the device must be taken into account. Following the work of Mayol \etal \cite{mayol2001positioning}, in this section we give a detailed overview on the best places where to put a wearable camera.
 
 Cameras used for wearable applications fall into two categories for this discussion; static narrow-view devices and omnidirectional devices. Omnidirectional devices include catadioptric, fish-eye and active systems where either the entire field-of-viewis imaged at low resolution, or in the active case the high-resolution narrow-view sensor moved to any orientation. Narrow-view static cameras can only ever see a small part of the user or their environment, and placement is therefore entirely driven by the task. For wide-angle or omnidirectional sensors placement is less constrained and a range of positions are possible. 
 
-A variety of solutions appear in the literature. In \cite{starner1998real, schiele1999attentional}, hat-mounted cameras have been used to look down at the user’s hands and reaching space, whereas in [9, 13] cameras are strapped to the wearer’s hands themselves. In [10], a hat-mounted camera looks forward, an orientation also used when the camera is attached to a head mounted display [2]. In contrast, [11, 6] uses a camera worn on the chest, in [5] an omnidirectional camera is used above the head, and a wide-angle lens camera mounted at the back in [12] and in previous work [4] we placed a miniature active vision system on the shoulder.
-In a previous paper [4], we identified three frames of reference for measurements that a wearable sensor makes: I relative to the user body (e.g. sensing the manipulative space in front of the user’s chest) II relative to the static world (e.g. sensing the ceiling/
-floor texture to infer user’s location)
-III relative to an independent object (e.g. tracking an interesting
-object)
-This task-oriented classification can help us to understand
-the criteria that should be considered. For working
-in the user frame alone all that is required is a stable view
-of the chosen area — often the handling space, and absolute
-field-of-view may be less important. For sensing the
-outside environment user occlusion is problematic and absolute
-field-of-view is more important. Both occlusion and
-user motion are problems when fixating resolution or processing
-on a particular part of the environment or independently
-moving object.
+A variety of solutions appear in the literature. In \cite{starner1998real, schiele1999attentional}, hat-mounted cameras have been used to look down at the user’s hands and reaching space, whereas in \cite{kohtake1999infostick} cameras are strapped to the wearer’s hands themselves. In \cite{aoki1999realtime}, a hat-mounted camera looks forward, an orientation also used when the camera is attached to a head mounted display \cite{mann1998wearcam}. In contrast, \cite{starner2000gesture} uses a camera worn on the chest, in \cite{rungsarityotin2000finding} an omnidirectional camera is used above the head, and a wide-angle lens camera mounted at the back in \cite{clarkson1999unsupervised}.
 
+Mayol \etal \cite{mayol2001positioning} identify three frames of reference for measurements that a wearable sensor makes: 
+\begin{enumerate}
+\item relative to the user body (e.g. sensing the manipulative space in front of the user’s chest)
+\item relative to the static world (e.g. sensing the ceiling/floor texture to infer user’s location)
+\item relative to an independent object (e.g. tracking an interesting object)
+\end{enumerate}
+This task-oriented classification can help us to understand the criteria that should be considered. For working in the user frame alone all that is required is a stable view of the chosen area — often the handling space, and absolute field-of-view may be less important. For sensing the outside environment user occlusion is problematic and absolute field-of-view is more important. Both occlusion and
+user motion are problems when fixating resolution or processing on a particular part of the environment or independently moving object.
+
+To simulate and compare positions for optical devices around a human body, we must first simulate the human form. \cite{mayol2001positioning} use a female example from the Human Animation Working Group\footnote{\url{http://www.h-anim.org}}, consisting of about 1000 markers (points) and 1800 polygons arranged into 16 body-segments which can be independently rotated to simulate any natural pose. They have created a software\footnote{freely available at \url{http://www.robots.ox.ac.uk/~wmayol/3D/nancy_matlab.html}} to allow the simulated optical device to be positioned arbitrarily in space around the body, or for faster automatic tests placed a distance above any of the humanoid’s polygons. Such positioning requires determination of the polygon’s outward normal and centroid and positioning of the device a fixed distance along the normal
+based at the centroid. The utility of such a model is that the variables of position and distance above the body-surface can be varied automatically, allowing tests for a range of device heights over the whole body (which would be tedious at best on a real person).
+
+Determination of occlusion in any direction can be made by emitting a ray from the chosen device centre and checking for intersection with any of the component polygons. Only polygons facing the camera need be considered, and refinements to further reduce the number of tests are widely reported in the ray-tracing literature. For visualization it is also useful to consider emitting rays from the device centre as equivalent to a central projection onto a unit sphere. This yields representations such as Figure \ref{fig:Positioning1}, where
+the head is clearly visible to the right with the shoulder below it. The proportion of the sphere surface not occluded gives the absolute field-of-view.
 
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[page=3]{Figures/mayol_etal_ouel224101_cropped.pdf}
-	\caption[An Electron]{An electron (artist's impression).}
-	\label{fig:Electron}
+	\caption{Left: The device is positioned above the centroid of the polygon, a short distance (37.5mm) along the surface normal. Right: The view from such a camera shows the head and shoulder clearly, but the rest of the body is obscured.}
+	\label{fig:Positioning1}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[page=4]{Figures/mayol_etal_ouel224101_cropped.pdf}
-	\caption[An Electron]{An electron (artist's impression).}
+	\caption{The proportion of the view obscured against the distance from the body.}
 	\label{fig:Electron}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[page=5]{Figures/mayol_etal_ouel224101_cropped.pdf}
+		\includegraphics[page=8,width=0.7\linewidth]{Figures/mayol_etal_ouel224101_cropped.pdf}
 	\caption[An Electron]{An electron (artist's impression).}
 	\label{fig:Electron}
 \end{figure}
+
+\section{Wearable devices}
+\subsection{Go-Pro}
+GoPro offers a series of small and high-quality cameras. These cameras can be mounted on various
+body parts or objects such as a helmet, chest and snow board which makes them very flexible. The
+GoPro Hero 1 has a fish-eye lens with a 110 view angle. The view angle has increased to 170 in
+the more recent Hero 2 and 3 cameras. The quality of the video is in HD, with minimal motion
+blur and other artifacts. The quality of the video is much better outdoors, and the video sometimes
+becomes very dark indoors. The main advantage of the GoPro camera is its wide field of view
+and its high quality video. On the other hand, its disadvantage is its bulkiness, and the fact that
+other individuals in the scene become very aware of it. The battery lasts for about 2 hours during
+continuous video capture. The data is recorded on a SD card. A 16GB SD card suffices for storing
+2 hours of HD video. The price of GoPro is around 200\$.
+
+\subsection{Tobii Eye-Tracking Glasses}
+Tobii offers various kinds of eye-tracking products. Most of their devices are static and monitorbased.
+However, they have a few mobile eye-tracking systems as well. The system consists of an
+outward looking camera that captures the scene in front of the user, and an inward looking infrared
+camera that tracks the subject’s right eye. The glasses connect to a pocket size recording device.
+Before or after data collection, the system needs to be calibrated in order to correctly estimate the
+gaze point. Calibration is very intensive and becomes very hard for some subjects. The resolution
+of the video is $640\times480$ and the frame rate is 30 fps. The video quality is low and there exist severe
+motion blur and interlacing effects. On the plus size, the gaze tracking is accurate in comparison
+to the wearable gaze-tracking devices of other companies. The view field of the camera is around
+$600\times400$. The price of Tobii eye-tracking glasses is around 30,000\$.
+
+\subsection{SMI Eye-Tracking Glasses}
+SMI produced a device similar to Tobii’s eye-tracking glasses in January 2012. They have tried to fix some of the issues that exist in the Tobii’s system. In particular, their system is easier to calibrate, records a video in HD, and the glasses are more tolerable on the face. The SMI system has two eye-tracking infrared cameras looking at both eyes which results in an easier calibration in comparison to Tobii’s system. An issue that exists in the SMI glasses is that the video is blurred and dark on the frame boundaries. The price
+of SMI eye-tracking glasses is around 24,000\$.
+
+\subsection{Pivothead Glasses}
+Pivothead has introduced a relatively cheap pair of glasses that have an outward looking camera
+that captures the scene in front of the user. Obviously this is a cheaper system in comparison to
+SMI and Tobii because it doesn’t track the eyes. The video quality is HD and it can capture for an
+hour. The only issue with the pivothead glasses is that the camera’s field of view is very narrow,
+even narrower than that of SMI and Tobii systems. The price of Pivothead glasses is around 300\$.
+They also provide a 100\$ device which can transmit video to a laptop in realtime.
+
+\subsection{Google Glass}
+Google Glass is about to become available for public use. The system records a 720p video and
+takes 5-megapixel images. It can connect to the internet and any bluetooth-capable phone. In
+addition, Glass has a heads up display (HUD) creating an illusion equivalent to viewing a 25-inch
+high definition screen from eight feet away. It has 16 GB of RAM, 12 GB of which are usable for
+apps. Furthermore, it has a microphone, similar to all of the previously mentioned wearable devices.
+
+\subsection{Devices used in this thesis}
+
 
 %----------------------------------------------------------------------------------------
 

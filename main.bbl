@@ -1,9 +1,48 @@
-\begin{thebibliography}{32}
+\begin{thebibliography}{43}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Betancourt et~al.()Betancourt, Morerio, Regazzoni, and
+  Rauterberg]{surveyfpv}
+Alejandro Betancourt, Pietro Morerio, Carlo~S. Regazzoni, and title = "{The
+  Evolution of First Person Vision Methods: A Survey}" url
+  =~{http://arxiv.org/abs/1409.1484} Rauterberg, Matthias".
+
+\bibitem[Mann(1998)]{mann1998wearcam}
+Steve Mann.
+\newblock 'wearcam'(the wearable camera): personal imaging systems for
+  long-term use in wearable tetherless computer-mediated reality and personal
+  photo/videographic memory prosthesis.
+\newblock In \emph{Wearable Computers, 1998. Digest of Papers. Second
+  International Symposium on}, pages 124--131. IEEE, 1998.
+
+\bibitem[Mayol et~al.(2002)Mayol, Tordoff, and Murray]{mayol2002wearable}
+WW~Mayol, BJ~Tordoff, and David~W Murray.
+\newblock Wearable visual robots.
+\newblock \emph{Personal and Ubiquitous Computing}, 6\penalty0 (1):\penalty0
+  37--48, 2002.
+
+\bibitem[Mayol et~al.(2005)Mayol, Davison, Tordoff, and
+  Murray]{mayol2005applying}
+Walterio~W Mayol, Andrew~J Davison, Ben~J Tordoff, and David~W Murray.
+\newblock Applying active vision and slam to wearables.
+\newblock In \emph{Robotics Research}, pages 325--334. Springer, 2005.
+
+\bibitem[Hodges et~al.(2006)Hodges, Williams, Berry, Izadi, Srinivasan, Butler,
+  Smyth, Kapur, and Wood]{hodges2006sensecam}
+Steve Hodges, Lyndsay Williams, Emma Berry, Shahram Izadi, James Srinivasan,
+  Alex Butler, Gavin Smyth, Narinder Kapur, and Ken Wood.
+\newblock Sensecam: A retrospective memory aid.
+\newblock In \emph{UbiComp 2006: Ubiquitous Computing}, pages 177--193.
+  Springer, 2006.
+
+\bibitem[Blum et~al.(2006)Blum, Pentland, and Troster]{blum2006insense}
+Mark Blum, Alex Pentland, and Gerhard Troster.
+\newblock Insense: Interest-based life logging.
+\newblock \emph{IEEE MultiMedia}, 13\penalty0 (4):\penalty0 40--48, 2006.
 
 \bibitem[Mayol et~al.(2001)Mayol, Tordoff, and Murray]{mayol2001positioning}
 WW~Mayol, B~Tordoff, and DW~Murray.
@@ -22,6 +61,41 @@ Thad Starner, Joshua Weaver, and Alex Pentland.
 Bernt Schiele and Alex Pentland.
 \newblock Attentional objects for visual context understanding.
 \newblock In \emph{SUBMITTED TO ISWC'99}, 1999.
+
+\bibitem[Kohtake et~al.(1999)Kohtake, Rekimoto, and
+  Anzai]{kohtake1999infostick}
+Naohiko Kohtake, Jun Rekimoto, and Yuichiro Anzai.
+\newblock Infostick: an interaction device for inter-appliance computing.
+\newblock In \emph{Handheld and ubiquitous computing}, pages 246--258.
+  Springer, 1999.
+
+\bibitem[Aoki et~al.(1999)Aoki, Schiele, and Pentland]{aoki1999realtime}
+Hisashi Aoki, Bernt Schiele, and Alex Pentland.
+\newblock Realtime personal positioning system for a wearable computer.
+\newblock In \emph{Wearable Computers, 1999. Digest of Papers. The Third
+  International Symposium on}, pages 37--43. IEEE, 1999.
+
+\bibitem[Starner et~al.(2000)Starner, Auxier, Ashbrook, and
+  Gandy]{starner2000gesture}
+Thad Starner, Jake Auxier, Daniel Ashbrook, and Maribeth Gandy.
+\newblock The gesture pendant: A self-illuminating, wearable, infrared computer
+  vision system for home automation control and medical monitoring.
+\newblock In \emph{Wearable computers, the fourth international symposium on},
+  pages 87--94. IEEE, 2000.
+
+\bibitem[Rungsarityotin and Starner(2000)]{rungsarityotin2000finding}
+Wasinee Rungsarityotin and Thad~E Starner.
+\newblock Finding location using omnidirectional video on a wearable computing
+  platform.
+\newblock In \emph{Wearable Computers, The Fourth International Symposium on},
+  pages 61--68. IEEE, 2000.
+
+\bibitem[Clarkson and Pentland(1999)]{clarkson1999unsupervised}
+Brian Clarkson and Alex Pentland.
+\newblock Unsupervised clustering of ambulatory audio and video.
+\newblock In \emph{Acoustics, Speech, and Signal Processing, 1999.
+  Proceedings., 1999 IEEE International Conference on}, volume~6, pages
+  3037--3040. IEEE, 1999.
 
 \bibitem[Cortes and Vapnik(1995)]{cortes1995support}
 Corinna Cortes and Vladimir Vapnik.

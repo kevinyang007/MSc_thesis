@@ -41,6 +41,31 @@ Repeated entry---line 1030 of file Bibliography.bib
  : @inproceedings{kim2007tensor
  :                             ,
 I'm skipping whatever remains of this entry
+Repeated entry---line 1150 of file Bibliography.bib
+ : @article{blum2006insense
+ :                         ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 1167 of file Bibliography.bib
+ : 
+ : @inproceedings{kohtake1999infostick,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 1167 of file Bibliography.bib
+ : @inproceedings{kohtake1999infostick
+ :                                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 1185 of file Bibliography.bib
+ : @inproceedings{mann1998wearcam
+ :                               ,
+I'm skipping whatever remains of this entry
+Too many commas in name 4 of "Betancourt, Alejandro and Morerio, Pietro and Regazzoni, Carlo S. and Rauterberg, Matthias", title = "{The Evolution of First Person Vision Methods: A Survey}", url = {http://arxiv.org/abs/1409.1484}" for entry surveyfpv
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 4 of "Betancourt, Alejandro and Morerio, Pietro and Regazzoni, Carlo S. and Rauterberg, Matthias", title = "{The Evolution of First Person Vision Methods: A Survey}", url = {http://arxiv.org/abs/1409.1484}" for entry surveyfpv
+while executing---line 1315 of file unsrtnat.bst
+Warning--empty title in surveyfpv
+Warning--empty journal in surveyfpv
+Warning--empty year in surveyfpv
+Warning--empty year in surveyfpv
 Warning--empty year in tourismintelligence
 Warning--empty year in joachims
-(There were 10 error messages)
+(There were 16 error messages)
