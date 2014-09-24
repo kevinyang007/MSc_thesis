@@ -1,12 +1,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Performance by incrementally adding new features.\relax }}{31}{table.caption.77}
-\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison considering Illumination Invariance (II), Time Smoothing (TS) and Spatial Consistency (SC).\relax }}{32}{table.caption.79}
-\contentsline {table}{\numberline {3.3}{\ignorespaces Hand segmentation comparison with the state-of-the-art.\relax }}{32}{table.caption.81}
+\contentsline {table}{\numberline {3.1}{\ignorespaces Performance by incrementally adding new features.\relax }}{31}{table.caption.82}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison considering Illumination Invariance (II), Time Smoothing (TS) and Spatial Consistency (SC).\relax }}{32}{table.caption.84}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Hand segmentation comparison with the state-of-the-art.\relax }}{32}{table.caption.86}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Recognition rates on the Cambridge dataset.\relax }}{40}{table.caption.95}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Gesture recognition accuracy on the Interactive Museum{} dataset with and without hand segmentation.\relax }}{42}{table.caption.105}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Recognition rates on the Cambridge dataset.\relax }}{40}{table.caption.100}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Gesture recognition accuracy on the Interactive Museum{} dataset with and without hand segmentation.\relax }}{42}{table.caption.110}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

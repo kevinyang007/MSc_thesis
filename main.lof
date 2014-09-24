@@ -3,31 +3,36 @@
 \contentsline {figure}{\numberline {1.2}{\ignorespaces The proportion of the view obscured against the distance from the body.\relax }}{11}{figure.caption.17}
 \contentsline {figure}{\numberline {1.3}{\ignorespaces Amount of motion: arms and legs suffer the most severe motions during walking.\relax }}{11}{figure.caption.18}
 \contentsline {figure}{\numberline {1.4}{\ignorespaces We used Panasonic HX-A10 for collecting the Interactive Museum dataset and the Maramotti dataset.\relax }}{14}{figure.caption.26}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Genius WideCam F100\relax }}{15}{figure.caption.29}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Genius WideCam F100.\relax }}{15}{figure.caption.29}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{15}{figure.caption.29}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{15}{figure.caption.29}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces One of the goals of this thesis: natural interaction with artworks.\relax }}{16}{figure.caption.34}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{16}{figure.caption.34}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{16}{figure.caption.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Comparison before (left image) and after (right image) Temporal smoothing.\relax }}{28}{figure.caption.66}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison before (left image) and after (right image) Spatial Consistency.\relax }}{29}{figure.caption.69}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Our dataset consists of five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.\relax }}{30}{figure.caption.70}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{30}{figure.caption.70}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{30}{figure.caption.70}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{30}{figure.caption.70}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{30}{figure.caption.70}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{30}{figure.caption.70}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Comparison before (left image) and after (right image) Temporal smoothing.\relax }}{28}{figure.caption.71}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison before (left image) and after (right image) Spatial Consistency.\relax }}{29}{figure.caption.74}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Our dataset consists of five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.\relax }}{30}{figure.caption.75}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{30}{figure.caption.75}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{30}{figure.caption.75}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{30}{figure.caption.75}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{30}{figure.caption.75}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{30}{figure.caption.75}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Natural interaction with artworks: visitors can get specific content or share information about the observed artwork through simple gestures. Hand segmentation results are highlighted in red and detected gestures are reported in the bottom part of each frame.\relax }}{37}{figure.caption.86}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Outline of the proposed Gesture Recognition method.\relax }}{37}{figure.caption.90}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Sample gestures from the Interactive Museum{} dataset.\relax }}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\textit {Like} gesture in the \textit {museum} setting}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\textit {Dislike} gesture}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {\textit {Ok} gesture in the \textit {museum} setting, in low light}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {\textit {Point} gesture}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {\textit {Slide right to left} gesture in the \textit {museum} setting, while another visitor walks in}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {\textit {Slide left to right} gesture in the \textit {demo room} setting performed by user 3}}}{41}{figure.caption.96}
-\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {\textit {Take a picture} gesture in the \textit {demo room} setting}}}{41}{figure.caption.96}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Natural interaction with artworks: visitors can get specific content or share information about the observed artwork through simple gestures. Hand segmentation results are highlighted in red and detected gestures are reported in the bottom part of each frame.\relax }}{37}{figure.caption.91}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Outline of the proposed Gesture Recognition method.\relax }}{37}{figure.caption.95}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sample gestures from the Interactive Museum{} dataset.\relax }}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\textit {Like} gesture in the \textit {museum} setting}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\textit {Dislike} gesture}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {\textit {Ok} gesture in the \textit {museum} setting, in low light}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {\textit {Point} gesture}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {\textit {Slide right to left} gesture in the \textit {museum} setting, while another visitor walks in}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {\textit {Slide left to right} gesture in the \textit {demo room} setting performed by user 3}}}{41}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {\textit {Take a picture} gesture in the \textit {demo room} setting}}}{41}{figure.caption.101}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces User interacting with wearable camera.\relax }}{46}{figure.caption.116}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces The Odroid-XU board with battery pack.\relax }}{46}{figure.caption.116}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Hardkernel Odroid-XU block diagram\relax }}{47}{figure.caption.117}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces User interacting with wearable camera.\relax }}{46}{figure.caption.121}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces The Odroid-XU board with battery pack.\relax }}{46}{figure.caption.121}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Hardkernel Odroid-XU block diagram\relax }}{47}{figure.caption.122}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

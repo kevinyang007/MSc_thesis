@@ -1,0 +1,146 @@
+% Chapter 1
+
+\chapter{Computer Vision and Machine Learning techniques used in this thesis}
+
+\lhead{Chapter 2. \emph{Computer Vision and Machine Learning techniques}} % This is for the header on each page - perhaps a shortened title
+
+\section{Color spaces}
+\section{Descriptors}
+\subsection{Histograms of Oriented Gradient}
+\subsection{Histograms of Optical Flow}
+\subsection{MBH}
+\section{Classifiers}
+\subsection{Support Vector Machines}
+Support Vector Machines (SVM) became popular in some years ago for solving problems in classification, regression,
+and novelty detection. An important property of support vector machines is that the
+determination of the model parameters corresponds to a convex optimization problem,
+and so any local solution is also a global optimum.
+
+\subsubsection{The separable case}
+Let's start with the simplest case: linear support vector machines trained on separable data. Label the training data $\{ \mathbf{x}_i, y_i\}$ $i=1, ..., l$, $y_i \in \{-1,1\}$, $\mathbf{x}_i \in \mathbb{R}^d$. Suppose we have some hyperplane which separates the positive from the negative samples. The points $\mathbf{x}$ which lie on the hyperplane satisfy $\mathbf{w} \cdot \mathbf{x} + b = 0$, where $\mathbf{w}$ is normal to the hyperplane, $|b|/\|\mathbf{w}\|$ is the perpendicular distance from the hyperplane to the origin and $\|\mathbf{w}\|$ is the Euclidean norm of $\mathbf{w}$. Let $\mathbf{w} \cdot \mathbf{x} +b = a$ ($\mathbf{w} \cdot \mathbf{x} +b = -a$) be the hyperplane that touches the closest positive (negative) example. Define the \textit{margin} of a separable hyperplane to be $2a / \| \mathbf{w} \|$. For the linearly separable case, the support vector algorithm simply looks for the separating hyperplane with the largest margin. This can be formulated as follows: suppose that all the training data satisfy the following constraints:
+
+\begin{equation}
+\mathbf{w} \cdot \mathbf{x}_i + b \ge +1 \quad \text{if } y_i = +1
+\label{const1}
+\end{equation}
+\begin{equation}
+\mathbf{w} \cdot \mathbf{x}_i + b \le -1 \quad \text{if } y_i = -1
+\label{constr2}
+\end{equation}
+
+We will now switch to a Lagrangian formulation of the problem. There are two reasons
+for doing this. The first is that the constraints will be replaced by constraints on the
+Lagrange multipliers themselves, which will be much easier to handle. The second is that
+in this reformulation of the problem, the training data will only appear (in the actual training
+and test algorithms) in the form of dot products between vectors. This is a crucial property
+which will allow us to generalize the procedure to the nonlinear case.
+
+Thus, we introduce positive Lagrange multipliers $\alpha_i$, $i = 1, ... , l$, one for each of the
+inequality constraints (\ref{ineq-constr}). For constraints of the form $c_i \ge 0$, as in our case, the
+constraint equations are multiplied by positive Lagrange multipliers and subtracted from the objective function, to form the Lagrangian. For equality constraints, the Lagrange multipliers are unconstrained. This gives Lagrangian:
+\begin{equation}
+L_p = \frac{1}{2} \| \mathbf{w} \|^2 - \sum_{i=1}^l \alpha_i y_i (\mathbf{x}_i \cdot \mathbf{w} + b) + \sum_{i=1}^l \alpha_i
+\label{Lp}
+\end{equation}
+
+We must now minimize $L_p$ with respect to $\mathbf{w}$, $b$, and simultaneously require that the
+derivatives of $L_p$ with respect to all the $\alpha_i$ vanish, all subject to the constraints $\alpha_i \ge 0$. Now this is a convex quadratic programming
+problem, and those points which satisfy the
+constraints also form a convex set. Requiring that the gradient of $L_p$ with respect to $\mathbf{w}$ and $b$ vanish give the conditions:
+\begin{equation}
+\frac{\partial L_p}{\partial \mathbf{w}} = 0 \Longleftrightarrow \mathbf{w} = \sum_{i=1}^l \alpha_i y_i \mathbf{x}_i
+\label{14}
+\end{equation}
+
+\begin{equation}
+\frac{\partial L_p}{\partial b} = 0 \Longleftrightarrow \sum_{i=1}^l \alpha_i y_i =0
+\label{15}
+\end{equation}
+
+We can substitute these equalities into (\ref{Lp}) to give:
+\begin{equation}
+L_d=  \sum_{i} \alpha_i - \frac{1}{2} \sum_{i,j} \alpha_i\alpha_j y_iy_j \mathbf{x}_i \cdot \mathbf{x}_j
+\end{equation}
+Support vector training (for the separable, linear case) therefore amounts to maximizing
+$L_d$ with respect to the $\alpha_i$, subject to constraints (\ref{15}) and positivity of the $\alpha_i$, with solution
+given by (\ref{14}). Notice that there is a Lagrange multiplier $\alpha_i$ for every training point. In
+the solution, those points for which $\alpha_i > 0$ are called \textit{support vectors}.
+
+\subsection{Non-separable case}
+Since not always the training data is linearly separable, we would like to relax the constraints (\ref{const1}) and (\ref{constr2}), but only when necessary, that is, we would like to introduce a further cost for
+doing so. This can be done by introducing positive slack variables $\epsilon_i$, $i = 1, ... , l$ in the
+constraints \cite{cortes1995support}, which then become:
+
+\begin{equation}
+\mathbf{w} \cdot \mathbf{x}_i + b \ge +1 \quad \text{if } y_i = +1 - \epsilon_i
+\label{const1b}
+\end{equation}
+\begin{equation}
+\mathbf{w} \cdot \mathbf{x}_i + b \le -1 \quad \text{if } y_i = -1 + \epsilon_i
+\label{constr2b}
+\end{equation}
+
+Thus, for an error to occur, the corresponding $\epsilon_i$ must exceed unity. Combining the two inequalities, and adding an extra cost for errors to the objective function, we can formulate the problem of margin maximization as:
+\begin{equation}
+\min_{\mathbf{w},b} \mathbf{w}\cdot\mathbf{w} + C \sum_{i=1}^l \epsilon_i \quad \text{s.t.  }
+y_i(\mathbf{w} \cdot \mathbf{x}_i + b)-1 + \epsilon_i \ge 0
+\label{ineq-constr}
+\end{equation}
+where $C$ is a parameter to be chosen by the user, a larger $C$ corresponding to assigning
+a higher penalty to error.
+
+\subsection{Structured Learning and Structured SVM}
+Structured learning deals with the general problem of learning a mapping
+from input vectors or patterns $\mathbf{x}\in\mathcal{X}$ to discrete
+response variables $\mathbf{y}\in\mathcal{Y}$, based on a training
+sample of input-output pairs $(\mathbf{x}_{1},\mathbf{y}_{1}),\ldots,(\mathbf{x}_{n},\mathbf{y}_{n})\in\mathcal{X}\times\mathcal{Y}$
+drawn from some fixed but unknown probability distribution. Unlike
+multiclass classification, where the output space consists of an arbitrary
+finite set of labels or class identifiers, structured classification
+considers the case where the elements of $\mathcal{Y}$ are structured
+objects such as sequences, strings, trees, or graphs. 
+
+We are interested in learning functions $f:\mathcal{X}\rightarrow\mathit{\mathcal{Y}}$
+between the input space and arbitrary discrete output spaces, based
+on a training sample of input-output pairs, and the approach we pursue
+is to learn a discriminant function $F:\mathcal{X}\times\mathit{\mathcal{Y}\rightarrow\mathbb{R}}$
+over input-output pairs from which we can derive a prediction by maximizing
+$F$ over the response variable for a specific given input $\mathbf{x}$. Hence, the general form of our hypotheses $f$ is
+
+\begin{equation}
+f(\mathbf{x},\mathbf{y}) =\argmax_{\mathbf{y} \in \mathcal{Y}} F(\mathbf{x},\mathbf{y};\mathbf{w})
+\end{equation}
+
+where $\mathbf{w}$ denotes a parameter vector. $F$ can be thought as a compatibility function that measures how compatible pairs $(\mathbf{x},\mathbf{y})$ are. We can assume $F$ to be linear in some combined feature representation of input and outputs $\Phi(\mathbf{x},\mathbf{y})$:
+
+\begin{equation}
+F(\mathbf{x},\mathbf{y};\mathbf{w}) = \langle \mathbf{w}, \Phi(\mathbf{x},\mathbf{y}) \rangle
+\end{equation}
+
+where the specific form of $\Phi(\mathbf{x},\mathbf{y})$ depends on the nature of the problem.
+
+\subsection{Loss Functions}
+
+The standard zero-one loss function typically used in classification is not appropriate for most kinds of structured responses. In order to quantify the accuracy of a prediction, arbitrary loss functions $\Delta:\mathcal{Y}\times\mathcal{Y}\rightarrow\mathbb{R}$ are used. Here $\Delta(\mathbf{y},\mathbf{y'})$ quantifies the loss associated with a prediction $\mathbf{y'}$ if the true output value is $\mathbf{y}$. Usually the loss function is zero diagonal, with $\Delta(\mathbf{y},\mathbf{y}) = 0$ and $\Delta(\mathbf{y},\mathbf{y'}) > 0$ for $\mathbf{y} \neq \mathbf{y'}$.
+
+If we assume that input-output pairs $(\mathbf{x},\mathbf{y})$ are generated according to some fixed distribution $P(\mathbf{x},\mathbf{y})$, we could describe the goal of supervised learning as to find a function $f$ that minimizes the following risk
+
+\begin{equation}
+\mathcal{R}^\Delta_P(f) = \int_{\mathcal{X} \times \mathcal{Y}} \Delta(\mathbf{y},f(\mathbf{x})) dP(\mathbf{x},\mathbf{y})
+\end{equation}
+
+but since $P$ is unknown, and we only have a finite training set of pairs $S = \{ (\mathbf{x}_i,\mathbf{y}_i) \in \mathcal{X}\times\mathcal{Y} : i=1,...,n\}$, we can describe the performance of a function $f$ on the training set $S$ by the empirical risk,
+
+\begin{equation}
+\mathcal{R}^\Delta_S(f) = \frac{1}{n} \sum_{i=1}^n \Delta(\mathbf{y}_i,f(\mathbf{x_i}))
+\end{equation}
+
+\subsection{Structured SVM}
+We now consider the generalization of support vector machine learning over structured inputs. As in the one class non-structured case, to allow errors in the training set slack variable are introduced. Furthermore, to be able to use arbitrary loss function, we could re-scale the margin. The primal problem thus would become:
+\begin{eqnarray} \label{eq:svm}
+\min_{\mathbf{w},\mathbf{\xi}} \frac{1}{2} \lVert \mathbf{w} \rVert^2 + \frac{C}{n} \sum_{i=1}^n \xi_i \nonumber \\
+\text{s.t.} \forall i, \forall \mathbf{y} \in \mathcal{Y}-\{\mathbf{y}_i\}: \nonumber \\ 
+\langle \mathbf{w},\Psi(\mathbf{x}_i,\mathbf{y}_i)-\Psi(\mathbf{x}_i,\mathbf{y})\rangle \geq \Delta(\mathbf{y}_i,\mathbf{y})-\xi_i
+\end{eqnarray}
+
+However, also slack re-scaling can be used. Furthermore mn-slack and 1-slack versions have been proposed.

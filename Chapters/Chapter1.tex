@@ -135,12 +135,14 @@ The actual lens (F2.5 bright lens, 1/4.1-inch BSI Sensor) part sports a two-foot
 \subsection{Genius WideCam F100}
 The Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?xItem=53214&ctNode=161}} is a wide angle HD camera that we used in some of our tests, and is the camera mounted on our wearable vision device. It can record 1080p frames at up to 30 fps and features ultra wide angle lens (up to 120 degrees) and built-in microphones (see figure \ref{fig:wide-camera}).
 
-\begin{figure}[t!]
+\begin{figure*}[tb]
 \centering
-\includegraphics[width=0.4\linewidth]{Figures/WideCam_F100_Angle.jpg}
-\caption{Genius WideCam F100}
+\subfigure[]{\includegraphics[height=100px]{./Figures/WideCam_F100_Angle.jpg}}
+\subfigure[]{\includegraphics[height=100px]{./Figures/wide_camera.jpg}}
+\caption{Genius WideCam F100.}
 \label{fig:wide-camera}
-\end{figure}
+\end{figure*}
+
 
 %----------------------------------------------------------------------------------------
 \section{Previous work in Egocentric Vision}
@@ -157,17 +159,19 @@ In this chapter, we describe the related work to each of these topics.
 
 %----------------------------------------------------------------------------------------
 \section{About this thesis: gestures}
-As we said before, the main aim of this thesis, from the hardware point of view, is to develop a wearable vision device capable of executing intensive computer vision algorithms. From the software point of view, we would like to build a new human-computer interface based on gestures.
+As we said before, the main aim of this thesis, from the hardware point of view, is to develop a wearable vision device capable of executing intensive computer vision algorithms. From the software point of view, we would like to build a new human-computer interface based on gestures: gestures are used to control a wearable vision device that lets the user interact with artworks (Figure \ref{fig:interaction}).
 
-Gestures are expressive, meaningful body motions involving
-physical movements of the fingers, hands, arms, head, face, or
-body with the intent of conveying meaningful information
-or interacting with the environment. They constitute one interesting
-small subspace of possible human motion. A gesture
-may also be perceived by the environment as a compression
-technique for the information to be transmitted elsewhere and
-subsequently reconstructed by the receiver. Gesture recognition
-has wide-ranging applications such as the following:
+\begin{figure*}[tb]
+\centering
+\subfigure[]{\includegraphics[height=100px]{./Figures/egovision_duomo_modena.jpg}}
+\subfigure[]{\includegraphics[height=100px]{./Figures/egovision_duomo_modena_1.jpg}}
+\caption{One of the goals of this thesis: natural interaction with artworks.}
+\label{fig:interaction}
+\end{figure*}
+
+Gestures are expressive, meaningful body motions involving physical movements of the fingers, hands, arms, head, face, or
+body with the intent of conveying meaningful information or interacting with the environment. They constitute one interesting
+small subspace of possible human motion. A gesture may also be perceived by the environment as a compression technique for the information to be transmitted elsewhere and subsequently reconstructed by the receiver. Gesture recognition has wide-ranging applications such as the following:
 \begin{itemize}
 \item developing aids for the hearing impaired;
 \item  enabling very young children to interact with computers;
@@ -175,7 +179,6 @@ has wide-ranging applications such as the following:
 \item recognizing sign language;
 \item medically monitoring patients’ emotional states or stress
 levels;
-\item lie detection;
 \item navigating and/or manipulating in virtual environments;
 \item communicating in video conferencing;
 \item distance learning/tele-teaching assistance;
@@ -201,8 +204,7 @@ Often one needs to specify the start and end points of a
 gesture in terms of the frames of movement, both in time and
 in space. Sometimes a gesture is also affected by the context of
 preceding as well as following gestures. Moreover, gestures are
-often language- and culture-specific. They can broadly be of the
-following types:
+often language- and culture-specific.
 
 %----------------------------------------------------------------------------------------
 
