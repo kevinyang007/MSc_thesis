@@ -2,7 +2,7 @@
 
 \chapter{A sequential implementation for the Odroid-XU developer board}
 
-\lhead{Chapter 1. \emph{A sequential implementation}} % This is for the header on each page - perhaps a shortened title
+\lhead{Chapter 5. \emph{A sequential implementation}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
 Finally, we turn our attention to define and implement a sequential version of our gesture recognition approach that can run in real-time on an embedded device and which could be suitable for real-world application. To this aim, we modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take into account time, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we exploit several optimization techniques.
@@ -95,14 +95,8 @@ Big.LITTLE is a heterogeneous computing architecture developed by ARM that coupl
 
 In the Samsung Exynos 5 there is only one way for the different processor cores to be arranged in a big.LITTLE design: the \textit{clustered model} approach. With this approach the operating system scheduler can only see one of the two processor clusters, when the load on one cluster hits a certain point, the system transitions to the other cluster. All relevant data is passed through the common L2 cache, the first core cluster is powered off and the other one is activated. A Cache Coherent Interconnect (CCI) is used.
 
-Our capturing device is the Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?xItem=53214&ctNode=161}}, which can record 1080p frames at up to 30 fps and features ultra wide angle lens (up to 120 degrees) and built-in microphones (see figure \ref{wide-camera}).
 
-\begin{figure}[t!]
-\centering
-\includegraphics[width=0.4\linewidth]{Figures/WideCam_F100_Angle.jpg}
-\caption{Genius WideCam F100}
-\label{wide-camera}
-\end{figure}
+
 
 \begin{figure}[t!]
 \centering

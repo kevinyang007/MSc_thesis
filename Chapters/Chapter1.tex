@@ -1,6 +1,6 @@
 % Chapter 1
 
-\chapter{Wearable devices and new human-machine interfaces: an overview}
+\chapter{Egocentric Vision and Wearable devices: an overview}
 
 \lhead{Chapter 1. \emph{Wearable devices and new human-machine interfaces}} % This is for the header on each page - perhaps a shortened title
 
@@ -8,22 +8,22 @@
 
 \section{Introduction}
 
-Portable head-mounted cameras able to record dynamic high quality first-person videos, have become a common
+Portable head-mounted cameras, able to record dynamic high quality first-person videos, have become a common
 item among sportsmen over the last five years. These devices represent the first commercial attempts to record
 experiences from a first-person perspective. This technological trend is a follow-up of the academic results
 obtained in the late 1990s, combined with the growing interest of the people to record their daily activities.
 As a recent survey on first person vision \cite{surveyfpv} recalls, the idea of recording and analyzing videos from first person perspective is not new. To mention some examples:
 In 1998 Mann proposed the WearCam \cite{mann1998wearcam}. Later in 2000, Mayol \etal proposed a necklace device \cite{mayol2002wearable} , and in 2005 Mayol et al. developed an active shoulder mounted camera \cite{mayol2005applying}. In 2006, the Microsoft Research Center started to use the SenseCam for research purposes \cite{hodges2006sensecam}, while Pentland \etal \cite{blum2006insense} developed a wearable data collector system (InSense). Finally, it is important to
-highlight the work of Mann, who, since 1978, has been working on his own family of devices.
+highlight the work of Mann, who, since 1978, has been working on his own family of devices. 
 
 Up to date, no consensus has yet been reached in the literature with respect to naming this video perspective.
 \textit{First Person Vision} (FPV) is probabily the most commonly used term, but also \textit{Egocentric Vision}
-has also recently grown in popularity, and will be used in the rest of this thesis. In the awakening of this technological trend, Google announced the Project Glass in 2012. The company started publishing short previews on the Internet demonstrating
+has also recently grown in popularity, and will be used in the rest of this thesis.  In the awakening of this technological trend, Google announced the Project Glass in 2012. The company started publishing short previews on the Internet demonstrating
 the Glasses FPV recording capabilities. This was coupled by the ability of the device to show relevant information to the user through the head-up display. The main idea of the Project Glass is to use a wearable computer to reduce the time between intention and
 action. In this thesis, we try to move a step forward, and realize a wearable vision device with better computing capacities and thus able to execute complex computer vision algorithms.
 
 \section{On the positioning of the camera}
-One of the first questions to solve in the development of an ego-vision device is where to put the camera. Positioning an optical device on the human body is quite a problematic task, as occlusion, motion, social issues as well as criteria related to the purpose of the device must be taken into account. Following the work of Mayol \etal \cite{mayol2001positioning}, in this section we give a detailed overview on the best places where to put a wearable camera.
+The ego-centric approach consists in equipping the users with wearable sensors that observe their activities: these devices see what the user sees and look where the user is looking. One of the first questions to solve, of course, is where to put the camera. Positioning an optical device on the human body is quite a problematic task, as occlusion, motion, social issues as well as criteria related to the purpose of the device must be taken into account. Following the work of Mayol \etal \cite{mayol2001positioning}, in this section we give a detailed overview on the best places where to put a wearable camera.
 
 Cameras used for wearable applications fall into two categories for this discussion; static narrow-view devices and omnidirectional devices. Omnidirectional devices include catadioptric, fish-eye and active systems where either the entire field-of-viewis imaged at low resolution, or in the active case the high-resolution narrow-view sensor moved to any orientation. Narrow-view static cameras can only ever see a small part of the user or their environment, and placement is therefore entirely driven by the task. For wide-angle or omnidirectional sensors placement is less constrained and a range of positions are possible. 
 
@@ -38,8 +38,7 @@ Mayol \etal \cite{mayol2001positioning} identify three frames of reference for m
 This task-oriented classification can help us to understand the criteria that should be considered. For working in the user frame alone all that is required is a stable view of the chosen area — often the handling space, and absolute field-of-view may be less important. For sensing the outside environment user occlusion is problematic and absolute field-of-view is more important. Both occlusion and
 user motion are problems when fixating resolution or processing on a particular part of the environment or independently moving object.
 
-To simulate and compare positions for optical devices around a human body, we must first simulate the human form. \cite{mayol2001positioning} use a female example from the Human Animation Working Group\footnote{\url{http://www.h-anim.org}}, consisting of about 1000 markers (points) and 1800 polygons arranged into 16 body-segments which can be independently rotated to simulate any natural pose. They have created a software\footnote{freely available at \url{http://www.robots.ox.ac.uk/~wmayol/3D/nancy_matlab.html}} to allow the simulated optical device to be positioned arbitrarily in space around the body, or for faster automatic tests placed a distance above any of the humanoid’s polygons. Such positioning requires determination of the polygon’s outward normal and centroid and positioning of the device a fixed distance along the normal
-based at the centroid. The utility of such a model is that the variables of position and distance above the body-surface can be varied automatically, allowing tests for a range of device heights over the whole body (which would be tedious at best on a real person).
+To simulate and compare positions for optical devices around a human body, we must first simulate the human form: \cite{mayol2001positioning} use a female example from the Human Animation Working Group\footnote{\url{http://www.h-anim.org}}, consisting of about 1000 markers (points) and 1800 polygons arranged into 16 body-segments which can be independently rotated to simulate any natural pose. They have created a software\footnote{freely available at \url{http://www.robots.ox.ac.uk/~wmayol/3D/nancy_matlab.html}} to allow the simulated optical device to be positioned arbitrarily in space around the body, or for faster automatic tests placed a distance above any of the humanoid’s polygons. The utility of such a model is that the variables of position and distance above the body-surface can be varied automatically, allowing tests for a range of device heights over the whole body (which would be tedious at best on a real person).
 
 Determination of occlusion in any direction can be made by emitting a ray from the chosen device centre and checking for intersection with any of the component polygons. Only polygons facing the camera need be considered, and refinements to further reduce the number of tests are widely reported in the ray-tracing literature. For visualization it is also useful to consider emitting rays from the device centre as equivalent to a central projection onto a unit sphere. This yields representations such as Figure \ref{fig:Positioning1}, where
 the head is clearly visible to the right with the shoulder below it. The proportion of the sphere surface not occluded gives the absolute field-of-view.
@@ -51,21 +50,32 @@ the head is clearly visible to the right with the shoulder below it. The proport
 	\label{fig:Positioning1}
 \end{figure}
 
+In terms of absolute field of view, the head, the position of choice for many researchers (and nature), is favourable, as are the
+shoulders. This comes as no surprise: however it is important to note which alternative placements are favorable if these locations can not be used (e.g. for social reasons). A further consideration is that raising the sensor away from the body might reduce the occlusion. Figure \ref{fig:Position2} shows the amount of occluision in some of the favoured positions and varies the sensor height from resting on the surface (height=0mm) to far above (height=150mm). At all of the chosen positions the occlusion reduces as the height is increased, but the most significant gains are made for the head-mounted positions and shoulder area. Whichever position is chosen, the field of view is always significantly improved if the sensor can be raised a few centimeters from the surface. However, increases beyond 50mm make no significant improvement in the field of view for this model.
+
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[page=4]{Figures/mayol_etal_ouel224101_cropped.pdf}
 	\caption{The proportion of the view obscured against the distance from the body.}
-	\label{fig:Electron}
+	\label{fig:Position2}
 \end{figure}
+
+The amount of usermotion must also be taken into account. The type of motion that may be encountered can vary enormously and
+may be task dependent. With an articulated model it is possible to analyze any motion for which the joint angle evolutions over time are known. In figure \ref{fig:Position3}, we show the amount of motion . The arms and legs suffer the highest
+motions, with most of the torso and head relatively still.
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[page=8,width=0.7\linewidth]{Figures/mayol_etal_ouel224101_cropped.pdf}
-	\caption[An Electron]{An electron (artist's impression).}
-	\label{fig:Electron}
+		\includegraphics[page=8,width=0.4\linewidth]{Figures/mayol_etal_ouel224101_cropped.pdf}
+	\caption{Amount of motion: arms and legs suffer the most severe motions during walking.}
+	\label{fig:Position3}
 \end{figure}
 
+Now, having considered and evaluated occlusion, motion, and distance, it is clear that the best places to put a wearable camera, with respect to these parameters, are head and shoulders. Of course, an head mounted camera will suffer a bigger motion, but can reveal attentional cues, and it is thus the best choice for action and activity recognition. Shoulder mounted cameras, on the other hand, are less invasive, and are still a good choice for social interaction analysis and human-machine interfaces. In this thesis we will explore both options.
+
 \section{Wearable devices}
+The term \textit{wearable device} refers to electronic technologies or computer that are incorporated into items of clothing and accesories which can be worn on the body. In our case, we are mainly interested in developing wearable \textit{vision} devices, i.e. wearable devices capable to see and process video data. In this section, we will provide a brief description for some of these devices and our experience in using a few of them.
+
 \subsection{Go-Pro}
 GoPro offers a series of small and high-quality cameras. These cameras can be mounted on various
 body parts or objects such as a helmet, chest and snow board which makes them very flexible. The
@@ -109,12 +119,46 @@ addition, Glass has a heads up display (HUD) creating an illusion equivalent to 
 high definition screen from eight feet away. It has 16 GB of RAM, 12 GB of which are usable for
 apps. Furthermore, it has a microphone, similar to all of the previously mentioned wearable devices.
 
-\subsection{Devices used in this thesis}
+\subsection{Panasonic HX-A10}
+The Panasonic HX-A10, rather than relying on mounts and accessories, is equipped with an ''earhoo'' feature and a remote processing unit, which allows users to attach the camera to their head right out of the box, and no helmet is required. The device itself records at $1920\times1080$ video at 60 fps, $1280\times 720$ at 120 fps, and $640\times360$ at 240 fps for slow shots. It has Wi-Fi and can setup a live stream; and battery life for over two hours of filming on a single charge.
+
+The actual lens (F2.5 bright lens, 1/4.1-inch BSI Sensor) part sports a two-foot cable and only weighs in at 4 ounces. It also communicates with a smartphone or tablet while watching in live view. We used the Panasonic HX-A10 to record two datasets, the Interactive Museum dataset and the Maramotti dataset, taken into the Maramotti Collection (Figure \ref{fig:Panasonic}). The lens helps to capture a wide field of view, which is necessary for observing first-person’s hands during daily activities. The fish-eye distortion, however, creates some challenges for using the data.
+
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.4\linewidth]{Figures/lore_maramotti.jpg}
+	\caption{We used Panasonic HX-A10 for collecting the Interactive Museum dataset and the Maramotti dataset.}
+	\label{fig:Panasonic}
+\end{figure}
+
+\subsection{Genius WideCam F100}
+The Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?xItem=53214&ctNode=161}} is a wide angle HD camera that we used in some of our tests, and is the camera mounted on our wearable vision device. It can record 1080p frames at up to 30 fps and features ultra wide angle lens (up to 120 degrees) and built-in microphones (see figure \ref{fig:wide-camera}).
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.4\linewidth]{Figures/WideCam_F100_Angle.jpg}
+\caption{Genius WideCam F100}
+\label{fig:wide-camera}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+\section{Previous work in Egocentric Vision}
+We now discuss the relationship between this work with other areas of related work. Egocentric vision is an emerging area in computer vision. Every year around ten papers addressing this topic appear in top vision conferences (CVPR, ICCV and ECCV). It is possible to categorize these papers into roughly three main groups:
+\begin{itemize}
+\item Recognition of Activities
+\item Gaze in Egocentric Vision
+\item Day-long Video Summarization
+\end{itemize}
+
+In this chapter, we describe the related work to each of these topics.
+
 
 
 %----------------------------------------------------------------------------------------
+\section{About this thesis: gestures}
+As we said before, the main aim of this thesis, from the hardware point of view, is to develop a wearable vision device capable of executing intensive computer vision algorithms. From the software point of view, we would like to build a new human-computer interface based on gestures.
 
-\section{Gestures}
 Gestures are expressive, meaningful body motions involving
 physical movements of the fingers, hands, arms, head, face, or
 body with the intent of conveying meaningful information

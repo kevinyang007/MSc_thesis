@@ -7,9 +7,10 @@
 
 \bibitem[Betancourt et~al.()Betancourt, Morerio, Regazzoni, and
   Rauterberg]{surveyfpv}
-Alejandro Betancourt, Pietro Morerio, Carlo~S. Regazzoni, and title = "{The
-  Evolution of First Person Vision Methods: A Survey}" url
-  =~{http://arxiv.org/abs/1409.1484} Rauterberg, Matthias".
+Alejandro Betancourt, Pietro Morerio, Carlo~S. Regazzoni, and Matthias
+  Rauterberg.
+\newblock The evolution of first person vision methods: A survey.
+\newblock URL \url{http://arxiv.org/abs/1409.1484}.
 
 \bibitem[Mann(1998)]{mann1998wearcam}
 Steve Mann.

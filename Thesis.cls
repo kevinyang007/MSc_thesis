@@ -75,9 +75,9 @@
 %	MARGINS
 %----------------------------------------------------------------------------------------
 \setmarginsrb  { 1.5in}  % left margin
-                        { 0.6in}  % top margin
-                        { 1.0in}  % right margin
-                        { 0.8in}  % bottom margin
+                        { 1.3in}  % top margin
+                        { 1.2in}  % right margin
+                        { 1.0in}  % bottom margin
                         {  20pt}  % head height
                         {0.25in}  % head sep
                         {   9pt}  % foot height
