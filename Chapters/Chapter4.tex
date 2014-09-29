@@ -7,36 +7,6 @@
 %----------------------------------------------------------------------------------------
 Finally, we turn our attention to define and implement a sequential version of our gesture recognition approach that can run in real-time on an embedded device and which could be suitable for real-world application. To this aim, we modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take into account time, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we exploit several optimization techniques.
 
-\subsection{Label Sequence Learning}
-\label{svmhmm}
-A special case of the general scenario of Structured learning is the problem of label sequence learning, or sequence annotation. Here the goal is to predict a label sequence $\mathbf{y} = (y^1,...,y^T)$ for a given observation sequence $\mathbf{x} = (\mathbf{x}^1,...,\mathbf{x}^T)$. If we assume that all sequences are of the same length $T$ and that $\mathbf{\Sigma}$ is the set of possible labels for each individual variable $y^t$, hence each sequence of labels is considered to a class of its own, resulting in a multiclass classification problem with $|\mathbf{\Sigma}|^T$ different classes. To model label sequence learning in this manner would of course not be very useful, if one were to apply standard multiclass classification methods.
-
-Inspired by hidden Markov models (HMM) interactions, Altun \etal \cite{altun2003hidden} propose to define $\Psi$ to include interactions between input features and labels via multiple copies of the input features as well as features that model interactions between nearby label variables. Before modeling the discriminant function $F$, we need to define the canonical binary representation of labels $\mathbf{y} \in \mathcal{Y}$ by unit vectors
-
-\begin{equation}
-\Lambda^c(\mathbf{y}) \equiv (\delta(\mathbf{y}_1,\mathbf{y}),\delta(\mathbf{y}_2,\mathbf{y}),...,\delta(\mathbf{y}_K,\mathbf{y}))' \in \{0,1\}^K
-\end{equation}
-
-so that $\langle \Lambda^c(\mathbf{y}),\Lambda^c(\mathbf{y}')\rangle =\delta(\mathbf{y},\mathbf{y}')$. Furthermore, we define the $\otimes$-operation in the following way:
-
-\begin{equation}
-\otimes:\mathbb{R}^D \times \mathbb{R}^K \rightarrow \mathbb{R}^{D\cdot K},\; (\mathbf{a}\otimes\mathbf{b})_{i+(j-1)D} \equiv a_i \cdot b_j
-\end{equation}
-
-Now we can write the discriminant function used in \cite{tsochantaridis2005large}:
-
-\begin{eqnarray}
-F(\mathbf{x},\mathbf{y};\mathbf{w}) = & \langle \mathbf{w}_a,\sum_{t=1}^T \Phi(\mathbf{x}^t) \otimes \Lambda^c(y^t) \rangle \nonumber \\
- & +\eta \langle \mathbf{w}_b,\sum_{t=1}^{T-1}  \Lambda^c(y^{t}) \otimes \Lambda^c(y^{t+1}) \rangle
-\end{eqnarray}
-
-where $\mathbf{w} = (\mathbf{w}_a',\mathbf{w}_b')'$ and $\eta \geq 0$ is a scaling factor which balances the two types of contribution. Of course, in this case $\Psi(\mathbf{x},\mathbf{y})$ is
-\begin{equation}
-\Psi(\mathbf{x},\mathbf{y}) = \left( \begin{array}{cc} \sum_{t=1}^T \Phi(\mathbf{x}^t) \otimes \Lambda^c(y^t) \\ \eta\sum_{t=1}^{T-1}  \Lambda^c(y^{t}) \otimes \Lambda^c(y^{t+1}) \end{array} \right)
-\end{equation}
-
-There are at least three ways of extending the given discriminant function. First of all, one can extract features not just from $\mathbf{x}^t$, but from a window around $\mathbf{x}^t$, i.e. replacing $\Phi(\mathbf{x}^t)$ with $\Phi(\mathbf{x}^{t-r},...,\mathbf{x}^t,...,\mathbf{x}^{t+r})$. This has been called the use of \textit{overlapping features} \cite{altun2003hidden}. Secondly, it is also straightforward to include higher order label-label interactions beyond pairwise interactions by including higher order tensor terms, for instance, label triplets $\sum_{t}  \Lambda^c(y^{t}) \otimes \Lambda^c(y^{t+1}) \otimes \Lambda^c(y^{t+2})$. Thirdly, one can also combine higher order $\mathbf{y}$ features with input features, for example by including terms of the type $\sum_{t} \Phi(\mathbf{x}^t) \otimes \Lambda^c(y^t) \otimes \Lambda^c(y^{t+1})$. 
-
 We evaluate the Structural SVM implementation by Altun \etal using feature vectors generated from our gesture recognition algorithm. We modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
 $\Psi(\mathbf{x},\mathbf{y})$ takes the following form:
 
