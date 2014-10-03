@@ -8,6 +8,14 @@
 \section{Descriptors}
 \subsection{Histograms of Oriented Gradient}
 \subsection{Histograms of Optical Flow}
+\subsection{Gabor Filters}
+\label{Gabor}
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=\linewidth]{Figures/gabor.png}
+	\caption{Examples of Gabor filters.}
+	\label{fig:Gabor}
+\end{figure}
 \subsection{MBH}
 \subsection{Bag of Words}
 The bag-of-words (BoW) methodology was first proposed in the text retrieval domain problem for text document analysis, and it was further adapted for computer vision applications \cite{bosch2007best}. For image analysis, a visual analogue of a word is used in the BoWmodel, which is based on the vector quantization process by clustering low-level visual features of local regions. 
@@ -32,8 +40,8 @@ Figure \ref{fig:BoW} describes these four steps to extract the BoW feature from 
 As stated before, the traditional application of the Bag of Words approach is image classification. Usually SIFT keypoints and descriptors are extracted, and BoW histograms are then passed to a SVM classifier. However, the same principle can be used to classify videos or frame sequences, if we employ spatio-temporal points of interest and descriptors: in the following of this thesis, the BoW technique will be used in combination with spatio-temporal trajectories extracted from frame sequences, each described in its shape and appearance. We will then be able to classify frame sequences instead of images, and to have a descriptor with fixed length even in presence of a variabile number of trajectories per frame. Other techinques will be then proposed to deal with actions with variable length (and thus described by a variable number of frames).
 
 
-\section{Support Vector Machines classifiers}
-The last step in the traditional computer vision pipeline is classification: in this thesis, we will employ the Support Vector Machine classifier, both in its linear version and in its structured version. Support Vector Machines (SVM) have been one of the most popular classifiers in recent years for solving problems in classification, regression, and novelty detection. An important property of support vector machines is that the determination of the model parameters corresponds to a convex optimization problem, and so any local solution is also a global optimum.
+\section{Classifiers}
+The last step in the traditional computer vision pipeline is classification: in this thesis, we will employ the Support Vector Machine classifier, both in its linear version and in its structured version, and Random Forest classifiers. Support Vector Machines (SVM) have been one of the most popular classifiers in recent years for solving problems in classification, regression, and novelty detection. An important property of support vector machines is that the determination of the model parameters corresponds to a convex optimization problem, and so any local solution is also a global optimum.
 
 \subsection{Linear SVMs}
 Let's start with the simplest case: linear support vector machines trained on separable data. Label the training data $\{ \mathbf{x}_i, y_i\}$ $i=1, ..., l$, $y_i \in \{-1,1\}$, $\mathbf{x}_i \in \mathbb{R}^d$. Suppose we have some hyperplane which separates the positive from the negative samples. The points $\mathbf{x}$ which lie on the hyperplane satisfy $\mathbf{w} \cdot \mathbf{x} + b = 0$, where $\mathbf{w}$ is normal to the hyperplane, $|b|/\|\mathbf{w}\|$ is the perpendicular distance from the hyperplane to the origin and $\|\mathbf{w}\|$ is the Euclidean norm of $\mathbf{w}$. Let $\mathbf{w} \cdot \mathbf{x} +b = a$ ($\mathbf{w} \cdot \mathbf{x} +b = -a$) be the hyperplane that touches the closest positive (negative) example. Define the \textit{margin} of a separable hyperplane to be $2a / \| \mathbf{w} \|$. For the linearly separable case, the support vector algorithm simply looks for the separating hyperplane with the largest margin. This can be formulated as follows: suppose that all the training data satisfy the following constraints:
@@ -209,3 +217,60 @@ where $\mathbf{w} = (\mathbf{w}_a',\mathbf{w}_b')'$ and $\eta \geq 0$ is a scali
 \end{equation}
 
 There are at least three ways of extending the given discriminant function. First of all, one can extract features not just from $\mathbf{x}^t$, but from a window around $\mathbf{x}^t$, i.e. replacing $\Phi(\mathbf{x}^t)$ with $\Phi(\mathbf{x}^{t-r},...,\mathbf{x}^t,...,\mathbf{x}^{t+r})$. This has been called the use of \textit{overlapping features} \cite{altun2003hidden}. Secondly, it is also straightforward to include higher order label-label interactions beyond pairwise interactions by including higher order tensor terms, for instance, label triplets $\sum_{t}  \Lambda^c(y^{t}) \otimes \Lambda^c(y^{t+1}) \otimes \Lambda^c(y^{t+2})$. Thirdly, one can also combine higher order $\mathbf{y}$ features with input features, for example by including terms of the type $\sum_{t} \Phi(\mathbf{x}^t) \otimes \Lambda^c(y^t) \otimes \Lambda^c(y^{t+1})$. 
+
+\subsection{Random Forest}
+\label{random_forest}
+In the last years, the random forest framework has become a very popular
+and powerful tool for classification and regression problems by exhibiting
+many appealing properties like inherent multi-class capability, robustness
+to label noise and reduced tendency to over fitting. They are considered
+to be close to an ideal learner, making them attractive in many areas
+of computer vision like image classification, clustering, regression
+or semantic segmentation. In this work we use the decision forest
+algorithm to learn hand appearance.
+
+A (binary) \emph{decision tree} is a tree-structured predictor where,
+starting from the root, a sample is routed until it reaches a leaf
+where the prediction takes place. At each internal node of the tree
+the decision is taken whether the sample should be forwarded to the
+left or right child, according to a binary-valued function. In formal
+terms, let $X$ denote the input space, let $Y$ denote the output
+space and let $T$ be the set of the decision trees. In its simplest
+form a decision tree consists of a single node (a leaf) and is parametrized
+by a probability distribution $Q\in\mathcal{P}(Y)$ which represents
+the posterior probability of elements in $Y$ given any data sample
+reaching the leaf. We denote this tree as $\text{Lf}(Q)\in T$. Otherwise,
+a decision tree consists of a node with a left and a right sub-tree.
+This node is parametrized by a split function $\Phi:X\rightarrow\{0,1\}$,
+which determines whether to route a data sample $x\in X$ reaching
+it to the left decision sub-tree $t_{l}\in T$ (if $\Phi(x)=0$) or
+to the right one $t_{r}\in T$ (if $\Phi(x)=1$). We denote such a
+tree as $\text{Nd}(\Phi,t_{l},t_{r})\in T$. Finally, a decision forest
+is an ensemble $\mathcal{F}\subseteq T$ of decision trees which makes
+a prediction about a data sample by averaging over the single predictions
+gathered from all trees.
+
+Given a decision tree $t\in T$, the associated posterior probability
+of each element in $Y$ given a sample $x\in X$ is determined by
+finding the probability distribution $Q$ parametrizing the leaf that
+is reached by $x$ when routed along the tree. This is compactly presented
+with the following definition of $P(y|x,t)$, which is inductive in
+the structure of $t$:
+
+\[
+P(y|x,t)=\left\{ \begin{array}{rl}
+Q(y) & \text{if }t=\text{Lf}(Q)\\
+P(y|x,t_{l}) & \text{if }t=\text{Nd}(\Phi,t_{l},t_{r})\text{ and }\Phi(x)=0\\
+P(y|x,t_{r}) & \text{if }t=\text{Nd}(\Phi,t_{l},t_{r})\text{ and }\Phi(x)=1
+\end{array}\right.
+\]
+
+
+Finally, the combination of the posterior probabilities derived from
+the trees in a forest $\mathcal{F}\subseteq T$ can be done by an
+averaging operation, yielding a single posterior probability for the
+whole forest:
+
+\[
+P(y|x,\mathit{\mathcal{F}})=\frac{1}{|\mathcal{F}|}\sum_{t\in\mathcal{F}}P(y|x,t)
+\]

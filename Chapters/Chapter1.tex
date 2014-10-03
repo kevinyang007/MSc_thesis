@@ -120,6 +120,7 @@ high definition screen from eight feet away. It has 16 GB of RAM, 12 GB of which
 apps. Furthermore, it has a microphone, similar to all of the previously mentioned wearable devices.
 
 \subsection{Panasonic HX-A10}
+\label{panasonic}
 The Panasonic HX-A10, rather than relying on mounts and accessories, is equipped with an ''earhoo'' feature and a remote processing unit, which allows users to attach the camera to their head right out of the box, and no helmet is required. The device itself records at $1920\times1080$ video at 60 fps, $1280\times 720$ at 120 fps, and $640\times360$ at 240 fps for slow shots. It has Wi-Fi and can setup a live stream; and battery life for over two hours of filming on a single charge.
 
 The actual lens (F2.5 bright lens, 1/4.1-inch BSI Sensor) part sports a two-foot cable and only weighs in at 4 ounces. It also communicates with a smartphone or tablet while watching in live view. We used the Panasonic HX-A10 to record two datasets, the Interactive Museum dataset and the Maramotti dataset, taken into the Maramotti Collection (Figure \ref{fig:Panasonic}). The lens helps to capture a wide field of view, which is necessary for observing first-person’s hands during daily activities. The fish-eye distortion, however, creates some challenges for using the data.
@@ -142,6 +143,39 @@ The Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?x
 \caption{Genius WideCam F100.}
 \label{fig:wide-camera}
 \end{figure*}
+
+\subsection{The Odroid-XU board}
+The wearable ego-vision devices we have built embe a glass-mounted camera and an Odroid-XU developer board, serving as video-processing and network communication unit.
+There are several benefits in using such a portable device: the commercial availability and low costs for prototypes evaluation, the computational power and energy efficiency of the Big-Little architecture. Furthermore it has the possibility  of peripheral addition to extend connections and input devices. 
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.6\linewidth]{Figures/board.jpg}
+\caption{The Odroid-XU board with battery pack.}
+\label{board}
+\end{figure}
+
+Hardkernel have made a name for themselves within the open-source community by delivering high performance development boards at affordable prices. The Odroid-XU platform boasts an Exynos 5 Octa processor – the same SoC found inside the Samsung Galaxy S4, which includes a PowerVR SGX544MP3 GPU clocked at around 600 MHz (see figure \ref{odroid-xu}).
+
+The key features and specifications of the ODROID-XU development board include:
+\begin{itemize}
+\item big.LITTLE processing based on the Cortex™-A15 and Cortex™-A7 quad core CPUs
+\item PowerVR SGX544MP3 GPU (OpenGL ES 2.0, OpenGL ES 1.1, OpenCL 1.1 EP, Renderscript/Filterscript)
+\item 2Gbyte LPDDR3 PoP (1600Mbps/pin, 2 x 32bit Bus)
+\item USB 3.0 Host x 1, OTG x 1, USB 2.0 Host x 4
+\item HDMI 1.4a output Type-D connector (Micro-HDMI)
+\item eMMC 4.5 Flash Storage
+\item Micro-SD socket
+\item MIPI DSI for LCD display output
+\item On-board Audio Codec
+\item Fast 10/100 Ethernet LAN
+\item WiFi
+\item 5V/4A power supply
+\end{itemize}
+
+Big.LITTLE is a heterogeneous computing architecture developed by ARM that couples slower, low-power processor cores with more powerful and power-hungry ones. The intention being to create a multi-core processor that can adjust better to dynamic computing needs and use less power than clock scaling alone. In this case we have the Cortex-A7 coupled with the Cortex-A15, which have been designed to be architecturally compatible.
+
+In the Samsung Exynos 5 there is only one way for the different processor cores to be arranged in a big.LITTLE design: the \textit{clustered model} approach. With this approach the operating system scheduler can only see one of the two processor clusters, when the load on one cluster hits a certain point, the system transitions to the other cluster. All relevant data is passed through the common L2 cache, the first core cluster is powered off and the other one is activated. A Cache Coherent Interconnect (CCI) is used.
 
 
 %----------------------------------------------------------------------------------------

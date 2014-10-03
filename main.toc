@@ -15,46 +15,48 @@
 \contentsline {subsection}{\numberline {1.3.5}Google Glass}{13}{subsection.24}
 \contentsline {subsection}{\numberline {1.3.6}Panasonic HX-A10}{13}{subsection.25}
 \contentsline {subsection}{\numberline {1.3.7}Genius WideCam F100}{14}{subsection.27}
-\contentsline {section}{\numberline {1.4}Previous work in Egocentric Vision}{15}{section.32}
-\contentsline {section}{\numberline {1.5}About this thesis: gestures}{15}{section.33}
-\contentsline {section}{\numberline {1.6}In Closing}{16}{section.37}
-\contentsline {chapter}{\numberline {2}Computer Vision and Machine Learning techniques used in this thesis}{17}{chapter.38}
-\contentsline {section}{\numberline {2.1}Color spaces}{17}{section.39}
-\contentsline {section}{\numberline {2.2}Descriptors}{17}{section.40}
-\contentsline {subsection}{\numberline {2.2.1}Histograms of Oriented Gradient}{17}{subsection.41}
-\contentsline {subsection}{\numberline {2.2.2}Histograms of Optical Flow}{17}{subsection.42}
-\contentsline {subsection}{\numberline {2.2.3}MBH}{17}{subsection.43}
-\contentsline {subsection}{\numberline {2.2.4}Bag of Words}{17}{subsection.44}
-\contentsline {section}{\numberline {2.3}Support Vector Machines classifiers}{19}{section.50}
-\contentsline {subsection}{\numberline {2.3.1}Linear SVMs}{19}{subsection.51}
-\contentsline {subsection}{\numberline {2.3.2}Structured Learning and Structured SVM}{21}{subsection.61}
-\contentsline {subsection}{\numberline {2.3.3}Label Sequence Learning}{23}{subsection.70}
-\contentsline {chapter}{\numberline {3}Hand segmentation in ego-centric videos}{26}{chapter.75}
-\contentsline {section}{\numberline {3.1}Literature overview}{27}{section.76}
-\contentsline {section}{\numberline {3.2}Proposed approach}{28}{section.77}
-\contentsline {subsubsection}{\numberline {3.2.0.1}Illumination invariance}{29}{subsubsection.78}
-\contentsline {subsubsection}{\numberline {3.2.0.2}Temporal smoothing}{29}{subsubsection.80}
-\contentsline {subsubsection}{\numberline {3.2.0.3}Spatial consistency}{31}{subsubsection.83}
-\contentsline {section}{\numberline {3.3}Experimental results}{31}{section.91}
-\contentsline {subsection}{\numberline {3.3.1}Features performance}{33}{subsection.93}
-\contentsline {subsection}{\numberline {3.3.2}Temporal Smoothing and Spatial Consistency}{33}{subsection.95}
-\contentsline {subsection}{\numberline {3.3.3}Comparison to related methods}{34}{subsection.97}
-\contentsline {chapter}{\numberline {4}Gesture recognition in the cultural heritage scenario}{35}{chapter.98}
-\contentsline {section}{\numberline {4.1}Motivation}{35}{section.99}
-\contentsline {section}{\numberline {4.2}Proposed Method}{37}{section.100}
-\contentsline {subsection}{\numberline {4.2.1}Camera motion removal}{38}{subsection.106}
-\contentsline {subsection}{\numberline {4.2.2}Gesture Description}{39}{subsection.107}
-\contentsline {section}{\numberline {4.3}Experimental Results}{40}{section.109}
-\contentsline {chapter}{\numberline {5}A sequential implementation for the Odroid-XU developer board}{43}{chapter.121}
-\contentsline {section}{\numberline {5.1}The Odroid-XU board}{44}{section.125}
-\contentsline {section}{\numberline {5.2}Implementation}{46}{section.128}
-\contentsline {subsection}{\numberline {5.2.1}OpenMP and Neon Intrisics}{47}{subsection.134}
-\contentsline {subsection}{\numberline {5.2.2}Further optimizations}{48}{subsection.161}
-\contentsline {section}{\numberline {5.3}Some applications}{48}{section.164}
-\contentsline {subsection}{\numberline {5.3.1}Ego-Vision Jacket}{48}{subsection.165}
-\contentsline {subsection}{\numberline {5.3.2}...}{48}{subsection.166}
-\contentsline {chapter}{\numberline {6}Conclusion}{49}{chapter.167}
+\contentsline {subsection}{\numberline {1.3.8}The Odroid-XU board}{15}{subsection.32}
+\contentsline {section}{\numberline {1.4}Previous work in Egocentric Vision}{16}{section.34}
+\contentsline {section}{\numberline {1.5}About this thesis: gestures}{17}{section.35}
+\contentsline {section}{\numberline {1.6}In Closing}{18}{section.39}
+\contentsline {chapter}{\numberline {2}Computer Vision and Machine Learning techniques used in this thesis}{19}{chapter.40}
+\contentsline {section}{\numberline {2.1}Color spaces}{19}{section.41}
+\contentsline {section}{\numberline {2.2}Descriptors}{19}{section.42}
+\contentsline {subsection}{\numberline {2.2.1}Histograms of Oriented Gradient}{19}{subsection.43}
+\contentsline {subsection}{\numberline {2.2.2}Histograms of Optical Flow}{19}{subsection.44}
+\contentsline {subsection}{\numberline {2.2.3}Gabor Filters}{19}{subsection.45}
+\contentsline {subsection}{\numberline {2.2.4}MBH}{19}{subsection.47}
+\contentsline {subsection}{\numberline {2.2.5}Bag of Words}{19}{subsection.48}
+\contentsline {section}{\numberline {2.3}Classifiers}{21}{section.54}
+\contentsline {subsection}{\numberline {2.3.1}Linear SVMs}{22}{subsection.55}
+\contentsline {subsection}{\numberline {2.3.2}Structured Learning and Structured SVM}{24}{subsection.65}
+\contentsline {subsection}{\numberline {2.3.3}Label Sequence Learning}{26}{subsection.74}
+\contentsline {subsection}{\numberline {2.3.4}Random Forest}{27}{subsection.79}
+\contentsline {chapter}{\numberline {3}Hand segmentation in ego-centric videos}{29}{chapter.80}
+\contentsline {section}{\numberline {3.1}Literature overview}{30}{section.81}
+\contentsline {section}{\numberline {3.2}Proposed approach}{31}{section.82}
+\contentsline {subsection}{\numberline {3.2.1}Illumination invariance}{33}{subsection.86}
+\contentsline {subsection}{\numberline {3.2.2}Temporal smoothing}{34}{subsection.88}
+\contentsline {subsection}{\numberline {3.2.3}Spatial consistency}{35}{subsection.91}
+\contentsline {section}{\numberline {3.3}Experimental results}{36}{section.100}
+\contentsline {subsection}{\numberline {3.3.1}Features performance}{38}{subsection.102}
+\contentsline {subsection}{\numberline {3.3.2}Temporal Smoothing and Spatial Consistency}{38}{subsection.104}
+\contentsline {subsection}{\numberline {3.3.3}Comparison to related methods}{39}{subsection.106}
+\contentsline {chapter}{\numberline {4}Gesture recognition in the cultural heritage scenario}{40}{chapter.107}
+\contentsline {section}{\numberline {4.1}Motivation}{40}{section.108}
+\contentsline {section}{\numberline {4.2}Proposed Method}{42}{section.109}
+\contentsline {subsection}{\numberline {4.2.1}Camera motion removal}{43}{subsection.115}
+\contentsline {subsection}{\numberline {4.2.2}Gesture Description}{44}{subsection.116}
+\contentsline {section}{\numberline {4.3}Experimental Results}{45}{section.118}
+\contentsline {chapter}{\numberline {5}A sequential implementation for the Odroid-XU developer board}{48}{chapter.130}
+\contentsline {section}{\numberline {5.1}Implementation}{49}{section.135}
+\contentsline {subsection}{\numberline {5.1.1}OpenMP and Neon Intrisics}{50}{subsection.141}
+\contentsline {subsection}{\numberline {5.1.2}Further optimizations}{51}{subsection.168}
+\contentsline {section}{\numberline {5.2}Some applications}{51}{section.171}
+\contentsline {subsection}{\numberline {5.2.1}Ego-Vision Jacket}{51}{subsection.172}
+\contentsline {subsection}{\numberline {5.2.2}...}{51}{subsection.173}
+\contentsline {chapter}{\numberline {6}Conclusion}{52}{chapter.174}
 \vspace {2em}
-\contentsline {chapter}{\numberline {A}Publications}{50}{appendix.168}
+\contentsline {chapter}{\numberline {A}Publications}{53}{appendix.175}
 \vspace {2em}
-\contentsline {chapter}{Bibliography}{51}{dummy.173}
+\contentsline {chapter}{Bibliography}{54}{dummy.180}
