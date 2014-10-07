@@ -14,28 +14,28 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Examples of Gabor filters.\relax }}{20}{figure.caption.46}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces The Bag of Words approach.\relax }}{21}{figure.caption.53}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Images segmented using SLIC into superpixels of size 64, 256, and 1024 pixels (approximately).\relax }}{32}{figure.caption.85}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison before (left image) and after (right image) Temporal smoothing.\relax }}{34}{figure.caption.89}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Comparison before (left image) and after (right image) Spatial Consistency.\relax }}{35}{figure.caption.92}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces The GrabCut algorithm.\relax }}{36}{figure.caption.93}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Our dataset consists of five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.\relax }}{37}{figure.caption.94}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{37}{figure.caption.94}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{37}{figure.caption.94}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{37}{figure.caption.94}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{37}{figure.caption.94}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{37}{figure.caption.94}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Images segmented using SLIC into superpixels of size 64, 256, and 1024 pixels (approximately).\relax }}{33}{figure.caption.85}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Comparison before (left image) and after (right image) Temporal smoothing.\relax }}{35}{figure.caption.89}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Comparison before (left image) and after (right image) Spatial Consistency.\relax }}{36}{figure.caption.92}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces The GrabCut algorithm.\relax }}{37}{figure.caption.93}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces The EGO-HSGR dataset contains hands performing five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.\relax }}{38}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{38}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{38}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{38}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{38}{figure.caption.101}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{38}{figure.caption.101}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Natural interaction with artworks: visitors can get specific content or share information about the observed artwork through simple gestures. Hand segmentation results are highlighted in red and detected gestures are reported in the bottom part of each frame.\relax }}{43}{figure.caption.110}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Outline of the proposed Gesture Recognition method.\relax }}{43}{figure.caption.114}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Sample gestures from the Interactive Museum{} dataset.\relax }}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\textit {Like} gesture in the \textit {museum} setting}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\textit {Dislike} gesture}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {\textit {Ok} gesture in the \textit {museum} setting, in low light}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {\textit {Point} gesture}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {\textit {Slide right to left} gesture in the \textit {museum} setting, while another visitor walks in}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {\textit {Slide left to right} gesture in the \textit {demo room} setting performed by user 3}}}{46}{figure.caption.120}
-\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {\textit {Take a picture} gesture in the \textit {demo room} setting}}}{46}{figure.caption.120}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Results from the proposed hand segmentation and gesture recognition algorithms. Hand segmentation results are highlighted in red and detected gestures are reported in the bottom part of each frame.\relax }}{45}{figure.caption.117}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Outline of the proposed Gesture Recognition method.\relax }}{45}{figure.caption.121}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Sample gestures from the Interactive Museum{} dataset and the Maramotti dataset.\relax }}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {\textit {Like} gesture in the \textit {museum} setting}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {\textit {Dislike} gesture}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {\textit {Ok} gesture in the \textit {museum} setting, in low light}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {\textit {Point} gesture}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {\textit {Slide right to left} gesture in the \textit {museum} setting, while another visitor walks in}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {\textit {Slide left to right} gesture in the \textit {demo room} setting performed by user 3}}}{51}{figure.caption.134}
+\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {\textit {Take a picture} gesture in the \textit {demo room} setting}}}{51}{figure.caption.134}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Hardkernel Odroid-XU block diagram\relax }}{49}{figure.caption.134}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Hardkernel Odroid-XU block diagram\relax }}{55}{figure.caption.149}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

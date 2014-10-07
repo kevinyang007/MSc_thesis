@@ -1,4 +1,4 @@
-\begin{thebibliography}{44}
+\begin{thebibliography}{45}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -97,6 +97,12 @@ Brian Clarkson and Alex Pentland.
 \newblock In \emph{Acoustics, Speech, and Signal Processing, 1999.
   Proceedings., 1999 IEEE International Conference on}, volume~6, pages
   3037--3040. IEEE, 1999.
+
+\bibitem[Dalal and Triggs(2005)]{dalal2005histograms}
+Navneet Dalal and Bill Triggs.
+\newblock Histograms of oriented gradients for human detection.
+\newblock In \emph{Computer Vision and Pattern Recognition, 2005. CVPR 2005.
+  IEEE Computer Society Conference on}, volume~1, pages 886--893. IEEE, 2005.
 
 \bibitem[Bosch et~al.(2007)Bosch, Mu{\~n}oz, and Mart{\'\i}]{bosch2007best}
 Anna Bosch, Xavier Mu{\~n}oz, and Robert Mart{\'\i}.
@@ -221,12 +227,6 @@ Flavia Sparacino.
   visitors' interests for personalized visually-augmented museum experiences.
 \newblock In \emph{In Proc. of Museums and the Web}, pages 17--20, 2002.
 
-\bibitem[Kanade and Hebert(2012)]{kanade2012}
-T.~Kanade and M.~Hebert.
-\newblock First-person vision.
-\newblock \emph{Proceedings of the IEEE}, 100\penalty0 (8):\penalty0
-  2442--2453, Aug 2012.
-
 \bibitem[Sanin et~al.(2013)Sanin, Sanderson, Harandi, and
   Lovell]{sanin2013spatio}
 Andres Sanin, Conrad Sanderson, Mehrtash~T Harandi, and Brian~C Lovell.
@@ -257,6 +257,11 @@ Tae-Kyun Kim and Roberto Cipolla.
 Heng Wang, Alexander Kl{\"a}ser, Cordelia Schmid, and Cheng-Lin Liu.
 \newblock {Action Recognition by Dense Trajectories}.
 \newblock In \emph{Proc. of CVPR}, 2011.
+
+\bibitem[Farneb{\"a}ck(2003)]{farneback2003two}
+Gunnar Farneb{\"a}ck.
+\newblock Two-frame motion estimation based on polynomial expansion.
+\newblock In \emph{Image Analysis}, pages 363--370. Springer, 2003.
 
 \bibitem[Perronnin et~al.(2010)Perronnin, S{\'a}nchez, and
   Mensink]{perronnin2010improving}

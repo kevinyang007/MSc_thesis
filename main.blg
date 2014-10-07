@@ -1,6 +1,10 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
 The style file: unsrtnat.bst
 Database file #1: Bibliography.bib
+Repeated entry---line 639 of file Bibliography.bib
+ : @incollection{farneback2003two
+ :                               ,
+I'm skipping whatever remains of this entry
 Repeated entry---line 648 of file Bibliography.bib
  : @inproceedings{wang:2011:inria-00583818:1
  :                                          ,
@@ -27,6 +31,10 @@ Repeated entry---line 698 of file Bibliography.bib
 I'm skipping whatever remains of this entry
 Repeated entry---line 705 of file Bibliography.bib
  : @inproceedings{sanin2013spatio
+ :                               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 990 of file Bibliography.bib
+ : @incollection{farneback2003two
  :                               ,
 I'm skipping whatever remains of this entry
 Repeated entry---line 999 of file Bibliography.bib
@@ -58,4 +66,4 @@ Warning--empty year in surveyfpv
 Warning--empty year in surveyfpv
 Warning--empty year in tourismintelligence
 Warning--empty year in joachims
-(There were 13 error messages)
+(There were 15 error messages)

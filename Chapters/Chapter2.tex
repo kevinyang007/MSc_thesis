@@ -17,9 +17,9 @@ ego-centric video has re-emerged as a popular topic in computer
 vision and has shown promising results in such areas
 as understanding hand-eye coordination and recognizing
 activities of daily living. In order to achieve more
-detailed models of human interaction and object manipulation,
+detailed models of human interaction and object manipulation, and, in our case, to perform hand gesture recognition,
 it is important to detect hand regions with pixel-level
-accuracy. Hand detection is an important element of such
+accuracy. Hand detection is, in fact, an important element of such
 tasks as gesture recognition, hand tracking, grasp recognition,
 action recognition and understanding hand-object interactions.
 
@@ -63,14 +63,14 @@ This approach is shown to be a robust tool for skin detection for hand segmentat
 Li and Kitani \cite{li13} provide an historical overview about approaches for detecting hands from moving cameras. They define three categories: local appearance-based detection, global appearance-based detection, where a global template of hand is needed, and motion-based detection, which is based on the hypothesis that hands and background have different motion statistics. Motion-based detection approach requires no supervision nor training. On the other hand, this approach eventually identifies as hand an object manipulated by the user, since it moves together his hands. In addition they proposed a model with sparse feature selection which was shown to be an illumination-dependent strategy. To solve this issue, they trained a set of random forests indexed by a global color histogram, each one reflecting a different illumination condition.
 Recently Bagdanov \etal \cite{bagdanov12} propose a method to predict the status of the user hand by jointly exploiting depth and RGB imagery.
 
-All the presented previous works present good characteristics, but lack of generality, since they take into account only few aspects to model user hand appearance and they are not integrated with a gesture recognition system. We therefore present a novel method for hand segmentation and gesture recognition that can be used as basis for ego-vision applications. 
-Hand detection is based on Random Forest classifiers learned by color and gradient features which are computed on superpixels. In order to improve the detection accuracy we present two strategies that incorporate temporal and spatial coherence: temporal smoothing and spatial consistency.
+All the presented previous works present good characteristics, but lack of generality, since they take into account only few aspects to model user hand appearance and they are not integrated with a gesture recognition system. We therefore present a novel method for hand segmentation that can be used as basis for ego-vision applications. 
+The proposed Hand detection approach is based on Random Forest classifiers learned by color and gradient features which are computed on superpixels. In order to improve the detection accuracy we present two strategies that incorporate temporal and spatial coherence: temporal smoothing and spatial consistency.
 
 \section{Proposed approach}
 Ego-vision applications require a fast and reliable segmentation of the hands; thus we propose to use random forest classifiers, as they are known to efficiently work even with large inputs \cite{leo01}. Since using a per-pixel basis in label assignment has show to be inefficient \cite{jones99}, we adopt segmentation method which assign labels to superpixels, as suggested in \cite{tighe13}. 
 This allows a complexity reduction of the problem and also gives better spatial support for aggregating features that could belong to the same object. 
 
-To extract superpixels for every frames we use the Simple Linear Iterative Clustering (SLIC) algorithm, proposed in \cite{achanta12} as memory efficient and highly accurate segmentation method.  The SLIC algorithm is an adaptation of k-means for superpixel generation (see Fig. \ref{fig:SLIC}), with two important distinctions:
+To extract superpixels for every frames we use the Simple Linear Iterative Clustering (SLIC) algorithm, proposed in \cite{achanta12} as memory efficient and highly accurate segmentation method.  The SLIC algorithm is an adaptation of $k$-means for superpixel generation (see Fig. \ref{fig:SLIC}), with two important distinctions:
 \begin{enumerate}
 \item The number of distance calculations in the optimization is dramatically reduced by limiting the search space to a
 region proportional to the superpixel size. This reduces the complexity to be linear in the number of pixels $N$– and independent of the number of superpixels $k$.
@@ -85,12 +85,12 @@ and 1024 pixels (approximately).}
 	\label{fig:SLIC}
 \end{figure}
 
-SLIC is simple to use and understand. By default, the only parameter of the algorithm is $k$, the desired number of approximately equally-sized superpixels. For color images in the CIELAB color space, the clustering procedure begins with an initialization step where $k$ initial cluster centers $C_i = [l_i a_i b_i x_i y_i]^T$ are sampled on a regular grid spaced $S$ pixels apart. To produce roughly equally sized superpixels, the grid interval is $S =\sqrt{N/k}$. The centers are moved to seed locations corresponding to the lowest gradient position in a $3\times 3$ neighborhood. This is done to avoid centering a superpixel on an edge, and to reduce the chance of seeding a superpixel with a noisy pixel. Next, in the assignment step, each pixel $i$ is associated with the nearest cluster center whose search region overlaps its location. This is the key to speeding up the algorithm because limiting the size of the search region
-significantly reduces the number of distance calculations, and results in a significant speed advantage over conventional k-means clustering where each pixel must be compared with all cluster centers. Since the expected spatial extent of a superpixel is a region of
+SLIC is simple to use and understand. By default, the only parameter of the algorithm is $k$, the desired number of approximately equally-sized superpixels. For color images in the CIELAB color space, the clustering procedure begins with an initialization step where $k$ initial cluster centers $C_i = [l_i \quad a_i \quad b_i \quad x_i \quad y_i]^T$ are sampled on a regular grid spaced $S$ pixels apart. To produce roughly equally sized superpixels, the grid interval is $S =\sqrt{N/k}$. The centers are moved to seed locations corresponding to the lowest gradient position in a $3\times 3$ neighborhood. This is done to avoid centering a superpixel on an edge, and to reduce the chance of seeding a superpixel with a noisy pixel. Next, in the assignment step, each pixel $i$ is associated with the nearest cluster center whose search region overlaps its location. This is the key to speeding up the algorithm because limiting the size of the search region
+significantly reduces the number of distance calculations, and results in a significant speed advantage over conventional $k$-means clustering where each pixel must be compared with all cluster centers. Since the expected spatial extent of a superpixel is a region of
 approximate size $S\times S$, the search for similar pixels is done in a region $2S \times 2S$ around the superpixel center.
 
 Once each pixel has been associated to the nearest cluster center, an update step adjusts the cluster centers to be the mean
-$[l a b x y]^T$ vector of all the pixels belonging to the cluster. The $L_2$ norm is used to compute a residual error  between
+$[l \quad a \quad b \quad x \quad y]^T$ vector of all the pixels belonging to the cluster. The $L_2$ norm is used to compute a residual error  between
 the new cluster center locations and previous cluster center locations. The assignment and update steps can be repeated
 iteratively until the error converges. Finally, a post-processing step enforces connectivity by re-assigning disjoint pixels to
 nearby superpixels. A real-time implementation of the SLIC algorithm is also available in \cite{YHRengSLIC}.
@@ -107,20 +107,20 @@ In particular, we describe each superpixel with:
 The gradient features are included in order to discriminate between objects with a hand-like color distribution and hands.
 
 \subsection{Illumination invariance}
-To deal with different illumination conditions we train a collection of Random Forest classifiers (see \ref{random_forest}) indexed by a global HSV histogram, instead of using a single classifier. Hence, training images are distributed among the classifiers by a \textsl{k}-means clustering on the feature space. By using a histogram over all three channels of the HSV color space, each scene cluster encodes both the appearance of the scene and its illumination. Intuitively, this models the fact that hands viewed under similar global appearance will share a similar distribution in the feature space. Given a feature vector $\mathbf{l}$ of a superpixel $\mathbf{s}$ and a global appearance
+To deal with different illumination conditions, we cluster the training images running the $k$-means algorithm on a global HSV histogram. Hence, we train a Random Forest classifier for each cluster. By using a histogram over all three channels of the HSV color space, each scene cluster encodes both the appearance of the scene and its illumination. Intuitively, this models the fact that hands viewed under similar global appearance will share a similar distribution in the feature space. Given a feature vector $\mathbf{l}$ of a superpixel $\mathbf{s}$ and a global appearance
 feature $\mathbf{g}$, the posterior distribution of $\mathbf{s}$
-is computed by marginalizing over different scenes $c$:
+is computed by marginalizing over different clusters $c$:
 
 \begin{equation}
-P(\mathbf{s}|\mathbf{l},\mathbf{g})=\sum_{c}P(\mathbf{s}|\mathbf{l},c)P(c|\mathbf{g})
+P(\mathbf{s}|\mathbf{l},\mathbf{g})=\sum_{c=1}^{k}P(\mathbf{s}|\mathbf{l},c)P(c|\mathbf{g})
 \end{equation}
 
 
-where $P(\mathbf{s}|\mathbf{l},c)$ is the output of a global appearance-specific
+where $k$ is the number of clusters, $P(\mathbf{s}|\mathbf{l},c)$ is the output of the cluster-specific
 classifier and $P(c|\mathbf{g})$ is a conditional distribution of a
-scene $c$ given a global appearance feature $\mathbf{g}$. In test
+cluster $c$ given a global appearance feature $\mathbf{g}$. In test
 phase, the conditional $P(c|\mathbf{g})$ is approximated using an
-uniform distribution over the five nearest models learned at training.
+uniform distribution over the five nearest clusters.
 It is important to highlight that the optimal number of classifiers
 depends on the characteristics of the dataset: a training dataset
 with several different illumination conditions, taken both inside and
@@ -143,7 +143,7 @@ its previous frames, since past frames should affect the results prediction for 
 The smoothing filter for a pixel $\mathbf{x}_{t}^{i}$ of a frame $t$ (inspired by \cite{liu08}) can thus be defined as follows:
 
 \begin{multline}
-P(\mathbf{x}_{t}^{i}=1) = \sum_{k = 0}^{d} w_{k} \bigl( P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=1) \cdot P(\mathbf{x}_{t-k}^{i}=1|\mathbf{l_{t-k}},\mathbf{g_{t-k}})\, + P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=0) \, \cdot \\
+P(\mathbf{x}_{t}^{i}=1) = \sum_{k = 0}^{\min(d,k)} w_{k} \bigl( P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=1) \cdot P(\mathbf{x}_{t-k}^{i}=1|\mathbf{l_{t-k}},\mathbf{g_{t-k}})\, + P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=0) \, \cdot \\
 \cdot P(\mathbf{x}_{t-k}^{i}=0|\mathbf{l_{t-k}},\mathbf{g_{t-k}}) \bigr)
 \end{multline}
 where $P(\mathbf{x}_{t-k}^{i}=1|\mathbf{l_{t-k}},\mathbf{g_{t-k}})$ is the posterior probability
@@ -170,7 +170,7 @@ of times that two pixels at the same location at frame $t$ and $t-k$ belong to a
 similarly, $\#(\mathbf{x}_{t}^{i}=1,\mathbf{x}_{t-k}^{i}=0)$
 is the number of times that a pixel in frame $t$ belongs to
 a hand part and pixel in the same position in frame $t-k$ does not belong
-to a hand region.
+to a hand region. Based on our preliminary experiments we set $d$ equal to three
 Figure \ref{fig:gesture_samples_time} shows an example where temporal smoothing deletes blinking regions (i.e. the tea box brand and jar shadows on the right).
 
 
@@ -182,7 +182,7 @@ Figure \ref{fig:gesture_samples_time} shows an example where temporal smoothing 
 \caption{Comparison before (left image) and after (right image) Spatial Consistency.}
 \label{fig:gesture_samples_space}
 \end{figure}
-Given pixels elaborated by the previous steps, we want to exploit spatial consistency to prune away small and isolated pixel groups that are unlikely to be part of hand regions and also aggregate bigger connected pixel groups.
+Given pixels elaborated by the previous steps, we want to exploit spatial consistency to prune away small and isolated pixel groups that are unlikely to be part of hand regions and also aggregate bigger connected pixel groups. To this aim, we exploit the GrabCut algorithm \cite{rother04}, which essentially works as follows:
 
 \begin{figure}[htbp]
 	\centering
@@ -191,8 +191,27 @@ Given pixels elaborated by the previous steps, we want to exploit spatial consis
 	\label{fig:GrabCut}
 \end{figure}
  
+\begin{enumerate}
+\item User creates an initial trimap by of background, foreground and unknown pixels.
+\item Computer creates an initial image segmentation, where all unknown
+pixels are tentatively placed in the foreground class
+and all known background pixels are placed in the background
+class.
+\item Gaussian Mixture Models (GMMs) are created for initial foreground
+and background classes.
+\item Each pixel in the foreground class is assigned to the most
+likely Gaussian component in the foreground GMM. Similarly,
+each pixel in the background is assigned to the most
+likely background Gaussian component.
+\item The GMMs are thrown away and new GMMs are learned from
+the pixel sets created in the previous set.
+\item A graph is built and Graph Cut is run to find a new tentative
+foreground and background classification of pixels (Fig. \ref{fig:GrabCut}).
+\item Steps 4-6 are repeated until the classification converges
 
-For every pixel $\mathbf{x}$, we extract its posterior probability $P(\mathbf{x}_{t}^{i})$ and use it as input for the GrabCut algorithm \cite{rother04}. Each pixel with $P(\mathbf{x}_{t}^{i}) \geq 0.5$ is marked as foreground, otherwise it's considered as part of background. After the segmentation step, we discard all the small isolated regions that have an area of less than 5\% of the frame and we keep only the three largest connected components.
+\end{enumerate}
+
+For every pixel $\mathbf{x}$, we extract its posterior probability $P(\mathbf{x}_{t}^{i})$ and use it as input for the GrabCut algorithm. Each pixel with $P(\mathbf{x}_{t}^{i}) \geq 0.5$ is marked as foreground, otherwise it's considered as part of background. After the segmentation step, we discard all the small isolated regions that have an area of less than 5\% of the frame and we keep only the three largest connected components.
 
 In Figure \ref{fig:gesture_samples_space} an example with and without applying the Spatial Consistency method is depicted; notice this technique allows to better aggregate superpixels that are near the principal blob region.
 
@@ -204,21 +223,20 @@ In Figure \ref{fig:gesture_samples_space} an example with and without applying t
 \subfigure[]{\includegraphics[width=.30\columnwidth]{./Figures/dislike_sample.jpg}}
 \subfigure[]{\includegraphics[width=.30\columnwidth]{./Figures/ok_sample.jpg}}
 \subfigure[]{\includegraphics[width=.30\columnwidth]{./Figures/victory_sample.jpg}}
-\caption{Our dataset consists of five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.}
+\caption{The EGO-HSGR dataset contains hands performing five gestures: a) point out; b) like; c) dislike; d) ok; e) victory.}
 \label{fig:gesture_samples}
 \end{figure*}
 
 \section{Experimental results}
 To evaluate the performance of proposed method we tested it on two datasets: EDSH and EGO-HSGR.
-The recent publicly available EDSH dataset \cite{li13} consists in egocentric videos acquired to analyze performance of several hand detection methods. It consists in three videos (EDSH\_1, used as train video, and EDSH\_2 and EDSH\_{kitchen} used as test videos) that contain indoor and outdoor scenes with large variations of illumination, mild camera motion induced by walking and climbing stairs. All videos are recorded at a resolution of 720p and a speed of 30FPS. The dataset includes segmentation masks of hands, but it is not comprehensive of gesture annotations.     
+The recent publicly available EDSH dataset \cite{li13} consists in egocentric videos acquired to analyze performance of several hand detection methods. It consists of three videos (EDSH\_1, used as train video, and EDSH\_2 and EDSH\_{kitchen} used as test videos) that contain indoor and outdoor scenes with large variations of illumination, mild camera motion induced by walking and climbing stairs. All videos are recorded at a resolution of 720p and a speed of 30FPS. Also, the dataset includes segmentation masks of hands.    
 
-
-In order to analyze the performance of our method to recognize gestures, we generated a new dataset which contains 12 videos of indoor scenes (EGO-HSGR); it includes segmentation masks and gesture annotations. Videos have been recorded with a Panasonic HX-A10 Wearable Camcorder (see \ref{panasonic}) at a resolution of $800 \times 450$ with a 25FPS in two different locations: a library and department's exhibition area.   
+We also generated a new dataset which contains 12 videos of indoor scenes (EGO-HSGR). Videos have been recorded with a Panasonic HX-A10 Wearable Camcorder (see \ref{panasonic}) at a resolution of $800 \times 450$ with a 25FPS in two different locations: a library and department's exhibition area.   
 
 The aim of this dataset is to reproduce an environment similar to a museum for human and object interaction: paintings and posters are hung on the walls, true masterpieces or either its virtual images; the visitor walks and sometimes stops in front of an object of interest performing some gestures to interact with next generation wearable devices. We identify five different gestures that are used commonly: \textit{point out}, \textit{like}, \textit{dislike}, \textit{ok} and \textit{victory}. These can be associated to different action or used for record social experience. Fig. \ref{fig:gesture_samples} shows some frame examples. 
 
-To evaluate performance of our pixel-level hand detector a subset of six videos are used (three for training and two for testing). Segmentation masks are provided every 25 frames for a total of 700 annotations. For gesture analysis we extract all the keyframes and we manually annotated them distinguishing between gestures.  
-The F-score (harmonic mean of the precision and recall rate) is used to quantity hand detection performance, while gesture recognition is evaluated in terms of mAP (mean Average Precision).
+To evaluate performance of our pixel-level hand detector a subset of six videos are used (three for training and two for testing). Segmentation masks are provided every 25 frames for a total of 700 annotations. 
+The F-score (harmonic mean of the precision and recall rate) is used to quantity hand detection performance.
 %(we denote these videos as BB\_L1 and BB\_L2), a corridor of a faculty (BB\_F1 and BB\_F2) and a department (BB\_D1 and BB\_D2).
     
  \begin{table}
@@ -287,3 +305,6 @@ The single-pixel approach is a random regressor trained only using single-pixel 
 The background modeling approach aligns sequences of 15 frames estimating their mutual affine transformations; pixels with high variance are considered to be foreground hand regions. 
 As can be seen, although the single-pixel approach is conceptually simple, is still quite effective. In addition, we observe that the low performance of the video stabilization approach is due to large ego-motion because the camera is worn by the user.     
 The method recently proposed by \cite{li13} is more similar to our approach, but the use of superpixels, the selection of a new set of local features and the introduction of temporal and spatial consistency allow us to outperforms that results.
+
+\medskip
+We have addressed one of the main issues involved in hand gesture recognition: hand segmentation. The proposed algorithm will be exploited in the next chapter, where our gesture recognition approach will be introduced and fully described.

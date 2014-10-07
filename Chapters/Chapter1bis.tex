@@ -1,12 +1,17 @@
 % Chapter 1
 
 \chapter{Computer Vision and Machine Learning techniques used in this thesis}
-
+\label{chpt2}
 \lhead{Chapter 2. \emph{Computer Vision and Machine Learning techniques}} % This is for the header on each page - perhaps a shortened title
 
 \section{Color spaces}
 \section{Descriptors}
 \subsection{Histograms of Oriented Gradient}
+The HOG feature \cite{dalal2005histograms} is based on evaluating well-normalized local histograms of image gradient orientations
+in a dense grid. The basic idea is that local object appearance and shape can often be characterized rather well by the distribution of local intensity gradients or edge directions, even without precise knowledge of the corresponding gradient or edge positions. In practice this is implemented by dividing the image window into small spatial regions (cells), for each cell accumulating a local 1-D histogram of gradient directions or edge orientations over the pixels of the cell. The combined histogram entries form the representation. For better invariance to illumination, shadowing, etc., it is also useful to contrast-normalize the local 
+responses before using them. This can be done by accumulating a measure of local histogram energy over somewhat
+larger spatial regions (blocks) and using the results to normalize all of the cells in the block. 
+
 \subsection{Histograms of Optical Flow}
 \subsection{Gabor Filters}
 \label{Gabor}
