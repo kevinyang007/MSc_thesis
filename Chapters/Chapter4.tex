@@ -1,13 +1,28 @@
 % Chapter 1
 
-\chapter{A sequential implementation for the Odroid-XU developer board}
+\chapter{An on-line implementation for the Odroid-XU developer board}
 
-\lhead{Chapter 5. \emph{A sequential implementation}} % This is for the header on each page - perhaps a shortened title
+\lhead{Chapter 5. \emph{An on-line implementation}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
-Finally, we turn our attention to define and implement a sequential version of our gesture recognition approach that can run in real-time on an embedded device and which could be suitable for real-world application. To this aim, we modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take into account time, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we exploit several optimization techniques.
+The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and which could be suitable for real-world application. To this aim, we need to modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take a stream of frames as input, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we also have to exploit several optimization techniques.
 
-We evaluate the Structural SVM implementation by Altun \etal using feature vectors generated from our gesture recognition algorithm. We modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
+\section{Splitting trajectories}
+In the previous chapter, we classified frame sequences containing a gesture using a linear and power-normalized SVM classifier. In particular, we extracted trajectories with fixed length $L=30$ from the frame sequence, we then applied a standard BoW approach, and the output of the BoW was our final feature vector, with fixed size and ready to be classified with a standard SVM classifier. Note that in this case the input of the BoW was a feature vector describing the whole trajectory, therefore the SVM classifier was given a description of the entire frame sequence as input. That has been, so far, our way of taking time into account. Unfortunately, this only works when we have a frame sequence containing exactly one gesture, that is, when we know where a gesture starts and ends.
+
+Now, we consider a more complex scenario: we have a stream of frames, whose length is unknown, that can contain a variable number of gestures, and we have to classify each frame as if it contains a gesture (and which gesture) or not. This is basically a \textit{label sequence learning} problem, with one more class than the ones we were used to, the \textit{non-gesture} one.
+
+We start observing that our trajectory descriptors can be thought as a concatenation of single-point descriptors. Formally, let's consider a trajectory $T_i$ starting at frame $t_i$ and ending at frame $t_i+L-1$: we can express $T_i$ as $\left[ P_{t_i}^i, P_{t_{i+1}}^i, ..., P_{t_i+L-1}^i \right]$, where $P_{j}^i$ is the point of trajectory $T_i$ at frame $j$.  If we denote $D(T_i)$ the descriptor of trajectory $T_i$, then $D(T_i)$ can be expressed as the concatenation of $d(P_{t_i}^i), d(P_{t_{i+1}}^i), ..., d( P_{t_i+L-1}^i)$, where $d(P_{j}^i)$ is a descriptor computed around $P_j^i$, at frame $j$. 
+
+Let's now consider a single frame $j$ of a frame stream, and suppose $ \{ T_1, T_2, ..., T_n\}$ are the trajectories crossing this frame. In this on-line version, we build a BoW histogram on each frame, being the input of the BoW clustering the set of descriptors of the trajectory points crossing the frame, i.e. $\{ d(P_{j}^1),  d(P_{j}^2), ...,  d(P_{j}^n) \}$.  Therefore, the corresponding BoW histogram won't represent a collection of trajectories anymore, but a collection of points, each one belonging to a different trajectory, and all related to the same frame.
+
+Shortly, in the previous chapter the temporal dimension was encoded directly into the BoW input, now this will be up to the sequence classifier.
+
+
+\section{Classification}
+ In Section \ref{svmhmm} we have already described how a Struct SVM classifier can be used for label sequence learning. Now, we exploit the Structural SVM implementation by Altun \etal using this modified version of our feature vectors.
+
+ We modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
 $\Psi(\mathbf{x},\mathbf{y})$ takes the following form:
 
 \begin{equation}
@@ -21,15 +36,17 @@ Furthermore, we investigate the use of different loss functions and their impact
 \begin{equation}
 \delta_0(y,y') = \begin{cases} 0 \quad \text{if } y= y'  \\ 
 1 \quad \text{otherwise}\end{cases}
+\label{eq:loss-default}
 \end{equation}
 
 \begin{equation}
 \delta_1(y,y') = \begin{cases} 0 \quad \text{if } y= y'  \\ 
-3 \quad \text{if } y=8, y' \neq 8 \lor y\neq8, y'=8  \\
+3 \quad \text{if } y=y_{ng}, y' \neq y_{ng} \lor y\neq y_{ng}, y'=y_{ng}  \\
 1 \quad \text{otherwise}\end{cases}
+\label{eq:loss-mia}
 \end{equation}
 
-
+where $y_{ng}$ is the \textit{non-gesture} label. \ref{eq:loss-default} is the default 0-1 loss function included in Joachims's code, and \ref{eq:loss-mia} is a slightly modifed version that aims at penalizing the case when a non-gesture frame is confused with a gesture frame or viceversa.
 
 
 

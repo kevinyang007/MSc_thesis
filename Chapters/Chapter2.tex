@@ -45,9 +45,8 @@ of the hands does not change drastically over time.
 
 The purpose of this chapter is to identify and address the
 challenges of hand detection for first-person vision. To this
-end, we present a novel approach capable of facing
-various illumination conditions and different backgrounds. Furthermore, we analyze our algorithm on existing datasets and propose a new challenging dataset. We perform extensive tests to highlight the pros and
-cons of various widely-used local appearance features. We
+end, we present existing and recent hand detection approaches, and we propose a novel algorithm capable of facing
+various illumination conditions and different backgrounds. Furthermore, we analyze our proposal on existing datasets to highlight the pros and cons of various widely-used local appearance features. We
 evaluate the value of modeling global illumination to generate
 an ensemble of hand region detectors conditioned on the
 illumination conditions of the scene. Based on our finding,
@@ -55,12 +54,67 @@ we propose a model using sparse feature selection and an
 illumination-dependent modeling strategy, and show that it
 out-performs several baseline approaches.
 
-\section{Literature overview}
-The problem of hand detection  in ego-vision scenario, has been addressed only recently by the research community. Khan and Stoettinger in \cite{khan10} studied color classification for skin segmentation and pointed out how color-based skin detection has many advantages, like potentially high processing speed, invariance against rotation, partial occlusion and pose change. The authors tested Bayesian Networks, Multilayers Perceptrons, AdaBoost, Naive Bayes, RBF Networks and Random Forest. They demonstrated that Random Forest classification obtains the highest F-score among all the other techniques. 
-Fathi \etal \cite{fathi11} proposed a different approach to hand detection, exploiting the basic assumption that background is static in the world coordinate frame. Thus foreground objects are detected as to be the moving region respect to the background. An initial panorama of the background is required to discriminate between background and foreground regions: this is achieved by fitting a fundamental matrix to dense optical flow vectors. 
-This approach is shown to be a robust tool for skin detection for hand segmentation in a limited indoor environment but it performs poorly with more unconstrained scenes.
+\section{Previous approaches in Hand Segmentation}
+The problem of hand detection  in ego-vision scenario, has been addressed only recently by the research community. Khan \etal's paper \cite{khan10}, for example, addresses skin detection as a general task for face detection and hand gesture analysis. They used the IHLS color space for raw pixel based skin detection and evaluated different classifiers: Random Forest, Bayesian Networks, Multilayers Perceptrons, AdaBoost, Naive Bayes, RBF Networks. They demonstrated on a database of 8991 images that Random Forest classification obtains the highest F-score among all the other techniques. Also, they show the effect of increasing the number of trees: the maximum F-score is achieved with 10 trees, while an higher number of tree doesn't increase the F-score.
 
-Li and Kitani \cite{li13} provide an historical overview about approaches for detecting hands from moving cameras. They define three categories: local appearance-based detection, global appearance-based detection, where a global template of hand is needed, and motion-based detection, which is based on the hypothesis that hands and background have different motion statistics. Motion-based detection approach requires no supervision nor training. On the other hand, this approach eventually identifies as hand an object manipulated by the user, since it moves together his hands. In addition they proposed a model with sparse feature selection which was shown to be an illumination-dependent strategy. To solve this issue, they trained a set of random forests indexed by a global color histogram, each one reflecting a different illumination condition.
+Jones \etal \cite{jones99} describe the construction of color models for skin and non-skin classes from a dataset of nearly 1 billion labelled pixels. These classes exhibit a surprising degree of separability which we exploit by building a skin pixel detector achieving a detection rate of 80\% with 8.5\% false positives. They also compare the performance of histogram and mixture models in skin detection and find histogram models to be superior in accuracy and computational cost. Using aggregate features computed from the
+skin pixel detector they build an effective detector for naked people. Their results suggest that color can be the most powerful cue for detecting people in unconstrained imagery.
+
+On a different note, Hayman \etal \cite{hayman03} propose a video stabilization approach for hand segmentation. They present a probabilistic
+framework for when the camera pans and tilts. A unified approach is developed for handling various sources of error, including motion blur, sub-pixel camera motion, mixed pixels at object boundaries, and also uncertainty in background stabilisation caused by noise, unmodelled radial distortion and small translations of the camera. The second contribution regards a Bayesian approach to
+specifically incorporate uncertainty concerning whether the background has yet been uncovered by moving foreground
+objects. They don't assume that a background model is available in advance, instead they generate the background model online, very possibly in the presence of moving objects.
+
+Fathi \etal \cite{fathi11} try to solve the hand segmentation problem in the ego-centric perspective, with a foreground segmentation approach. Their method is based on a few
+assumptions: (1) that the background
+is static in the world coordinate frame, (2) they define foreground
+as every entity which is moving with respect to the
+static background, (3) they assume background objects are
+usually farther away from the camera than foreground objects
+and (4) they assume they can build a panorama of the background scene by stitching the background images together
+using an affine transformation. The fourth assumption
+is basically assuming that the background is roughly
+on a plane or far enough from the camera. An object will
+be moving with respect to the background when it is being
+manipulated by hands. When the subject finishes a sub-task
+and stops manipulating the object, the object will become a
+part of background again.
+
+Their segmentation method is as follows. They first make an
+initial estimate of background regions in each image by fitting
+a fundamental matrix to dense optical flow vectors. They
+make temporally local panoramas of background given their
+initial background region estimates. Then they register each
+image into its local background panorama. The regions in
+the image which do not match the background scene are
+likely to be parts of foreground. Then they connect the regions in
+sequence of images spatially and temporally and use graphcut
+to split them into foreground and background segments.
+They split the video into short intervals and make local
+background models for each. The reason is that the background
+might change over time, for example the subject
+might finish manipulating an object and leave it on the table,
+letting it become a part of background. They initially approximately
+separate foreground and background channels
+for each image by fitting a fundamental matrix to its optical
+flow vectors. They compute the flow vectors to its few adjacent
+frames. For each interval we choose a reference frame
+whose initial background aligns the best to other frames.
+
+They build two kinds of temporally local models for background
+(panoramas): (1) a model based on color and texture
+histogram of regions and (2) a model of region boundaries.
+To build these models, they fit an affine transformation
+to the initial background SIFT feature correspondences of
+each frame in the interval, and the reference frame. They
+stitch these images using affine transformation. After fixing
+the images to the reference frame coordinate, they build
+the color-texture and boundary background models. This is
+by computing a histogram of values extracted from interval
+images corresponding to each location in the background
+panorama.
+
+On the other hand, Li and Kitani in \cite{li13} provide an historical overview about approaches for detecting hands from moving cameras. They define three categories: local appearance-based detection, global appearance-based detection, where a global template of hand is needed, and motion-based detection, which is based on the hypothesis that hands and background have different motion statistics. Motion-based detection approach requires no supervision nor training. This approach eventually identifies as hand an object manipulated by the user, since it moves together his hands. In addition they proposed a model with sparse feature selection which was shown to be an illumination-dependent strategy. To solve this issue, they trained a set of random forests indexed by a global color histogram, each one reflecting a different illumination condition.
 Recently Bagdanov \etal \cite{bagdanov12} propose a method to predict the status of the user hand by jointly exploiting depth and RGB imagery.
 
 All the presented previous works present good characteristics, but lack of generality, since they take into account only few aspects to model user hand appearance and they are not integrated with a gesture recognition system. We therefore present a novel method for hand segmentation that can be used as basis for ego-vision applications. 
@@ -68,9 +122,9 @@ The proposed Hand detection approach is based on Random Forest classifiers learn
 
 \section{Proposed approach}
 Ego-vision applications require a fast and reliable segmentation of the hands; thus we propose to use random forest classifiers, as they are known to efficiently work even with large inputs \cite{leo01}. Since using a per-pixel basis in label assignment has show to be inefficient \cite{jones99}, we adopt segmentation method which assign labels to superpixels, as suggested in \cite{tighe13}. 
-This allows a complexity reduction of the problem and also gives better spatial support for aggregating features that could belong to the same object. 
+This allows a complexity reduction of the problem and also gives better spatial support for aggregating features that could belong to the same object. Summarizing, our method extract superpixels from the input image, and then classifies each superpixel as belonging to the hand or not.
 
-To extract superpixels for every frames we use the Simple Linear Iterative Clustering (SLIC) algorithm, proposed in \cite{achanta12} as memory efficient and highly accurate segmentation method.  The SLIC algorithm is an adaptation of $k$-means for superpixel generation (see Fig. \ref{fig:SLIC}), with two important distinctions:
+To extract superpixels for every frames we use the Simple Linear Iterative Clustering (SLIC) algorithm, proposed in \cite{achanta12} as it is memory efficient and highly accurate segmentation method. Moreover, being the SLIC algorithm an adaptation of $k$-means for superpixels, the generated superpixels tend to be circular (see Fig. \ref{fig:SLIC}). It features two main characteristics:
 \begin{enumerate}
 \item The number of distance calculations in the optimization is dramatically reduced by limiting the search space to a
 region proportional to the superpixel size. This reduces the complexity to be linear in the number of pixels $N$– and independent of the number of superpixels $k$.
@@ -98,17 +152,19 @@ nearby superpixels. A real-time implementation of the SLIC algorithm is also ava
 Having extracted SLIC superpixels, we represent superpixels by features to encode color and gradient information. As pointed out by previous works, HSV and LAB color spaces have been proven to be robust for skin detection. 
 In particular, we describe each superpixel with:
 \begin{itemize} 
-\item mean and covariance matrix of its pixel values
-\item a 32-bin color histogram both in HSV and Lab color spaces
+\item mean and covariance matrix of its pixel values, both in HSV and Lab color spaces
+\item a 32-bin color histogram, again both in HSV and Lab color spaces
 \item Gabor features (see \ref{Gabor}) obtained with 27 filters (nine orientations and three different scales: $7 \times 7$, $13 \times 13$, $19 \times 19$) 
-\item a simple histogram of gradients with nine bins. 
+\item a simple histogram of gradients with nine bins, computed inside each superpixel (this could be interpreted as a superpixel version of the HOG descriptor). 
 \end{itemize}
 
-The gradient features are included in order to discriminate between objects with a hand-like color distribution and hands.
+The gradient features are included in order to discriminate between objects with a hand-like color distribution and hands. Beyond describing each superpixel with color and texture, we propose three approaches to enhance the performance of our method: (1) \textit{illumination invariance}, by which we make our method invariant to variable illumination conditions; (2) temporal smoothing, by which we impose the temporal coherence of the segmentation; (3) spatial consistency, that is, we require that segmentation masks are spatially consistent. In the next subsections we will describe each of these techniques in detail.
 
 \subsection{Illumination invariance}
-To deal with different illumination conditions, we cluster the training images running the $k$-means algorithm on a global HSV histogram. Hence, we train a Random Forest classifier for each cluster. By using a histogram over all three channels of the HSV color space, each scene cluster encodes both the appearance of the scene and its illumination. Intuitively, this models the fact that hands viewed under similar global appearance will share a similar distribution in the feature space. Given a feature vector $\mathbf{l}$ of a superpixel $\mathbf{s}$ and a global appearance
-feature $\mathbf{g}$, the posterior distribution of $\mathbf{s}$
+The main purpose of this technique is to deal with different illumination conditions. We cluster the training images running the $k$-means algorithm on a global HSV histogram. Hence, we train a Random Forest classifier for each cluster. By using a histogram over all three channels of the HSV color space, each scene cluster encodes both the appearance of the scene and its illumination. Intuitively, this models the fact that hands viewed under similar global appearance will share a similar distribution in the feature space. 
+
+Given a feature vector $\mathbf{l}$ of a superpixel $\mathbf{s}$ and a global appearance
+feature $\mathbf{g}$ (the HSV histogram), the posterior distribution of $\mathbf{s}$
 is computed by marginalizing over different clusters $c$:
 
 \begin{equation}
@@ -121,6 +177,7 @@ classifier and $P(c|\mathbf{g})$ is a conditional distribution of a
 cluster $c$ given a global appearance feature $\mathbf{g}$. In test
 phase, the conditional $P(c|\mathbf{g})$ is approximated using an
 uniform distribution over the five nearest clusters.
+
 It is important to highlight that the optimal number of classifiers
 depends on the characteristics of the dataset: a training dataset
 with several different illumination conditions, taken both inside and
@@ -137,10 +194,10 @@ only considering illumination variations, but also including semantic coherence 
 \caption{Comparison before (left image) and after (right image) Temporal smoothing.}
 \label{fig:gesture_samples_time}
 \end{figure}
-We exploit temporal coherence to improve the foreground prediction of a pixel in a frame by a weighted combination of
-its previous frames, since past frames should affect the results prediction for the current frame.
+Temporal smoothing aims to improve the foreground prediction of a pixel in a frame by a weighted combination of
+its previous frames, since past frames should affect the results prediction for the current frame. This technique is inspired by \cite{liu08}.
 
-The smoothing filter for a pixel $\mathbf{x}_{t}^{i}$ of a frame $t$ (inspired by \cite{liu08}) can thus be defined as follows:
+The smoothing filter for a pixel $\mathbf{x}_{t}^{i}$ of a frame $t$  can thus be defined as follows:
 
 \begin{multline}
 P(\mathbf{x}_{t}^{i}=1) = \sum_{k = 0}^{\min(d,k)} w_{k} \bigl( P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=1) \cdot P(\mathbf{x}_{t-k}^{i}=1|\mathbf{l_{t-k}},\mathbf{g_{t-k}})\, + P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=0) \, \cdot \\
@@ -154,14 +211,14 @@ $1-P(\mathbf{s}|\mathbf{l},\mathbf{g_{t-k}})$.
 While $P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=1)$ and $P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=0)$ are prior probabilities estimated
 from the training set as follows:
 
-\[
+\begin{equation}
 P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=1)=\frac{\#(\mathbf{x}_{t}^{i}=1,\mathbf{x}_{t-k}^{i}=1)}{\#(\mathbf{x}_{t-k}^{i}=1)}
-\]
+\end{equation}
 
 
-\[
+\begin{equation}
 P(\mathbf{x}_{t}^{i}=1|\mathbf{x}_{t-k}^{i}=0)=\frac{\#(\mathbf{x}_{t}^{i}=1,\mathbf{x}_{t-k}^{i}=0)}{\#(\mathbf{x}_{t-k}^{i}=0)}
-\]
+\end{equation}
 
 
 where $\#(\mathbf{x}_{t-k}^{i}=1)$ and $\#(\mathbf{x}_{t-k}^{i}=0)$ are the number of times in which $\mathbf{x}_{t-k}$ belongs or not to
@@ -170,7 +227,9 @@ of times that two pixels at the same location at frame $t$ and $t-k$ belong to a
 similarly, $\#(\mathbf{x}_{t}^{i}=1,\mathbf{x}_{t-k}^{i}=0)$
 is the number of times that a pixel in frame $t$ belongs to
 a hand part and pixel in the same position in frame $t-k$ does not belong
-to a hand region. Based on our preliminary experiments we set $d$ equal to three
+to a hand region. 
+
+Based on our preliminary experiments we set $d$ equal to three.
 Figure \ref{fig:gesture_samples_time} shows an example where temporal smoothing deletes blinking regions (i.e. the tea box brand and jar shadows on the right).
 
 
@@ -192,8 +251,8 @@ Given pixels elaborated by the previous steps, we want to exploit spatial consis
 \end{figure}
  
 \begin{enumerate}
-\item User creates an initial trimap by of background, foreground and unknown pixels.
-\item Computer creates an initial image segmentation, where all unknown
+\item It takes as input an initial trimap by of background, foreground and unknown pixels.
+\item It creates an initial image segmentation, where all unknown
 pixels are tentatively placed in the foreground class
 and all known background pixels are placed in the background
 class.
@@ -228,8 +287,8 @@ In Figure \ref{fig:gesture_samples_space} an example with and without applying t
 \end{figure*}
 
 \section{Experimental results}
-To evaluate the performance of proposed method we tested it on two datasets: EDSH and EGO-HSGR.
-The recent publicly available EDSH dataset \cite{li13} consists in egocentric videos acquired to analyze performance of several hand detection methods. It consists of three videos (EDSH\_1, used as train video, and EDSH\_2 and EDSH\_{kitchen} used as test videos) that contain indoor and outdoor scenes with large variations of illumination, mild camera motion induced by walking and climbing stairs. All videos are recorded at a resolution of 720p and a speed of 30FPS. Also, the dataset includes segmentation masks of hands.    
+Having fully described our method, we now want to evaluate its performance on two datasets: EDSH and EGO-HSGR.
+The recent publicly available EDSH dataset \cite{li13} consists in egocentric videos acquired to analyze performance of several hand detection methods. It consists of three videos (EDSH\_1, used as train video, and EDSH\_2 and EDSH\_{kitchen} used as test videos) that contain indoor and outdoor scenes with large variations of illumination, mild camera motion induced by walking and climbing stairs. All videos are recorded at a resolution of 720p and a speed of 30 fps. Also, the dataset includes segmentation masks of hands.    
 
 We also generated a new dataset which contains 12 videos of indoor scenes (EGO-HSGR). Videos have been recorded with a Panasonic HX-A10 Wearable Camcorder (see \ref{panasonic}) at a resolution of $800 \times 450$ with a 25FPS in two different locations: a library and department's exhibition area.   
 
@@ -238,6 +297,8 @@ The aim of this dataset is to reproduce an environment similar to a museum for h
 To evaluate performance of our pixel-level hand detector a subset of six videos are used (three for training and two for testing). Segmentation masks are provided every 25 frames for a total of 700 annotations. 
 The F-score (harmonic mean of the precision and recall rate) is used to quantity hand detection performance.
 %(we denote these videos as BB\_L1 and BB\_L2), a corridor of a faculty (BB\_F1 and BB\_F2) and a department (BB\_D1 and BB\_D2).
+
+In the following subsections, we are going to evaluate every single aspect of our method: the performance of the features, and of the proposed techniques: temporal consistency, spatial coherence and illumination invariance. We will also compare our approach to existing methods.
     
  \begin{table}
  \centering
@@ -287,9 +348,9 @@ The proposed technique is also tested in our EGO-HSGR dataset obtaining an F-mea
  \begin{tabular}{|l|c|c|}
  \hline
   	& \textbf{EDSH\_2}	& \textbf{EDSH\_{kitchen}} \\ \hline\hline
-Hayman \etal \cite{hayman03} 	& 0.211 & 0.213		\\ \hline
-Jones \etal \cite{jones99}	& 0.708 &	0.787	\\ \hline  
-Li \etal \cite{li13} & 0.835 & 0.840		\\ \hline  
+Video stabilization  \cite{hayman03} 	& 0.211 & 0.213		\\ \hline
+Single pixel color \cite{jones99}	& 0.708 &	0.787	\\ \hline  
+Collection of random forest \cite{li13} & 0.835 & 0.840		\\ \hline  
 \textbf{Our method} & \textbf{0.852} &	\textbf{0.901}	\\ \hline 
 \end{tabular}
 \caption{Hand segmentation comparison with the state-of-the-art.}\label{tab:comparision_hand}
@@ -300,7 +361,7 @@ Li \etal \cite{li13} & 0.835 & 0.840		\\ \hline
 \subsection{Comparison to related methods}
 
 In Table \ref{tab:comparision_hand} we compare our results to several approaches on EDSH dataset: a single-pixel color approach inspired by \cite{jones99}, a video stabilization approach based on background modeling using affine alignment of image frames inspired by
-\cite{hayman03} and an approach based on random forest, proposed by \cite{li13}. 
+\cite{hayman03} and the approach based on random forest, by Li \etal \cite{li13}. 
 The single-pixel approach is a random regressor trained only using single-pixel LAB color values. 
 The background modeling approach aligns sequences of 15 frames estimating their mutual affine transformations; pixels with high variance are considered to be foreground hand regions. 
 As can be seen, although the single-pixel approach is conceptually simple, is still quite effective. In addition, we observe that the low performance of the video stabilization approach is due to large ego-motion because the camera is worn by the user.     

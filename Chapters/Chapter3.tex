@@ -5,7 +5,7 @@
 \lhead{Chapter 4. \emph{Hand gesture recognition}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
-Having presented our hand segmentation approach, we move a step forward and introduce a more complex problem: detecting static and dynamic hand gestures. The target scenario of our research is the cultural heritage domain. In fact, our goal is to deploy new gesture-based human machine interfaces to enhance museum experience.
+Having presented our hand segmentation approach, we move a step forward and introduce a more complex problem: detecting static and dynamic hand gestures. As we said in the introductory chapter, the target scenario of our research is the cultural heritage domain. In fact, our goal is to deploy new gesture-based human machine interfaces to enhance museum experience.
 
 \section{Motivation}
 In recent years the interest in cultural heritage has reborn, and the cultural market is becoming a cornerstone in many national economic strategies. In the United States, a recent report of the Office of Travel and Tourism Industries claims that 51\% of the 40 million Americans traveling abroad visit historical places; almost one third visit cultural heritage sites; and one quarter go to an art gallery or museum \cite{tourismintelligence}. The same interest is found in Europe, where the importance of the cultural sector is widely acknowledged, South Asia and North Africa. The latest annual research from World Travel and Tourism Council shows that travel and tourism's total contribution to total GDP grew by 3.0\% in 2013, faster than overall economic growth for the third consecutive year \cite{econotravel}.
@@ -18,10 +18,9 @@ An interesting attempt to user profiling with wearable sensors was the Museum We
 
 Museums and cultural sites still lack of an instrument that provides entertainment, instructions and visit customization in an effective natural way. Too often visitors struggle to find the description of the artwork they are looking at and when they finds it, its detail level could be too high or too low for their interests. Moreover, frequently the organization of the exhibition does not reflect the visitors' interests leading them to a pre-ordered path which cultural depth could not be appropriate.
 
-To overcome these limitations, we try to enhance visitors' experiences based on ego-vision. Ego-vision features glass-mounted wearable cameras able to see what the visitor sees and perceiving the surrounding environment as he does. Our goal is to develop a wearable vision device for museum environments, able to replace the traditional self-service guides and overcoming their limitations and allowing for a more interactive museum experience to all visitors. The aim of our device is to stimulate the visitors to interact with the artwork, reinforcing their real experience, by letting visitors to replicate the gestures (e.g. point out to the part of the painting they're interested in) and behaviors that they would use to ask a guide something about the artwork.
+To overcome these limitations, we try to enhance visitors' experiences using ego-vision. Ego-vision features glass-mounted wearable cameras able to see what the visitor sees and perceiving the surrounding environment as he does. Our goal is to develop a wearable vision device for museum environments, able to replace the traditional self-service guides and overcoming their limitations and allowing for a more interactive museum experience to all visitors. The aim of our device is to stimulate the visitors to interact with the artwork, reinforcing their real experience, by letting visitors to replicate the gestures (e.g. point out to the part of the painting they're interested in) and behaviors that they would use to ask a guide something about the artwork (see Fig. \ref{sample} for some samples of the recognized gestures).
 
-In this chapter, we provide algorithms that perform gesture analysis to recognize user interaction with artworks. The proposed solution is based on scalable and distributed wearable devices capable of communicating with each other and with a central server and hence does not require fixed cameras.
-In particular the connection with the central server allows our wearable devices to grab gestures of past visitors for improving gesture analysis accuracy.
+In this chapter, we provide algorithms that perform gesture analysis to recognize user interaction with artworks. We also propose to use scalable and distributed wearable devices capable of communicating with each other and with a central server. In particular the connection with the central server allows our wearable devices to grab gestures of past visitors for improving gesture analysis accuracy.
 
 The proposed gesture recognition algorithm is compared to the current state of the art on benchmark datasets showing superior performance, and is tested in real and virtual museum environments. We further demonstrate that our gesture recognition approach can achieve acceptable accuracy results even with a few training samples performed by the visitor, and can benefit from distributed training in which gestures performed by other visitors are exploited.
 
@@ -55,7 +54,10 @@ To our knowledge, the study of gesture recognition in the ego-centric paradigm h
 Gesture recognition systems should recognize both static and dynamic hand movements. Therefore, we propose to describe each gesture as a collection of dense trajectories extracted around hand regions. Feature points are sampled inside and around the user's hands and tracked during the gesture; then several descriptors are computed inside a spatio-temporal volume aligned with each trajectory, in order to capture its shape, appearance and movement at each frame. 
 These descriptors are coded,  using the Bag of Words approach and power normalization, in order to obtain the final feature vectors, which are then classified using a linear SVM classifier. A summary of our approach is presented in Figure \ref{schema}.
 
-We start by densely sampling feature points. To this aim, we consider a grid spaced by $W$ pixels. Sampling is carried out on each
+In the next subsections we will introduce the main components of our approach: camera motion suppression, trajectory sampling and description, the power normalized Bag of Words and the final classification. We will also explain how these steps exploit the hand segmentation approach we have presented in the previous chapter.
+
+\subsection{Feature points sampling}
+We start by describing how we densely sample feature points for generating trajectories. To this aim, we consider a grid spaced by $W$ pixels. Sampling is carried out on each
 spatial scale separately. This guarantees that feature points equally cover all spatial
 positions and scales. Experimental results showed that a sampling step size of $W = 5$ pixels is dense
 enough to give good results over all datasets. There are at most 8 spatial scales in total, depending on the
@@ -170,7 +172,7 @@ We have also observed that power-normalization greatly improves the final accura
 
 \section{Experimental Results}
 
-To compare the performance of the proposed gesture recognition algorithm with existing approaches, we test it on the Cambridge-Gesture database \cite{kim2007tensor}, which includes nine hand gesture types performed on a table, under different illumination conditions. To better investigate the effectiveness of the proposed approach in videos taken from the ego-centric perspective and in a museum setting, we also propose two far more realistic and challenging dataset which contains seven gesture classes, performed by five subjects in an interactive exhibition room which functions as a virtual museum and in a real museum. 
+We now evaluate the performance of the proposed approach. To compare the performance of our gesture recognition algorithm with existing approaches, we test it on the Cambridge-Gesture database \cite{kim2007tensor}, which includes nine hand gesture types performed on a table, under different illumination conditions. To better investigate the effectiveness of the proposed approach in videos taken from the ego-centric perspective and in a museum setting, we also propose two far more realistic and challenging dataset which contains seven gesture classes, performed by five subjects in an interactive exhibition room which functions as a virtual museum and in a real museum. 
 
 The Cambridge Hand Gesture dataset contains 900 sequences of nine hand gesture classes. Although this dataset does not contain ego-vision videos it is useful to compare our results to recent gesture recognition techniques. In particular, each sequence is recorded with a fixed camera, placed over one hand, and hands perform leftward and rightward movements on a table, with different poses. The whole dataset is divided in five sets, each of them containing image sequences taken under different illumination conditions. The common test protocol, proposed in \cite{kim2007tensor}, requires to use the set with normal illumination for training and the remaining sets for testing, thus we use the sequences taken in normal illumination to generate the BoW codebooks and to train the SVM classifier. Then, we perform the test using the remaining sequences.   
 
@@ -181,13 +183,17 @@ Table \ref{cambridge} shows the recognition rates obtained with our gesture reco
 \begin{center}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
-Method					& Set1		& Set2		& Set3		& Set4	 	& Overall \\
+\textbf{Method}					& \textbf{Set1}		& \textbf{Set2}		& \textbf{Set3}		& \textbf{Set4}	 	& \textbf{Overal}l \\
 \hline
 \hline
 TCCA \cite{kim2009canonical}		& 0.81		& 0.81		& 0.78		& 0.86		& 0.82 \\
+\hline
 PM \cite{lui2010action}			& 0.89		& 0.86		& 0.89		& 0.87		& 0.88  \\
+\hline
 TB \cite{lui2011tangent}			& \textbf{0.93}	& 0.88		& 0.90		& 0.91		& 0.91 \\
+\hline
 Cov3D \cite{sanin2013spatio}		& 0.92		&\textbf{0.94}	& 0.94		& 0.93		& 0.93 \\
+\hline
 \textbf{Our method}			& 0.92		& 0.93		& \textbf{0.97}	& \textbf{0.95}	& \textbf{0.94} \\
 \hline
 \end{tabular}
@@ -253,13 +259,17 @@ In Table \ref{gesture_comparison} we show the gesture recognition accuracy for e
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
-User							& No segmentation & With segmentation  \\
+\textbf{User}							& \textbf{No segmentation} & \textbf{With segmentation}  \\
 \hline
 \hline
 Subject 1				 			& 0.91 		& \textbf{0.95} \\
+\hline
 Subject 2			 				& 0.87 		& \textbf{0.87} \\
+\hline
 Subject 3					 		& 0.92		& \textbf{0.95}\\
+\hline
 Subject 4							& \textbf{0.96}	& 0.94 \\
+\hline
 Subject 5							& 0.91		& \textbf{0.96} \\
 \hline
 Average						&  0.91	& \textbf{0.93}  \\
@@ -270,7 +280,7 @@ Average						&  0.91	& \textbf{0.93}  \\
 \label{gesture_comparison}
 \end{table}
 
-On a different note, to test our approach in a real setting, we created a dataset with videos taken in the Maramotti modern art museum, in which paintings, sculptures and \textit{objets d'art} are exposed. As in the previous dataset, the camera is placed on the user's head and captures a 800 $\times$ 450, 25 frames per second image sequence. The Maramotti dataset contains 700 video sequences, recorded by five different persons (some are the same of the Interactive Museum dataset), each performing the same gestures as before in front of different artworks. We are currently waiting for the permission to release this dataset from the Maramotti museum.
+On a different note, to test our approach in a real setting, we created a dataset with videos taken in the Maramotti modern art museum, in which paintings, sculptures and \textit{objets d'art} are exposed. As in the previous dataset, the camera is placed on the user's head and captures a 800 $\times$ 450, 25 frames per second image sequence. The Maramotti dataset contains 700 video sequences, recorded by five different persons (some are the same of the Interactive Museum dataset), each performing the same gestures as before in front of different artworks. We have publicly released this dataset too\footnote{\url{ http://imagelab.ing.unimore.it/files/ego_maramotti.zip}}.
    
 Figure \ref{example-unimore} show some examples of gestures performed in the two datasets. In the Interactive Museum dataset, users perform gestures in front of a wall over which the works of art are projected. This setting is quite controlled: the illumination is constant, the art works are in low light, while hands are well illuminated. On the other hand, in the Maramotti dataset, users perform gestures in front of real artworks inside a museum. This is a realistic and very challenging environment: the illumination changes, other visitors are present and sometimes walk in. In both cases there is significant camera motion, because the camera moves as the users move their heads or arms. It is also important to underline that users have not been trained before recording their gestures, so each user performs the gestures in a slightly different way, as would happen in a realistic context.  
 
@@ -284,14 +294,19 @@ In our scenario each visitor coming to the museum performs, in the initial setup
 \caption{Gesture recognition accuracy on the Maramotti dataset.}
 \label{gesture_comparison_maramotti}
 \centering
-\begin{tabular}{lcc}
+\begin{tabular}{|l|c|c|}
 \hline
 \textbf{User}					& \textbf{Single user's Gestures} 	& \textbf{Augmented}  \\
 \hline
+\hline
 User A						& 0.54 			& \textbf{0.65} \\		% 4 Beppe
+\hline
 User B			 				& 0.52 			& \textbf{0.72} \\		% 2 Francesco
+\hline
 User C			 			& 0.68 			& \textbf{0.68} \\		% 1 Lorenzo
+\hline
 User F					 		& 0.56 			& \textbf{0.79} \\		% 3 Stefano
+\hline
 User G						& 0.53 			& \textbf{0.72} \\		% 5 Michela
 \hline
 \textbf{Average}					& 0.57	  		& \textbf{0.71} \\
@@ -299,4 +314,6 @@ User G						& 0.53 			& \textbf{0.72} \\		% 5 Michela
 \end{tabular}
 \end{table}
 
-In the next chapter, a sequential version of the described algorithm will be proposed, and we will describe the necessary optimizations steps to make such implementation real-time.
+We described a novel approach to cultural heritage fruition based on ego-centric vision devices. Our work is motivated by the increasing interest in ego-centric vision and by the growth of the cultural market, which encourages the development of new interfaces to interact with the cultural heritage. We presented a gesture and painting recognition model that can deal with static and dynamic gestures and can benefit from a distributed training. Our gesture recognition and hand segmentation results outperform the state-of-the-art approaches on Cambridge Hand Gesture and CMU EDSH datasets. Finally, we ran an extensive performance analysis of our system on a wearable board. 
+
+In the next chapter, a real-time version of the described algorithm will be proposed, and we will describe the necessary optimizations steps to make such implementation real-time.
