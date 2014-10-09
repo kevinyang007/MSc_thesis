@@ -20,7 +20,7 @@ Shortly, in the previous chapter the temporal dimension was encoded directly int
 
 
 \section{Classification}
- In Section \ref{svmhmm} we have already described how a Struct SVM classifier can be used for label sequence learning. Now, we exploit the Structural SVM implementation by Altun \etal using this modified version of our feature vectors.
+ In Section \ref{svmhmm} we have already described how a Struct SVM classifier can be used for label sequence learning. Now, we exploit the Structural SVM implementation by Altun \etal \cite{altun2003hidden} using this modified version of our feature vectors.
 
  We modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
 $\Psi(\mathbf{x},\mathbf{y})$ takes the following form:
@@ -61,13 +61,14 @@ where $y_{ng}$ is the \textit{non-gesture} label. \ref{eq:loss-default} is the d
 \section{Implementation}
 \lstset{language=C++}
 
-As stated before, on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is heavy, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
+As stated before (Section \ref{odroid-intro}), on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is heavy, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
 \begin{lstlisting}[frame=single]  % Start your code-block
 
 echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 \end{lstlisting}
-which basically activates the \verb+performance+ governor as the controller for the big.LITTLE switching mechanism.
-Then, having written a sequential implementation of our algorithm using the OpenCV library\footnote{This is joint work with Francesco Paci.}, we compile it using \verb+gcc+ with the following options:
+which basically activates the \verb+performance+ governor as the controller for the big.LITTLE switching mechanism. The \verb+performance+ governor will simply turn off the A7 cluster and turn on the A15 cluster.
+
+Then, having written a sequential implementation of our algorithm using the OpenCV library and our modified version of Joachims's SVM-HMM \cite{joachims} \footnote{This is joint work with Francesco Paci.}, we compile it using \verb+gcc+ and the following options:
 \begin{lstlisting}[frame=single]  % Start your code-block
 
 -g -mfpu=neon-vfpv4 -ftree-vectorize -mfloat-abi=hard -mtune=cortex-a15 -marm
@@ -76,9 +77,16 @@ Then, having written a sequential implementation of our algorithm using the Open
 The \verb+-g+ flag tells the compiler to produce debugging information in the operating system's native format, \verb+-mfpu=neon+  specifies what floating-point hardware (or hardware emulation) is available on the target, \verb+-ftree-vectorize+ enables the auto-vectorizer (which will try to use SIMD instructions, when possible), \verb+-mfloat-abi=hard+ allows generation of floating-point instructions and uses FPU-specific calling conventions, and \verb+-mtune=cortex-a15+ tunes the performance of the compiler for the A15 target.
 
 \subsection{OpenMP and Neon Intrisics}
-This first sequential version runs at 4.3 frames/s on $160\times 120$ frames, and needs 234 ms to elaborate each frame. The main bottleneck of this implementation is the multi-scale Farneback's optical flow, which requires 141 ms for each frame to run. Farneback's algorithm is executed two times for each frame, since the optical flow is calculated both on the original frame on the warped one, so we use OpenMP to run these two executions simultaneously on two different threads. Then, we use Neon intrinsics in order to exploit the SIMD capabilities of our CPU and thus gain a better performance on each thread.
+\begin{figure}[t!]
+\centering
+\includegraphics[width=1.5\linewidth,angle=90]{Figures/grafico_prestazioni.jpg}
+\caption{A section of the Valgrind Call Graph of the first sequential version. As can be seen, the optical flow takes more than 50\% of the execution time.}
+\label{valgrind}
+\end{figure}
 
-A complete explanation of the optimizations made is beyond the purpose of this chapter, but, as an example, let's consider this for loop, which is responsible of 51 of the 234 ms:
+This first sequential version runs at 4.3 frames/s on $160\times 120$ frames, and therefore needs 234 ms to elaborate each frame. Having profiled the application with Valgrind \cite{nethercote2007valgrind}, we observe that the main bottleneck of this implementation is the multi-scale Farneback's optical flow, which requires 141 ms for each frame to run (see Figure \ref{valgrind} for a section of the Valgrind call graph). Farneback's algorithm is executed two times for each frame, since the optical flow is calculated both on the original frame on the warped one, so we exploit OpenMP parallel sections to run these two calls simultaneously on two different threads. Then, we use Neon intrinsics in order to exploit the SIMD capabilities of our CPU and thus gain a better performance on each thread.
+
+A complete explanation of the optimizations made is beyond the purpose of this chapter, but, as an example, let's consider this for loop, inside the OpenCV implementation of Farneback's optical flow\footnote{Source code is available at: \url{https://github.com/Itseez/opencv/blob/0224a20ff6d0cf051cf818efb364048a2dcb716d/modules/video/src/optflowgf.cpp}}, which is responsible of 51 of the 234 ms:
 \begin{lstlisting}[frame=single]  % Start your code-block
 
 for( ; x < width*5; x++ ) {
@@ -111,15 +119,45 @@ for( i = 1; i <= m; i++ ) {
            }
 }
 \end{lstlisting}
-As can be seen, the two for loops have been inverted and four floats are processed at each iteration. The new code block takes only 20 ms to run. 
+As can be seen, the two for loops have been inverted and four floats are processed at each iteration now. The new code block takes only 20 ms to run.
 
 \subsection{Further optimizations}
-Having included several OpenMP/SIMD optimizations, our code runs at 7.1 frames/s on the A15 cluster, still not enough for real-time. Moreover, our algorithm needs an high frame rate in order to compute significant trajectories. Being the Farneback's algorithm our main bottleneck, we could turn our attention to the PowerVR GPU embedded into the Odroid board. Unfortunately, Hardkernel has not yet released an Ubuntu kernel that supports the PowerVR GPU\footnote{see: \url{http://forum.odroid.com/viewtopic.php?f=61&t=2236}.}, so the only way we have to increase speed is to further reduce the frame size and keep only one level of the spatial pyramid. Having reduce the frame size to $113\times 85$
-
-
-... the Farneback's optical flow\footnote{\url{https://github.com/Itseez/opencv/blob/9aa4410509fcc60dfabb78c14a96ed5153ee117e/modules/ocl/src/opencl/optical_flow_farneback.cl}} is included in the C++ code.
-
+Having included several other OpenMP/SIMD optimizations, our code runs at 7.1 frames/s on the A15 cluster, still not enough for real-time. Moreover, our algorithm needs an high frame rate in order to compute significant trajectories. Being Farneback's algorithm our main bottleneck, we could turn our attention to the PowerVR GPU, and use the OpenCL implementation of Farneback's algorithm included in OpenCV, for instance. Unfortunately, Hardkernel has not yet released an Ubuntu kernel that supports the PowerVR GPU\footnote{see: \url{http://forum.odroid.com/viewtopic.php?f=61&t=2236}.}, so the only way we have to increase speed is to further reduce the frame size and keep only one level of the spatial pyramid. Having reduced the frame size to $113\times 85$ the code can run at 11 fps, which is quite a good result, since trajectories can still be extracted with good accuracy and the overall recognition performance is only slightly affected: in fact, we have observed a $5\%$ drop in recognition accuracy.
 
 \section{Some applications}
-\subsection{Ego-Vision Jacket}
-\subsection{...}
+Since now we have described our approach to gesture recognition, and the way we have adapted our approach to build a real-time gesture recognizer on a wearable board. During this process, we have implemented and tested two applications, both of which have required a careful tuning and test phase: an \textit{ego-vision jacket}, which basically is a jacket that embeds our developer board and a camera, placed on the chest, and a \textit{gesture-based interface}.
+
+\textbf{Ego-Vision Jacket}: Embedding a wearable camera and a board on a jacket has required some tailoring work: the lens of the camera has been placed on a butthole, sewed on the chest, and the board in a custom designed pocket, made with breathable fabric. Furthermore, a battery has been developed to make the board completely wireless. Of course here the main technical issue is overheating, since the board has to stay inside a pocket.
+
+
+\textbf{Gesture-based interface}
+Figure \ref{fig:projector}
+
+Board connection code:
+\begin{lstlisting}[frame=single]
+int sockfd;
+struct sockaddr_in serv_addr;
+char buffer[1];
+sockfd = socket(AF_INET, SOCK_STREAM, 0);
+if (sockfd < 0)
+  cerr << "Error opening socket";
+memset(&serv_addr, 0, sizeof(serv_addr));
+serv_addr.sin_family = AF_INET;
+serv_addr.sin_addr.s_addr = inet_addr(ip_address);
+serv_addr.sin_port = htons(atoi(port_number));
+
+if (connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
+  cerr << "Unable to connect";
+\end{lstlisting}
+where \verb+ip_address+ and \verb+port_number+ are the server IP address port number.
+\begin{figure}
+\centering
+\subfigure[The \textit{point} gesture reveals a description of the current artwork.]{
+	\includegraphics[width=.65\columnwidth]{Figures/projector.jpg}
+} \\
+\subfigure[\textit{Slide} gestures let the user move forward and backwards.]{
+	\includegraphics[width=.65\columnwidth]{Figures/projector2.jpg}
+} \\
+\caption{Gestures let the user control a virtual museum interface. A demo video is available at \url{http://www.lorenzobaraldi.com/files/EgoVision_HCI.wmv}}
+\label{fig:projector}
+\end{figure}
