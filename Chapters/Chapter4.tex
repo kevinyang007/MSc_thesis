@@ -127,13 +127,16 @@ Having included several other OpenMP/SIMD optimizations, our code runs at 7.1 fr
 \section{Some applications}
 Since now we have described our approach to gesture recognition, and the way we have adapted our approach to build a real-time gesture recognizer on a wearable board. During this process, we have implemented and tested two applications, both of which have required a careful tuning and test phase: an \textit{ego-vision jacket}, which basically is a jacket that embeds our developer board and a camera, placed on the chest, and a \textit{gesture-based interface}.
 
-\textbf{Ego-Vision Jacket}: Embedding a wearable camera and a board on a jacket has required some tailoring work: the lens of the camera has been placed on a butthole, sewed on the chest, and the board in a custom designed pocket, made with breathable fabric. Furthermore, a battery has been developed to make the board completely wireless. Of course here the main technical issue is overheating, since the board has to stay inside a pocket.
+\textbf{Ego-Vision Jacket}: Embedding a wearable camera and a board in a jacket has required some tailoring work: the lens of the camera has been placed on a butthole, sewed on the chest, and the board in a custom designed pocket, made with breathable fabric. Furthermore, a battery has been developed to make the board completely wireless. 
 
+Of course here the main technical issue is overheating, since the board has to stay inside a pocket: for this reason, we extensively measured the CPU temperature with different workload conditions and external temperatures. Results during a three hours execution in full loading conditions shows that in fact the board temperature remarkably increases, but the embedded fan is still able to maintain the cores well below their maximum allowed temperature.
 
-\textbf{Gesture-based interface}
-Figure \ref{fig:projector}
+Our \textit{ego-vision jacket} is the first prototype of a future high technological jacket we are going to develop, which will include other sensors, like a GPS antenna, and which will be fully connected to the internet (via EDGE/UMTS), to local area networks (through the Ethernet port or through the Wifi module) and to the user's smartphone via Bluetooth. We plan to use such jackets, in conjunction with augmented-reality algorithms, to enhance historical city visits.
 
-Board connection code:
+\textbf{Gesture-based interface} (Figure \ref{fig:projector})
+This is basically a gesture-based controller for Power Point presentations, that gives the user the ability to control a presentation using his gestures. Commands are passed through a simple socket, in a client-server model, where our client is the Odroid-XU board, and the computer hosting the presentations acts as a server.
+
+The board automatically connects to the remote server, via the following lines:
 \begin{lstlisting}[frame=single]
 int sockfd;
 struct sockaddr_in serv_addr;
@@ -149,7 +152,8 @@ serv_addr.sin_port = htons(atoi(port_number));
 if (connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
   cerr << "Unable to connect";
 \end{lstlisting}
-where \verb+ip_address+ and \verb+port_number+ are the server IP address port number.
+where \verb+ip_address+ and \verb+port_number+ are the server IP address port number. Once a gesture is recognized, the client sends the corresponding command on the socket. In our implementation commands are coded with an unsigned char, thus allowing 255 different commands.
+
 \begin{figure}
 \centering
 \subfigure[The \textit{point} gesture reveals a description of the current artwork.]{
