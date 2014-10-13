@@ -1,11 +1,11 @@
 % Chapter 1
 
-\chapter{An on-line implementation for the Odroid-XU developer board}
+\chapter{A real-time implementation for the Odroid-XU developer board}
 
-\lhead{Chapter 5. \emph{An on-line implementation}} % This is for the header on each page - perhaps a shortened title
+\lhead{Chapter 5. \emph{A real-time implementation}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
-The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and which could be suitable for real-world application. To this aim, we need to modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take a stream of frames as input, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we also have to exploit several optimization techniques.
+The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and which could be suitable for real-world application. To this aim, we need to modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take a stream of frames as input, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we also have to exploit several optimization techniques. At the end of this chapter we also present some real-world applications of the proposed algorithm.
 
 \section{Splitting trajectories}
 In the previous chapter, we classified frame sequences containing a gesture using a linear and power-normalized SVM classifier. In particular, we extracted trajectories with fixed length $L=30$ from the frame sequence, we then applied a standard BoW approach, and the output of the BoW was our final feature vector, with fixed size and ready to be classified with a standard SVM classifier. Note that in this case the input of the BoW was a feature vector describing the whole trajectory, therefore the SVM classifier was given a description of the entire frame sequence as input. That has been, so far, our way of taking time into account. Unfortunately, this only works when we have a frame sequence containing exactly one gesture, that is, when we know where a gesture starts and ends.
@@ -50,13 +50,6 @@ where $y_{ng}$ is the \textit{non-gesture} label. \ref{eq:loss-default} is the d
 
 
 
-
-\begin{figure}[t!]
-\centering
-\includegraphics[width=0.9\linewidth]{Figures/Hardkernel-ODROID-XU-block_diagram.jpg}
-\caption{Hardkernel Odroid-XU block diagram}
-\label{odroid-xu}
-\end{figure}
 
 \section{Implementation}
 \lstset{language=C++}
@@ -142,15 +135,19 @@ int sockfd;
 struct sockaddr_in serv_addr;
 char buffer[1];
 sockfd = socket(AF_INET, SOCK_STREAM, 0);
-if (sockfd < 0)
+if (sockfd < 0) {
   cerr << "Error opening socket";
+  exit(EXIT_FAILURE);
+}
 memset(&serv_addr, 0, sizeof(serv_addr));
 serv_addr.sin_family = AF_INET;
 serv_addr.sin_addr.s_addr = inet_addr(ip_address);
 serv_addr.sin_port = htons(atoi(port_number));
 
-if (connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
+if (connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0) {
   cerr << "Unable to connect";
+  exit(EXIT_FAILURE);
+}
 \end{lstlisting}
 where \verb+ip_address+ and \verb+port_number+ are the server IP address port number. Once a gesture is recognized, the client sends the corresponding command on the socket. In our implementation commands are coded with an unsigned char, thus allowing 255 different commands.
 
