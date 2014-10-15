@@ -15,13 +15,45 @@ larger spatial regions (blocks) and using the results to normalize all of the ce
 \subsection{Histograms of Optical Flow}
 \subsection{Gabor Filters}
 \label{Gabor}
+Gabor filters (Figure \ref{fig:Gabor}) are linear filters used for edge and texture detection. Frequency and orientation representations of Gabor filters are similar to those of the human visual system, and they have been found to be particularly appropriate for texture representation and discrimination. In the spatial domain, a 2D Gabor filter is a Gaussian kernel function modulated by a sinusoidal plane wave:
+
+\begin{equation}
+g_{\lambda, \theta, \psi}(x,y) = \exp^{-((x'^2+\gamma^2y'^2)/2\sigma^2)} \cos \left(2\pi \frac{x'}{\lambda}+\psi \right)
+\end{equation}
+$$ x' = x \cos \theta + y \sin \theta \quad y'=-x\sin\theta +y\cos\theta $$
+
+where $\lambda$ is the amplitude of the filter, $\psi$ is the offset in pase, $\sigma$ is the variance of the gaussian component, $\gamma$ is the ratio of the ellipse, $\theta$ is its orientation.
 \begin{figure}[htbp]
 	\centering
 		\includegraphics[width=\linewidth]{Figures/gabor.png}
 	\caption{Examples of Gabor filters.}
 	\label{fig:Gabor}
 \end{figure}
+
+Simple cells in the visual cortex of mammalian brains can be modeled by Gabor functions \cite{marvcelja1980mathematical}. Thus, image analysis with Gabor filters is thought to be similar to perception in the human visual system.
+
 \subsection{MBH}
+Motion Boundary Histograms (MBH) \cite{dalal2005histograms} are descriptors that use differential flow to cancel out most of the effects of camera motion and HOG like oriented histogram voting to obtain robust coding.
+
+First note that the image flow induced by camera rotation (pan, tilt, roll) varies smoothly across the image irrespective of 3Ddepth boundaries, and in most applications it is locally essentially translational because significant camera roll is rare. Thus, any kind of local differential or difference of flow cancels out most of the effects of camera rotation. The remaining signal is due to either depth-induced motion parallax between the camera, subject and background, or to independent motion in the scene. Differentials
+of parallax flows are concentrated essentially at 3D depth boundaries, while those of independent motions are largest at motion boundaries. For human subjects, both types of boundaries coincide with limb and body edges, so flow differentials are good cues for the outline of a person. However we also expect internal dynamics such as relative limb motions to be quite discriminant for human motions and differentials taken within the subject’s silhouette are needed to capture these. Thus, flow-based features can focus either on coding motion (and hence depth) boundaries, or on coding internal dynamics and relative displacements of the limbs.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=\linewidth,page=6]{Figures/eccv2006_cropped.pdf}
+	\caption{Illustration of the MBH descriptor. (a,b) Reference images at time t and t+1. (c,d) Computed
+optical flow, and flow magnitude showing motion boundaries. (e,f) Gradient magnitude of
+flow field $I_x$, $I_y$ for image pair (a,b). (g,h) Average MBH descriptor over all training images for
+flow field $I_x$, $I_y$.}
+\end{figure}
+
+
+Let $I_x$, $I_y$ denote images containing the $x$ (horizontal) and $y$ (vertical) components of optical flow, and $I_w = (I_x, I_y)$ denote the 2D flow image $(w = (x, y))$, and $I_x^x$, $I_x^y$, $I_y^x$, $I_y^y$ denote the corresponding $x$- and $y$-derivative differential flow images. For example, $I_x^y$ is the $y$-derivative of the $x$ component of optical flow.
+
+It is natural to try to capture the local orientations of motion edges by emulating the static-image HOG descriptors. The simplest approach is to treat the two flow components $I_x$, $I_y$ as independent images, take their local gradients separately, find the corresponding gradient magnitudes and orientations, and use these as weighted votes into local orientation histograms in the same way as for the standard gray scale HOG. This is the Motion Boundary Histograms (MBH) descriptor. A separate histogram can be built for each flow component, or the two channels can be combined, e.g. by the winner-takes-all voting method. However, \cite{dalal2005histograms} find that separate histograms are more discriminant. As with standard gray scale HOG, it is best to take spatial derivatives at the smallest possible scale ($\left[ 1, 0,-1\right]$ mask) without any form of smoothing.
+
+
+
 \subsection{Bag of Words}
 The bag-of-words (BoW) methodology was first proposed in the text retrieval domain problem for text document analysis, and it was further adapted for computer vision applications \cite{bosch2007best}. For image analysis, a visual analogue of a word is used in the BoWmodel, which is based on the vector quantization process by clustering low-level visual features of local regions. 
 
