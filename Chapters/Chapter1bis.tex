@@ -4,18 +4,52 @@
 \label{chpt2}
 \lhead{Chapter 2. \emph{Computer Vision and Machine Learning techniques}} % This is for the header on each page - perhaps a shortened title
 
-\section{Color spaces}
+To detect hands and recognize gestures, we are going to use the traditional computer vision pipeline, that given an input image, or a frame sequence, detect, extract and codes \textit{descriptors}, and then uses a \textit{learning algorithm} to correctly classify the input. In this chapter, we present some of the most relevant features and machine learning algorithms we are going to exploit in the next sections.
+
 \section{Descriptors}
+\subsection{Color descriptors}
+Color is one of the most important features for hand detection, therefore a careful colorspace selection is crucial for this task. One important question is: what is the best
+colorspace for skin detection, or more generally - is there an optimal colorspace for skin-classification? Surprisingly, many papers on
+skin detection do not provide strict justification of their colorspace choice, probably because of possibility to obtain acceptable skin
+detection results on limited dataset with almost any colorspace. In our case, we made an effort to compare different color spaces and ended up using a mixture of diffent spaces. In the following, we present the three color spaces we have elected for our algorithm: RGB, HSV and CIElab.
+
+\textbf{RGB colour Space} --  RGB is a colorspace originated from CRT (or similar) display applications, when it was convenient to describe color as a combination of three colored rays (red, green and blue). It is one of the most widely used colorspaces for processing and storing of digital image data. However, high correlation between channels, significant perceptual non-uniformity, mixing of chrominance and luminance data make RGB not a very favorable choice for color analysis and colorbased recognition algorithms.
+
+\textbf{HSV colour Space} -- Hue-saturation based colorspaces were introduced when there was a need for the user to specify color properties numerically. They describe color with intuitive values, based on the artist’s idea of tint, saturation and tone. Hue defines the dominant color (such as red, green, purple and yellow) of an area, saturation measures the colorfulness of an area in proportion to its brightness.
+In HSV, the value is related to the color luminance. The intuitiveness of the colorspace components and explicit discrimination between luminance and chrominance properties made these colorspaces popular in the works on skin color segmentation. Several interesting properties of Hue are: it is invariant to highlights at white light sources, and also, for matte  surfaces, to ambient light and surface orientation relative to the light source.
+
+\textbf{CIElab} Skin color is not a physical property of an object, rather
+a perceptual phenomenon and therefore a subjective human concept.
+Therefore, color representation similar to the color sensitivity
+of human vision system should help to obtain high performance
+skin detection algorithm.
+CIELAB is perceptually uniform (reasonably perceptually unform, to be exact) and was proposed
+by G. Wyszecki and standardized by CIE (Commission Internationale
+de L’Eclairage). Perceptual uniformity means that a small
+perturbation to a component value is approximately equally perceptible
+across the range of that value. The wellknown
+RGB colorspace is far from being perceptually uniform, the
+non-linear transformation to CIELAB try to correct
+the situation. The price for better perceptual uniformity is complex
+transformation functions from and to RGB space, demanding
+far more computation than most other colorspaces
+
 \subsection{Histograms of Oriented Gradient}
-The HOG feature \cite{dalal2005histograms} is based on evaluating well-normalized local histograms of image gradient orientations
+The HOG descriptor \cite{dalal2005histograms} is based on evaluating well-normalized local histograms of image gradient orientations
 in a dense grid. The basic idea is that local object appearance and shape can often be characterized rather well by the distribution of local intensity gradients or edge directions, even without precise knowledge of the corresponding gradient or edge positions. In practice this is implemented by dividing the image window into small spatial regions (cells), for each cell accumulating a local 1-D histogram of gradient directions or edge orientations over the pixels of the cell. The combined histogram entries form the representation. For better invariance to illumination, shadowing, etc., it is also useful to contrast-normalize the local 
 responses before using them. This can be done by accumulating a measure of local histogram energy over somewhat
 larger spatial regions (blocks) and using the results to normalize all of the cells in the block. 
 
-\subsection{Histograms of Optical Flow}
+
 \subsection{Gabor Filters}
 \label{Gabor}
-Gabor filters (Figure \ref{fig:Gabor}) are linear filters used for edge and texture detection. Frequency and orientation representations of Gabor filters are similar to those of the human visual system, and they have been found to be particularly appropriate for texture representation and discrimination. In the spatial domain, a 2D Gabor filter is a Gaussian kernel function modulated by a sinusoidal plane wave:
+Gabor functions were proposed by Hungarian-born electrical engineer Dennis Gabor in 1946. Nowadays, Gabor functions are frequently used for feature extraction, especially in texture-based image analysis (e.g., classification, segmentation or edge detection) and more practically in face recognition. Many of image processing tasks can be seen in terms of a wavelet transform. Informally speaking, the image can be seen under the lens with a magnification given by the scale of a wavelet. In doing so, 
+we can only see just the information that is determined by the shape of the used wavelet. The Gabor functions can also be seen in the words of a wavelet transform. Specifically, Gabor wavelets are created from one particular atom by dilation (and rotation in two-dimensional case). These Gabor wavelets provide a complete image representation. In a two-dimensional case, the absolute square of a correlation between an image and the two-dimensional Gabor function provides a local spectral energy density concentrated around a given position and frequency in a certain direction. A two-dimensional convolution with a circular (non-elliptical) Gabor
+function is separable to series of one-dimensional ones. J. G. Daugman discovered that simple cells
+in the visual cortex of mammalian brains can be modeled by Gabor functions. Thus, image analysis
+by the Gabor wavelets is similar to perception in the human visual system.
+
+In the spatial domain, a 2D Gabor filter is a Gaussian kernel function modulated by a sinusoidal plane wave:
 
 \begin{equation}
 g_{\lambda, \theta, \psi}(x,y) = \exp^{-((x'^2+\gamma^2y'^2)/2\sigma^2)} \cos \left(2\pi \frac{x'}{\lambda}+\psi \right)
@@ -54,8 +88,8 @@ It is natural to try to capture the local orientations of motion edges by emulat
 
 
 
-\subsection{Bag of Words}
-The bag-of-words (BoW) methodology was first proposed in the text retrieval domain problem for text document analysis, and it was further adapted for computer vision applications \cite{bosch2007best}. For image analysis, a visual analogue of a word is used in the BoWmodel, which is based on the vector quantization process by clustering low-level visual features of local regions. 
+\section{Bag of Words}
+The bag-of-words (BoW) methodology is a way to encode a variable number of descriptors in a fixed sized representation. It was first proposed in the text retrieval domain problem for text document analysis, and it was further adapted for computer vision applications \cite{bosch2007best}. For image analysis, a visual analogue of a word is used in the BoWmodel, which is based on the vector quantization process by clustering low-level visual features of local regions. 
 
 To extract the BoW feature from images involves the following steps: 
 \begin{enumerate}

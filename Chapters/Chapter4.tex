@@ -5,24 +5,33 @@
 \lhead{Chapter 5. \emph{A real-time implementation}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
-The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and which could be suitable for real-world application. To this aim, we need to modify and improve the classification module of our gesture recognition algorithm, replacing the simple linear SVM classifier with a more complex Structural SVM implementation, designed to take a stream of frames as input, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we also have to exploit several optimization techniques. At the end of this chapter we also present some real-world applications of the proposed algorithm.
+The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and suitable for real-world applications. To achieve this goal, we will need to modify and improve the classification module of our algorithm, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we will also have to exploit several optimization techniques. At the end of this chapter we will also present some real-world applications of the proposed algorithm.
 
-\section{Splitting trajectories}
-In the previous chapter, we classified frame sequences containing a gesture using a linear and power-normalized SVM classifier. In particular, we extracted trajectories with fixed length $L=30$ from the frame sequence, we then applied a standard BoW approach, and the output of the BoW was our final feature vector, with fixed size and ready to be classified with a standard SVM classifier. Note that in this case the input of the BoW was a feature vector describing the whole trajectory, therefore the SVM classifier was given a description of the entire frame sequence as input. That has been, so far, our way of taking time into account. Unfortunately, this only works when we have a frame sequence containing exactly one gesture, that is, when we know where a gesture starts and ends.
+In the previous chapter, we classified frame sequences containing a gesture using a linear and power-normalized SVM classifier. In particular, we extracted trajectories with fixed length $L=30$ from the frame sequence, we then applied a standard BoW approach, and the output of the BoW was our final feature vector, with fixed size and ready to be classified. We now ask ourselves how to modify this approach in order to take a frame stream (with unknown length) as input, instead of a fixed sized sequence. To this aim, we propose two approaches: a naive sliding window approach and a more complex label sequence learning approach. In the following, we will use the latter as our default implementation.
 
-Now, we consider a more complex scenario: we have a stream of frames, whose length is unknown, that can contain a variable number of gestures, and we have to classify each frame as if it contains a gesture (and which gesture) or not. This is basically a \textit{label sequence learning} problem, with one more class than the ones we were used to, the \textit{non-gesture} one.
+\section{How to treat a frame stream}
+The simplest way to extend the proposed approach to frame streams is to exploit a sliding window. Let's suppose we have a window with size $W$, where $W$ is greater than the maximum gesture duration, and that the window step is $s$. Thus, at iteration $i$, the window will contain the following set of frames:
+\begin{equation}
+\{ I_{1+i\cdot s}, I_{2+i \cdot s}, ..., I_{W+i \cdot s} \}
+\end{equation}
 
-We start observing that our trajectory descriptors can be thought as a concatenation of single-point descriptors. Formally, let's consider a trajectory $T_i$ starting at frame $t_i$ and ending at frame $t_i+L-1$: we can express $T_i$ as $\left[ P_{t_i}^i, P_{t_{i+1}}^i, ..., P_{t_i+L-1}^i \right]$, where $P_{j}^i$ is the point of trajectory $T_i$ at frame $j$.  If we denote $D(T_i)$ the descriptor of trajectory $T_i$, then $D(T_i)$ can be expressed as the concatenation of $d(P_{t_i}^i), d(P_{t_{i+1}}^i), ..., d( P_{t_i+L-1}^i)$, where $d(P_{j}^i)$ is a descriptor computed around $P_j^i$, at frame $j$. 
+each window is then classified using the linear SVM classifier. Of course, in this case we have an additional class, the \textit{non-gesture} one. We define as \textit{non-gesture} any window that does not contain a complete gesture.
+
+However, this implementation leads to, at least, three drawbacks: first, we would be always $s$ frames late, and therefore for a real-time gesture recognition we would have to choose a small $s$ and accept to classify the same frame lots of times. Secondly, the classifier wouldn't learn a clear concept of \textit{non-gesture}, since the \textit{non-gesture} class would contain partial gestures. Third, an SVM classifier doesn't learn label/label dependencies.
+
+\medskip
+
+For this reasons, we will now treat the problem of classifying a frame stream as a \textit{label sequence learning} problem. We start observing that our trajectory descriptors can be thought as a concatenation of single-point descriptors. Formally, let's consider a trajectory $T_i$ starting at frame $t_i$ and ending at frame $t_i+L-1$: we can express $T_i$ as $\left[ P_{t_i}^i, P_{t_{i+1}}^i, ..., P_{t_i+L-1}^i \right]$, where $P_{j}^i$ is the point of trajectory $T_i$ at frame $j$.  If we denote with $D(T_i)$ the descriptor of trajectory $T_i$, then $D(T_i)$ can be expressed as the concatenation of $d(P_{t_i}^i), d(P_{t_{i+1}}^i), ..., d( P_{t_i+L-1}^i)$, where $d(P_{j}^i)$ is a descriptor computed around $P_j^i$, at frame $j$. Proving this statement is straightforward, given the nature of the descriptors employed.
 
 Let's now consider a single frame $j$ of a frame stream, and suppose $ \{ T_1, T_2, ..., T_n\}$ are the trajectories crossing this frame. In this on-line version, we build a BoW histogram on each frame, being the input of the BoW clustering the set of descriptors of the trajectory points crossing the frame, i.e. $\{ d(P_{j}^1),  d(P_{j}^2), ...,  d(P_{j}^n) \}$.  Therefore, the corresponding BoW histogram won't represent a collection of trajectories anymore, but a collection of points, each one belonging to a different trajectory, and all related to the same frame.
 
 Shortly, in the previous chapter the temporal dimension was encoded directly into the BoW input, now this will be up to the sequence classifier.
 
 
-\section{Classification}
- In Section \ref{svmhmm} we have already described how a Struct SVM classifier can be used for label sequence learning. Now, we exploit the Structural SVM implementation by Altun \etal \cite{altun2003hidden} using this modified version of our feature vectors.
+\subsection{Classification}
+ In Section \ref{svmhmm} we described how a Struct SVM classifier can be used for label sequence learning. Now, we exploit the Structural SVM implementation by Altun \etal \cite{altun2003hidden} to classify this modified version of our feature vectors.
 
- We modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
+ First of all, we modify the source code provided by Joachims \cite{joachims} in order to include higher order label-label and label-features interactions, so that the generic 
 $\Psi(\mathbf{x},\mathbf{y})$ takes the following form:
 
 \begin{equation}
@@ -48,13 +57,80 @@ Furthermore, we investigate the use of different loss functions and their impact
 
 where $y_{ng}$ is the \textit{non-gesture} label. \ref{eq:loss-default} is the default 0-1 loss function included in Joachims's code, and \ref{eq:loss-mia} is a slightly modifed version that aims at penalizing the case when a non-gesture frame is confused with a gesture frame or viceversa.
 
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+$\mathbf{\tau}$ & $\mathbf{\epsilon}$ & \textbf{Accuracy \%} \\
+\hline
+\hline
+1							& 0							& 92.2 \% \\
+1							& 1							& 92.4 \% \\
+2							& 0							& 92.4 \% \\
+2							& 1							& 93.0 \% \\
+\textbf{2}						& \textbf{2}						& \textbf{93.8 \%} \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy results with different orders of dependencies of transitions and emissions}
+\label{transemis}
+\end{table}
 
+\begin{table*}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+ 	& \textbf{Like}	& \textbf{Dislike}	&\textbf{Point}	&\textbf{Ok}	&\textbf{Slide LR}	&\textbf{Slide RL}	&\textbf{T. a pic}	& \textbf{No ges.} \\
+\hline
+\hline
+ \textbf{Like}   & 8 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+\textbf{Dislike}   & 0 & 10 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\textbf{Point}  & 0 & 0 & 10 & 1 & 0 & 0 & 0 & 0 \\
+\textbf{Ok}  & 0 & 0 & 0 & 9 & 0 & 0 & 0 & 0 \\
+\textbf{Slide left to right}  & 0 & 0 & 0 & 0 & 9 & 1 & 0 & 0 \\
+\textbf{Slide right to left}  & 0 & 0 & 0 & 0 & 0 & 10 & 0 & 0 \\
+\textbf{Take a picture}  & 0 & 0 & 0 & 0 & 0 & 0 & 10 & 0 \\
+\textbf{No gesture}   & 1 & 0 & 0 & 1 & 1 & 0 & 2 & 66 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Confusion matrix using the $\delta_0$ per-token loss function. Each entry in the confusion matrix represents a sequence of adjacent frames in which a gesture is performed or not.}
+\label{losses0}
+\end{table*}
+
+\begin{table*}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+ 	& \textbf{Like}	& \textbf{Dislike}	&\textbf{Point}	&\textbf{Ok}	&\textbf{Slide LR}	&\textbf{Slide RL}	&\textbf{T. a pic}	& \textbf{No ges.} \\
+\hline
+\hline
+ \textbf{Like}  & 9 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+\textbf{Dislike}  & 1 & 10 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\textbf{Point}  & 0 & 0 & 10 & 1 & 0 & 0 & 0 & 0 \\
+\textbf{Ok}  & 0 & 0 & 0 & 9 & 0 & 0 & 0 & 0 \\
+\textbf{Slide left to right}  & 0 & 0 & 0 & 0 & 9 & 1 & 0 & 0 \\
+\textbf{Slide right to left} & 0 & 0 & 0 & 0 & 0 & 10 & 0 & 0 \\
+\textbf{Take a picture} & 0 & 0 & 0 & 0 & 0 & 0 & 10 & 0 \\
+\textbf{No gesture}  & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 69 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Confusion matrix using the $\delta_1$ per-token loss function.  Each entry in the confusion matrix represents a sequence of adjacent frames in which a gesture is performed or not.}
+\label{losses1}
+\end{table*}
+
+We train the Structural SVM classifier using four different gesture sequences from the Maramotti dataset, each five minutes long, and perform test on three sequences taken in front of different artworks. Using our gesture recognition algorithm we get a feature vector for each frame, which is then classified using the Structural SVM classifier. Of course, since sequences contain frames in which the user is not performing any gesture, the classifier has to deal with a \textit{non-gesture} class too.
+
+Table \ref{transemis} shows the accuracy results obtained with various orders of label-label and label-features dependencies, using the $\delta_0$ per-token loss function. As can be seen, high accuracy results can be achieved even with $\tau = 1$ and $\epsilon = 0$, whereas using second order dependencies there is a slight increase in accuracy. On the other hand, this would imply slower training and testing.
+
+Moreover, the $\delta_0$ per-token loss function leads to a confusion matrix where some \textit{non-gesture} examples are classified as gestures (see Table \ref{losses0}). Since false positives can be a major problem in human-machine interfaces, we propose the $\delta_1$ loss function, which increases the penalty when \textit{non-gesture} examples are misclassified and viceversa. Table \ref{losses1} shows that this loss function significantly reduce the confusion between gesture and \textit{non-gesture} sequences.
 
 
 \section{Implementation}
 \lstset{language=C++}
 
-As stated before (Section \ref{odroid-intro}), on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is heavy, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
+As stated in Section \ref{odroid-intro}, on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is heavy, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
 \begin{lstlisting}[frame=single]  % Start your code-block
 
 echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -69,11 +145,11 @@ Then, having written a sequential implementation of our algorithm using the Open
 
 The \verb+-g+ flag tells the compiler to produce debugging information in the operating system's native format, \verb+-mfpu=neon+  specifies what floating-point hardware (or hardware emulation) is available on the target, \verb+-ftree-vectorize+ enables the auto-vectorizer (which will try to use SIMD instructions, when possible), \verb+-mfloat-abi=hard+ allows generation of floating-point instructions and uses FPU-specific calling conventions, and \verb+-mtune=cortex-a15+ tunes the performance of the compiler for the A15 target.
 
-\subsection{OpenMP and Neon Intrisics}
+\subsection{Optimizations}
 \begin{figure}[t!]
 \centering
 \includegraphics[width=1.5\linewidth,angle=90]{Figures/grafico_prestazioni.jpg}
-\caption{A section of the Valgrind Call Graph of the first sequential version. As can be seen, the optical flow takes more than 50\% of the execution time.}
+\caption{A section of the Valgrind Call Graph of the first sequential version. As can be seen, the optical flow takes more than the 50\% of the execution time.}
 \label{valgrind}
 \end{figure}
 
@@ -114,20 +190,27 @@ for( i = 1; i <= m; i++ ) {
 \end{lstlisting}
 As can be seen, the two for loops have been inverted and four floats are processed at each iteration now. The new code block takes only 20 ms to run.
 
-\subsection{Further optimizations}
-Having included several other OpenMP/SIMD optimizations, our code runs at 7.1 frames/s on the A15 cluster, still not enough for real-time. Moreover, our algorithm needs an high frame rate in order to compute significant trajectories. Being Farneback's algorithm our main bottleneck, we could turn our attention to the PowerVR GPU, and use the OpenCL implementation of Farneback's algorithm included in OpenCV, for instance. Unfortunately, Hardkernel has not yet released an Ubuntu kernel that supports the PowerVR GPU\footnote{see: \url{http://forum.odroid.com/viewtopic.php?f=61&t=2236}.}, so the only way we have to increase speed is to further reduce the frame size and keep only one level of the spatial pyramid. Having reduced the frame size to $113\times 85$ the code can run at 11 fps, which is quite a good result, since trajectories can still be extracted with good accuracy and the overall recognition performance is only slightly affected: in fact, we have observed a $5\%$ drop in recognition accuracy.
+
+Having included several other OpenMP/SIMD optimizations, our code runs at 10 frames/s on the A15 cluster, still not enough for real-time. Moreover, our algorithm needs an high frame rate in order to compute significant trajectories. Being Farneback's algorithm our main bottleneck, we could turn our attention to the PowerVR GPU, and use the OpenCL implementation of Farneback's algorithm included in OpenCV, for instance. Unfortunately, Hardkernel has not yet released an Ubuntu kernel that supports the PowerVR GPU\footnote{See: \url{http://forum.odroid.com/viewtopic.php?f=61&t=2236}.}, so the only way we have to increase speed is to further reduce the frame size and keep only one level of the spatial pyramid. Having reduced the frame size to $113\times 85$ the code can run at 14 fps, which is quite a good result, since trajectories can still be extracted with good accuracy and the overall recognition performance is only slightly affected: in fact, we have observed a $5\%$ drop in recognition accuracy.
 
 \section{Some applications}
-Since now we have described our approach to gesture recognition, and the way we have adapted our approach to build a real-time gesture recognizer on a wearable board. During this process, we have implemented and tested two applications, both of which have required a careful tuning and test phase: an \textit{ego-vision jacket}, which basically is a jacket that embeds our developer board and a camera, placed on the chest, and a \textit{gesture-based interface}.
+During the process of adapting our approach to build a real-time gesture recognizer we have implemented and tested two applications, both of which have required a careful tuning and test phase: an \textit{ego-vision jacket}, which basically is a jacket that embeds our developer board and a camera, placed on the chest, and a \textit{gesture-based interface} for desktop applications.
 
 \textbf{Ego-Vision Jacket}: Embedding a wearable camera and a board in a jacket has required some tailoring work: the lens of the camera has been placed on a butthole, sewed on the chest, and the board in a custom designed pocket, made with breathable fabric. Furthermore, a battery has been developed to make the board completely wireless. 
 
-Of course here the main technical issue is overheating, since the board has to stay inside a pocket: for this reason, we extensively measured the CPU temperature with different workload conditions and external temperatures. Results during a three hours execution in full loading conditions shows that in fact the board temperature remarkably increases, but the embedded fan is still able to maintain the cores well below their maximum allowed temperature.
+\begin{figure}[t!]
+\centering
+\includegraphics[width=1.2\linewidth,angle=90]{Figures/consumi.pdf}
+\caption{CPU Frequency, Power consuption and CPU Temperature during a two hours execution of our algorithm, inside the pocket of Ego-vision Jacket.}
+\label{jacket}
+\end{figure}
+
+Of course here the main technical issue is overheating, since the board has to stay inside a pocket: for this reason, we extensively measured the CPU temperature with different workload conditions and external temperatures. Results during a two hours execution of our algorithm shows that in fact the board temperature is remarkably higher than in normal conditions, but the embedded fan is still able to maintain the cores well below their maximum allowed temperature, that is $80\text{ }^{\circ}\text{C}$ (see Fig. \ref{jacket}).
 
 Our \textit{ego-vision jacket} is the first prototype of a future high technological jacket we are going to develop, which will include other sensors, like a GPS antenna, and which will be fully connected to the internet (via EDGE/UMTS), to local area networks (through the Ethernet port or through the Wifi module) and to the user's smartphone via Bluetooth. We plan to use such jackets, in conjunction with augmented-reality algorithms, to enhance historical city visits.
 
-\textbf{Gesture-based interface} (Figure \ref{fig:projector})
-This is basically a gesture-based controller for Power Point presentations, that gives the user the ability to control a presentation using his gestures. Commands are passed through a simple socket, in a client-server model, where our client is the Odroid-XU board, and the computer hosting the presentations acts as a server.
+\textbf{Gesture-based interface}
+This is basically a gesture-based controller for Power Point presentations or others desktop applications, that gives the user the ability to control a GUI using his gestures. Commands are passed through a simple socket, and then transformed in mouse or keyboards events. We exploit a client-server model, where our client is the Odroid-XU board, and the computer hosting the presentations acts as a server.
 
 The board automatically connects to the remote server, via the following lines:
 \begin{lstlisting}[frame=single]
@@ -149,7 +232,16 @@ if (connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0) {
   exit(EXIT_FAILURE);
 }
 \end{lstlisting}
-where \verb+ip_address+ and \verb+port_number+ are the server IP address port number. Once a gesture is recognized, the client sends the corresponding command on the socket. In our implementation commands are coded with an unsigned char, thus allowing 255 different commands.
+where \verb+ip_address+ and \verb+port_number+ are the server IP address port number. Once a gesture is recognized, the client sends the corresponding command on the socket, using the \verb+send+ primitive. In our implementation commands are coded with an unsigned char, thus allowing 255 different commands. Similarly, the server creates a socket and listens on \verb+port_number+. It then transforms the command into a sequence of mouse/keyboard events using \verb+xdotool+. For example, if a gesture corresponds to pressing the Enter key, the following command is executed:
+\begin{lstlisting}[frame=single]
+xdotool key KP_Enter
+\end{lstlisting}
+or, if the gesture corresponds to a mouse click, the server calls:
+\begin{lstlisting}[frame=single]
+xdotool click 1
+\end{lstlisting}
+
+Of course, more complex mouse/keyboard actions can be defined. In our demo (see Figure \ref{fig:projector}), we used a set of three gestures: the \textit{Point} gesture, to trigger an animation, and two \textit{Slide} gestures, to move backwards and forwards in a Power Point presentation.
 
 \begin{figure}
 \centering
