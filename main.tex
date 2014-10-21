@@ -73,7 +73,7 @@
 %\HRule \\ % Horizontal line
 \textsc{\large Corso di Laurea Magistrale in Ingegneria Informatica}\\[5.5cm] % Thesis type
 
-\HRule \\[0.4cm] % Horizontal line
+\HRule \\[0.6cm] % Horizontal line
 {\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
 \HRule \\[1.5cm] % Horizontal line
  
@@ -155,12 +155,25 @@
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
-%\addtotoc{Abstract} % Add the "Abstract" page entry to the Contents
+\addtotoc{Abstract in lingua italiana} % Add the "Abstract" page entry to the Contents
 %
-%\abstract{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+\abstract{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
 %
 %The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-%}
+Il regolamento della Facoltà di Ingegneria di Modena prevede che le tesi scritte in lingua inglese debbano contenere un'ampia sintesi dei contenuti in lingua italiana: in accordo a questa regola, proponiamo un sunto degli algoritmi, delle tecniche e dei risultati che verranno proposti. Si noti che non si tratta di un sunto esaustivo, e che non è possibile valutare la tesi dalla semplice lettura di queste righe. Per una descrizione più dettagliata e più rigorosa, e per i risultati sperimentali ottenuti, si rimanda al testo in inglese.
+
+Questa tesi tratta dello sviluppo di nuovi algoritmi per la segmentazione delle mani e il riconoscimento dei gesti in video registrati da telecamere ego-centriche, cioè posizionate in maniera solidale con l'utente. Nel nostro caso, dopo aver studiato le proprietà di diverse posizioni e delle relative inquadrature, si è scelto di porre le telecamere sulla testa dell'utente o sul petto. Il fine degli algoritmi e delle tecniche proposte è quello di creare nuove modalità di interazione con opere d'arte, in ambiente museale o in generale di \textit{cultural heritage}: il visitatore, dopo aver indossato una telecamera ego-vision e un dispositivo di elaborazione wearable, può richiedere  informazioni sull'opera d'arte che sta visualizzando replicando con le mani gli stessi gesti che utilizzerebbe per chiedere informazioni a una guida. L'idea sottostante gli algoritmi che proponiamo, dunque, è che si possa costruire un nuovo tipo di interfaccia uomo-macchina, non più materiale, come le interfacce a cui siamo abituati, ma del tutto immateriale, e che si basa sul semplice movimento delle mani.
+
+Per poter identificare gesti espressi attraverso le mani, è necessario innanzitutto identificare le mani stesse. Pertanto, nel capitolo 3 proponiamo un nuovo algoritmo di segmentazione delle mani, che parte da una fase di pre-segmentazione in superpixels e viene costruito in modo da essere stabile a diverse condizioni di illuminazione e in modo da produrre maschere di segmentazione coerenti sia dal punto di vista spaziale che da quello temporale. Dopo aver pre-segmentato il frame in superpixels, utilizzando l'algoritmo SLIC  \cite{achanta12} (si veda la figura \ref{fig:SLIC} per un esempio), i singoli superpixels vengono classificati mediante una pluralità di classificatori Random Forest, ognuno dei quali è costruto in modo da imparare l'apparenza delle mani in una determinata condizione di illuminazione. A tempo di test, vengono selezionati i classificatori più vicini alle condizioni di illuminazione che si presentano: le loro predizioni vengono poi pesate per produrre una stima finale dell'appartenenza di ciascun superpixel alla mano. Una volta classificato ogni superpixel modo indipendente dagli altri, intervengono le sopracitate tecniche di coerenza spaziale e temporale, che agiscono a livello di pixel. La coerenza temporale fa si che la predizione del singolo pixel sia espressa come somma pesata delle predizioni dei frame precedenti, coprendo in questo modo errori di classificazione estemporanei. D'altro canto, le predizioni così ottenute vengono inserite nell'algoritmo GrabCut \cite{rother04}, che provvede a rivedere i contorni della maschera di segmentazione applicando iterativamente il Graph Cut e basandosi su modelli colore ottenuti tramite misture di gaussiane. La pipeline così ottenuta viene testata su dataset pubblicamente disponibili e su dataset di nostra produzione, dimostrando performances migliori dello stato dell'arte presente in letteratura (si veda la tabella \ref{tab:comparision_hand}).
+
+Una volta discusso il problema della segmentazione delle mani, la tesi si concentra sul riconoscimento dei gest all'interno di sequenze di frames di lunghezza fissa. La tecnica che proponiamo, anche in questo caso, supera gli approcci esistenti di riconoscimento dei gesti e delle azioni (tabella \ref{cambridge}), ed è dunque di interesse anche da un punto di vista di ricerca. L'idea è quella di estrarre punti di interesse nelle regioni delle mani, e tracciarli durante il video. Le traiettorie così ottenute vengono descritte non solo nella loro forma (mediante un Trajectory Descriptor ispirato da \cite{wang:2011:inria-00583818:1}), ma anche nel moto e nell'apparenza di un loro intorno, tramite i descrittori HOG, HOF e MBH. Si ottiene così, data una sequenza di frames, un numero variabile di traiettorie, che viene poi codificato mediante un approccio Bag of Words (si veda per un dettaglio la sezione \ref{trajectory-descr}). Il descrittore finale, che dunque è un'istogramma, viene power-normalizzato e quindi classificato tramite un classificatore a massimo margine lineare SVM.
+
+L'ultimo capitolo, infine, si occupa di estendere l'approccio di riconoscimento dei gesti, pensato per sequenze di lunghezza fissa, al caso del riconoscimento di gesti, in tempo reale, da un frame stream proveniente da una telecamera. Per fare ciò, ci ispiriamo ai problemi di \textit{label sequence learning}, proponiamo una versione leggermente modificata dei nostri descrittori e sostituiamo il classificatore lineare SVM con un più complesso classificatore SVM strutturato, a sua volta ispirato agli Hidden Markov Models. In altre parole, si modificano i descrittori in modo da passare da descrittori relativi a una sequenza di frames a descrittori relativi al singolo frames, e si affida all'SVM strutturato il compito di catturare le dipendenze temporali tra più frames. Compito del classificatore strutturato è infatti, in questo caso, associare una label (corrispondente a un gesto o a un \textit{non gesto}, cioè a una situazione in cui non viene compiuto alcun gesto) a ciascun frames, tenendo conto delle dipendenze temporali tra la label del frame corrente e i descrittori dei frame precenti, e tra la label del frame corrente e le label associate ai frames precedenti. Rispetto al caso del classificatore lineare, si guadagna sia in termini di una migliore descrizione delle dipendenze temporali, sia perchè si ha una classificazione on-line, in contrasto con quella precedente, che necessariamente ha un ritardo di alcuni frames.
+
+Come si è detto l'ultimo capitolo vuole proporre un riconoscimento dei gesti in tempo reale. Per questo scegliamo una piattaforma wearable su cui implementare i nostri algoritmi ed effettuare test, la board Odroid XU, e impieghiamo diverse tecniche di ottimizzazione, sia per sfruttare le potenzialità di un'architettura multicore mediante il multithreading, sia per sfruttare le capacità SIMD dei singoli processori. Inoltre, valutiamo l'uso della GPU embedded nel dispositivo. Impiegando tali tecniche di ottimizzazione passiamo da una prima versione sequenziale da 4.3 frames/s a una versione definitiva da 14 frames/s, capace di estrarre traiettorie di buona qualità in tempo reale.  L'implementazione real-time così ottenuta, costituisce di fatto la realizzazione dell'interfaccia uomo-macchina basata su gesti obiettivo della tesi, e viene testata in due applicazioni reali: in una \textit{ego-vision jacket}, in cui la board viene posta all'interno di una giacca da uomo, e si affrontano i conseguenti problemi hardware di surriscaldamento dei processori, e una \textit{gesture-based interface} per GUI e applicazioni desktop, con la quale è possibile controllare, mediante il movimento delle mani, interfacce grafiche pensate per ambienti desktop, come presentazioni Power Point (si veda, a tal proposito, la demo diponibile al seguente URL: \url{http://www.lorenzobaraldi.com/files/EgoVision_HCI.wmv}).
+
+Il lavoro svolto è inoltre testimoniato da due \textit{papers}, pubblicati in due workshops, e due articoli su rivista, attualmente in fase di revisione.
+}
 %
 \clearpage % Start a new page
 
@@ -269,6 +282,7 @@ Last but not the least, I would like to thank my parents Franco and Elisabetta, 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
+
 \input{Chapters/Chapter1}
 
 \input{Chapters/Chapter1bis}
@@ -294,7 +308,7 @@ Last but not the least, I would like to thank my parents Franco and Elisabetta, 
 % Uncomment the lines as you write the Appendices
 
 \input{Appendices/AppendixA}
-%\input{Appendices/AppendixB}
+
 %\input{Appendices/AppendixC}
 
 \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics

@@ -2,7 +2,7 @@
 
 \chapter{Egocentric Vision and Wearable devices: an overview}
 
-\lhead{Chapter 1. \emph{Wearable devices and new human-machine interfaces}} % This is for the header on each page - perhaps a shortened title
+\lhead{Chapter 1. \emph{Egocentric Vision and Wearable devices}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
 
@@ -134,7 +134,7 @@ The actual lens (F2.5 bright lens, 1/4.1-inch BSI Sensor) part sports a two-foot
 \end{figure}
 
 \subsection{Genius WideCam F100}
-The Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?xItem=53214&ctNode=161}} is a wide angle HD camera that we used in some of our tests, and is the camera mounted on our wearable vision device. It can record 1080p frames at up to 30 fps and features ultra wide angle lens (up to 120 degrees) and built-in microphones (see figure \ref{fig:wide-camera}).
+The Genius WideCam F100 is a wide angle HD camera that we used in some of our tests, and is the camera mounted on our wearable vision device. It can record 1080p frames at up to 30 fps and features ultra wide angle lens (up to 120 degrees) and built-in microphones (see figure \ref{fig:wide-camera}).
 
 \begin{figure*}[tb]
 \centering
@@ -144,8 +144,10 @@ The Genius WideCam F100\footnote{\url{http://www.geniusnet.com/Genius/wSite/ct?x
 \label{fig:wide-camera}
 \end{figure*}
 
-\subsection{The Odroid-XU board}
+\subsection{A wearable computing device: the Odroid-XU board}
 \label{odroid-intro}
+
+
 The wearable ego-vision devices we have built embe a glass-mounted camera and an Odroid-XU developer board, serving as video-processing and network communication unit.
 There are several benefits in using such a portable device: the commercial availability and low costs for prototypes evaluation, the computational power and energy efficiency of the Big-Little architecture. Furthermore it has the possibility  of peripheral addition to extend connections and input devices. 
 
@@ -187,21 +189,20 @@ In the Samsung Exynos 5 there is only one way for the different processor cores 
 
 
 %----------------------------------------------------------------------------------------
-\section{Previous work in Egocentric Vision}
-We now discuss the relationship between this work with other areas of related work. Egocentric vision is an emerging area in computer vision. Every year around ten papers addressing this topic appear in top vision conferences (CVPR, ICCV and ECCV). It is possible to categorize these papers into roughly three main groups:
-\begin{itemize}
-\item Recognition of Activities
-\item Gaze in Egocentric Vision
-\item Day-long Video Summarization
-\end{itemize}
+\section{About this thesis: a new gesture-based interface for cultural heritage}
+We would like to close this first chapter with a brief introduction to the motivation of this thesis. Our goal is to develop a new gesture-based human-machine interface, specifically designed for cultural heritage. As a matter of fact, in recent years the interest in cultural heritage has reborn, and the cultural market is becoming a cornerstone in many national economic strategies. In the United States, a recent report of the Office of Travel and Tourism Industries claims that 51\% of the 40 million Americans traveling abroad visit historical places; almost one third visit cultural heritage sites; and one quarter go to an art gallery or museum \cite{tourismintelligence}. The same interest is found in Europe, where the importance of the cultural sector is widely acknowledged, South Asia and North Africa. The latest annual research from World Travel and Tourism Council shows that travel and tourism's total contribution to total GDP grew by 3.0\% in 2013, faster than overall economic growth for the third consecutive year \cite{econotravel}.
 
-In this chapter, we describe the related work to each of these topics.
+Consequently, to deal with an increasing percentage of ``digital native'' tourists, a big effort is under way to propose new interfaces for interacting with the cultural heritage.
+ In this direction goes the solution ``SmartMuseum'' proposed by Kuusik \etal \cite{kuusik2009smartmuseum}: by the means of PDAs and RFIDs, a visitor can gather information about what the museum displays, building a customized visit based on his or her interests inserted, prior to the visit, on their website. This project brought an interesting novelty when first released, but it has some limitations. First, being tied to RFIDs does not allow reconfiguring the museum without rethinking the entire structure of the exhibition. Furthermore, researches demonstrated how the use of mobile devices on the long term decreases the quality of the visit due to their users paying more attention to the tool rather than to the work of art itself.
 
+In 2007 Kuflik \etal \cite{kuflik2011visitor} proposed a system to customize visitors experiences in museums using software capable of learning their interests based on the answers to a questionnaire that they compiled before the visit. Similarly to SmartMuseum, one of the main shortcomings of this system is the need to stop the visitor and force him into doing something that he/she might not be willing to do.
+An interesting attempt to user profiling with wearable sensors was the Museum Wearable \cite{sparacino2002museum}, a wearable computer which orchestrates an audiovisual narration as a function of the visitors' interests gathered from his/her physical path in the museum. However this prototype does not use any computer vision algorithm for understanding the surrounding environment. For instance the estimation of the visitor location is based again on infrared sensors distributed in the museum space.
 
+Museums and cultural sites still lack of an instrument that provides entertainment, instructions and visit customization in an effective natural way. Too often visitors struggle to find the description of the artwork they are looking at and when they finds it, its detail level could be too high or too low for their interests. Moreover, frequently the organization of the exhibition does not reflect the visitors' interests leading them to a pre-ordered path which cultural depth could not be appropriate.
 
-%----------------------------------------------------------------------------------------
-\section{About this thesis: gestures}
-As we said before, the main aim of this thesis, from the hardware point of view, is to develop a wearable vision device capable of executing intensive computer vision algorithms. From the software point of view, we would like to build a new human-computer interface based on gestures: for example gestures are used to control a wearable vision device that lets the user interact with artworks (Figure \ref{fig:interaction}).
+To overcome these limitations, we try to enhance visitors' experiences using ego-vision. Ego-vision features glass-mounted wearable cameras able to see what the visitor sees and perceiving the surrounding environment as he does. Our goal is to develop a wearable vision device for museum environments, able to replace the traditional self-service guides and overcoming their limitations and allowing for a more interactive museum experience to all visitors. The aim of our device is to stimulate the visitors to interact with the artwork, reinforcing their real experience, by letting visitors to replicate the gestures (e.g. point out to the part of the painting they're interested in) and behaviors that they would use to ask a guide something about the artwork.
+
+So the main aim of this thesis, from the hardware point of view, is to develop a wearable vision device capable of executing intensive computer vision algorithms, something like the system that appears in Douglas Trumbull's \textit{Brainstorm}, that was capable of recording the sensory and emotional feelings of a subject (Figure \ref{fig:brainstorm}).  From the software point of view, we would like to build a new human-computer interface based on gestures (Figure \ref{fig:interaction}).
 
 \begin{figure*}[tb]
 \centering
@@ -213,20 +214,7 @@ As we said before, the main aim of this thesis, from the hardware point of view,
 
 Gestures are expressive, meaningful body motions involving physical movements of the fingers, hands, arms, head, face, or
 body with the intent of conveying meaningful information or interacting with the environment. They constitute one interesting
-small subspace of possible human motion. A gesture may also be perceived by the environment as a compression technique for the information to be transmitted elsewhere and subsequently reconstructed by the receiver. Gesture recognition has wide-ranging applications such as the following:
-\begin{itemize}
-\item developing aids for the hearing impaired;
-\item  enabling very young children to interact with computers;
-\item  designing techniques for forensic identification;
-\item recognizing sign language;
-\item medically monitoring patients’ emotional states or stress
-levels;
-\item navigating and/or manipulating in virtual environments;
-\item communicating in video conferencing;
-\item distance learning/tele-teaching assistance;
-\item monitoring automobile drivers' alertness/drowsiness
-levels, etc.
-\end{itemize}
+small subspace of possible human motion. A gesture may also be perceived by the environment as a compression technique for the information to be transmitted elsewhere and subsequently reconstructed by the receiver.
 
 Generally, there exist many-to-one mappings from concepts
 to gestures and vice versa. Hence, gestures are ambiguous and
@@ -248,14 +236,11 @@ in space. Sometimes a gesture is also affected by the context of
 preceding as well as following gestures. Moreover, gestures are
 often language- and culture-specific.
 
+In the following of this thesis, we will address all this issues. Our proposed method, in fact, is capable of recognizing both static and dynamic gestures, can process a continuous stream of frames from a wearable camera, and in real-time, without the need to specify the start and end point of the gesture. Moreover, the nature of our classifiers let the user define its own gestures, and therefore its own, personal, way of interacting with the system.
+
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.6\linewidth]{Figures/brainstorm-Walken.jpg}
 \caption{A clip from \textit{Brainstorm} (1983)}
-\label{brainstorm}
+\label{fig:brainstorm}
 \end{figure}
-
-
-%----------------------------------------------------------------------------------------
-
-\section{In Closing}

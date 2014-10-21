@@ -146,12 +146,12 @@
         keepspaces=true}
 \lstdefinestyle{matlab} {
         language=Matlab,
-        keywordstyle=\color{blue},
+        keywordstyle=\color{black},
         commentstyle=\color[rgb]{0.13,0.55,0.13}\em,
         stringstyle=\color[rgb]{0.7,0,0} }
 \usepackage[pdfpagemode={UseOutlines},bookmarks=true,bookmarksopen=true,
    bookmarksopenlevel=0,bookmarksnumbered=true,hypertexnames=false,
-   colorlinks,linkcolor={blue},citecolor={blue},urlcolor={red},
+   colorlinks,linkcolor={black},citecolor={black},urlcolor={black},
    pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
 \pdfstringdefDisableCommands{
    \let\\\space
@@ -159,6 +159,7 @@
 \newcommand*{\supervisor}[1]{\def\supname{#1}}
 \newcommand*{\cosupervisor}[1]{\def\cosupname{#1}}
 \newcommand*{\thesistitle}[1]{\def\ttitle{#1}}
+\newcommand*{\thesistitleITA}[1]{\def\ttitleITA{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
 \newcommand*{\degree}[1]{\def\degreename{#1}}
 \newcommand*{\authors}[1]{\def\authornames{#1}}
@@ -182,7 +183,8 @@
 %	defined as \examname above so you cite it as \examname
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Hand Gesture recognition in Ego-Centric videos} % Your thesis title - this is used in the title and abstract
+\thesistitle{Hand Gesture recognition on wearable vision devices} % Your thesis title - this is used in the title and abstract
+\thesistitleITA{Analisi e Sviluppo di Metodi per il Riconoscimento di Gesti con Dispositivi di Visione Wearable}
 %-------------------------------------------------  
 \supervisor{Prof. Rita Cucchiara} % You supervisor's name - this is used in the title page
 \cosupervisor{Ing. Giuseppe Serra} % You supervisor's name - this is used in the title page
@@ -292,21 +294,21 @@
 {
   \btypeout{Abstract Page}
   \thispagestyle{empty}
-  \null\vfil
+  %\null\vfil
   \begin{center}
     \setlength{\parskip}{0pt}
-    {\normalsize \UNIVNAME \par} % University name in capitals
+    %{\normalsize \UNIVNAME \par} % University name in capitals
+    %\bigskip
+    {\huge{\textit{Abstract in lingua italiana}} \par}
+    %\bigskip
+    %{\normalsize \facname \par} % Faculty name
+    %{\normalsize \deptname \par} % Department name
+    %\bigskip
+    %{\normalsize \degreename\par} % Degree name
     \bigskip
-    {\huge{\textit{Abstract}} \par}
-    \bigskip
-    {\normalsize \facname \par} % Faculty name
-    {\normalsize \deptname \par} % Department name
-    \bigskip
-    {\normalsize \degreename\par} % Degree name
-    \bigskip
-    {\normalsize\bf \@title \par} % Thesis title
+    {\normalsize\bf Analisi e Sviluppo di Metodi per il Riconoscimento di Gesti con Dispositivi di Visione Wearable \par} % Thesis title
     \medskip
-    {\normalsize by \authornames \par} % Author name
+    {\normalsize \authornames \par} % Author name
     \bigskip
   \end{center}
 }
