@@ -1,0 +1,15 @@
+\chapter{Conclusion and future work}
+
+\lhead{\textit{Conclusion and future work}} % This is for the header on each page - perhaps a shortened title
+
+%----------------------------------------------------------------------------------------
+The work described in this thesis has been concerned with the development of an image segmentation algorithm, specifically designed for hands, and a new hand gesture recognition approach, inspired by dense trajectories. We have proposed a superpixel-based strategy for hand segmentation, where superpixels are classified with color, texture and gradient information, then temporal and spatial consistency are exploited. Moreover, we have proposed a gesture recognition approach that extracts trajectories inside and around the user's hands, and describes them with appearance and motion features. We have extensively tested both the algorithms in several different conditions, on standard datasets as well as on new and more challenging datasets we have developed, where they showed state-of-the-art performances. In addition to the design and development of these algorithms, we put a big effort into optimizing them and building a real-time gesture recognizer on a wearable computing device. We also showed that it can be used as a new kind of human-machine interface.
+
+\section{Recommendation for Future Work}
+Although the results presented here have demonstrated the effectiveness of the approach, it could be further developed in a number of ways.
+
+First of all, the spatial and temporal consistency strategies work at the pixel level, while the classification part of the hand segmentation works at the superpixel level. This is a little contradictory, since the power and spatial support of superpixels are lost in the middle of the pipeline: one, therefore, could develop a spatial consistency approach based on superpixels (or supervoxels), and propose a modified version of GrabCut capable of performing a GraphCut on superpixels. This would imply not only a cleaner approach, but also a more computationally efficient one.
+
+The gesture recognition approach could be enhanced and extended too. For example, depth wearable cameras could be used, in conjunction with an extended version of our descriptors: we believe that this could bring some improvement and make the approach even more stable to light variations. Finally, global shutter cameras could reduce the effect of blur, which can significantly deteriorate the recognition accuracy, being our method based on keypoints tracking.
+
+In closing, we witness that there is still much work to be done in order to develop new and effective human machine interfaces based on ego-vision. Still, this thesis is a preliminary and important contribution in this direction.

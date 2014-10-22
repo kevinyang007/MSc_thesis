@@ -5,7 +5,7 @@
 \lhead{Chapter 5. \emph{A real-time implementation}} % This is for the header on each page - perhaps a shortened title
 
 %----------------------------------------------------------------------------------------
-The last contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and suitable for real-world applications. To achieve this goal, we will need to modify and improve the classification module of our algorithm, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we will also have to exploit several optimization techniques. At the end of this chapter we will also present some real-world applications of the proposed algorithm.
+Another important contribution of this thesis is a real-time implementation of our gesture recognition approach, ready to be used on an embedded device and suitable for real-world applications. To achieve this goal, we will need to modify and improve the classification module of our algorithm, and choose the Odroid-XU developer board as our target plaform. To make our implementation capable of running in real-time, we will also have to exploit several optimization techniques. At the end of this chapter we will also present some real-world applications of the proposed algorithm.
 
 In the previous chapter, we classified frame sequences containing a gesture using a linear and power-normalized SVM classifier. In particular, we extracted trajectories with fixed length $L=30$ from the frame sequence, we then applied a standard BoW approach, and the output of the BoW was our final feature vector, with fixed size and ready to be classified. We now ask ourselves how to modify this approach in order to take a frame stream (with unknown length) as input, instead of a fixed sized sequence. To this aim, we propose two approaches: a naive sliding window approach and a more complex label sequence learning approach. In the following, we will use the latter as our default implementation.
 
@@ -83,18 +83,18 @@ $\mathbf{\tau}$ & $\mathbf{\epsilon}$ & \textbf{Accuracy \%} \\
  	& \textbf{Like}	& \textbf{Dislike}	&\textbf{Point}	&\textbf{Ok}	&\textbf{Slide LR}	&\textbf{Slide RL}	&\textbf{T. a pic}	& \textbf{No ges.} \\
 \hline
 \hline
- \textbf{Like}   & 8 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
-\textbf{Dislike}   & 0 & 10 & 0 & 0 & 0 & 0 & 0 & 1 \\
-\textbf{Point}  & 0 & 0 & 10 & 1 & 0 & 0 & 0 & 0 \\
-\textbf{Ok}  & 0 & 0 & 0 & 9 & 0 & 0 & 0 & 0 \\
-\textbf{Slide left to right}  & 0 & 0 & 0 & 0 & 9 & 1 & 0 & 0 \\
-\textbf{Slide right to left}  & 0 & 0 & 0 & 0 & 0 & 10 & 0 & 0 \\
-\textbf{Take a picture}  & 0 & 0 & 0 & 0 & 0 & 0 & 10 & 0 \\
-\textbf{No gesture}   & 1 & 0 & 0 & 1 & 1 & 0 & 2 & 66 \\
+ \textbf{Like}   & 80\% & 0 \% & 0 \% & 10\% & 0 \% & 0 \% & 0 \% & 10\% \\
+\textbf{Dislike}   & 0 \% & 91\% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% &  9\% \\
+\textbf{Point}  & 0 \% & 0 \% & 91\% & 9\% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Ok}  & 0 \% & 0 \% & 0 \% & 100\% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Slide left to right}  & 0 \% & 0 \% & 0 \% & 0 \% & 90\% & 10\% & 0 \% & 0 \% \\
+\textbf{Slide right to left}  & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 100\% & 0 \% & 0 \% \\
+\textbf{Take a picture}  & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 100\% & 0 \% \\
+\textbf{No gesture}   & 1\% & 0 \% & 0 \% & 1\% & 1\% & 0 \% & 3\% & 93\% \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Confusion matrix using the $\delta_0$ per-token loss function. Each entry in the confusion matrix represents a sequence of adjacent frames in which a gesture is performed or not.}
+\caption{Confusion matrix using the $\delta_0$ per-token loss function. Percentages are rounded to the nearest integer and computed considering sequences of adjacent frames in which a gesture is performed or not.}
 \label{losses0}
 \end{table*}
 
@@ -105,18 +105,18 @@ $\mathbf{\tau}$ & $\mathbf{\epsilon}$ & \textbf{Accuracy \%} \\
  	& \textbf{Like}	& \textbf{Dislike}	&\textbf{Point}	&\textbf{Ok}	&\textbf{Slide LR}	&\textbf{Slide RL}	&\textbf{T. a pic}	& \textbf{No ges.} \\
 \hline
 \hline
- \textbf{Like}  & 9 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-\textbf{Dislike}  & 1 & 10 & 0 & 0 & 0 & 0 & 0 & 0 \\
-\textbf{Point}  & 0 & 0 & 10 & 1 & 0 & 0 & 0 & 0 \\
-\textbf{Ok}  & 0 & 0 & 0 & 9 & 0 & 0 & 0 & 0 \\
-\textbf{Slide left to right}  & 0 & 0 & 0 & 0 & 9 & 1 & 0 & 0 \\
-\textbf{Slide right to left} & 0 & 0 & 0 & 0 & 0 & 10 & 0 & 0 \\
-\textbf{Take a picture} & 0 & 0 & 0 & 0 & 0 & 0 & 10 & 0 \\
-\textbf{No gesture}  & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 69 \\
+ \textbf{Like}  & 90\% & 0 \% & 10\% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Dislike}  & 9\% & 91\% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Point}  & 0 \% & 0 \% & 91\% & 9\% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Ok}  & 0 \% & 0 \% & 0 \% & 100\% & 0 \% & 0 \% & 0 \% & 0 \% \\
+\textbf{Slide left to right}  & 0 \% & 0 \% & 0 \% & 0 \% & 90\% & 10\% & 0 \% & 0 \% \\
+\textbf{Slide right to left} & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 100\% & 0 \% & 0 \% \\
+\textbf{Take a picture} & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 0 \% & 100\% & 0 \% \\
+\textbf{No gesture}  & 0 \% & 0 \% & 0 \% & 1 \% & 0 \% & 0 \% & 1 \% & 97\% \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Confusion matrix using the $\delta_1$ per-token loss function.  Each entry in the confusion matrix represents a sequence of adjacent frames in which a gesture is performed or not.}
+\caption{Confusion matrix using the $\delta_1$ per-token loss function.  Percentages are rounded to the nearest integer and computed considering sequences of adjacent frames in which a gesture is performed or not.}
 \label{losses1}
 \end{table*}
 
@@ -130,7 +130,7 @@ Moreover, the $\delta_0$ per-token loss function leads to a confusion matrix whe
 \section{Implementation}
 \lstset{language=C++}
 
-As stated in Section \ref{odroid-intro}, on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is heavy, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
+As stated in Section \ref{odroid-intro}, on the Odroid-XU board only one of the two clusters can run at the same time. Since our application is CPU intensive, we choose the A15 cluster, which includes four cores and is the most performant cluster. This is done trough the following command:
 \begin{lstlisting}[frame=single]  % Start your code-block
 
 echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
